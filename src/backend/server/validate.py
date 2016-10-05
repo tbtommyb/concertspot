@@ -1,5 +1,6 @@
 """ Check that POSTed JSON is valid """
 
+from __future__ import unicode_literals
 from datetime import datetime, date
 from voluptuous import Schema, Required, Length, All, Range, Any, Coerce, Invalid
 

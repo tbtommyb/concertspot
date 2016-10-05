@@ -1,5 +1,6 @@
 """ Test validation of user input """
 
+from __future__ import unicode_literals
 import unittest
 from datetime import date, timedelta
 from voluptuous import MultipleInvalid

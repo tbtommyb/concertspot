@@ -1,5 +1,7 @@
+# coding=utf-8
 """ Test Celery tasks """
 
+from __future__ import unicode_literals
 import unittest
 from operator import itemgetter
 from mock import Mock, MagicMock, patch
@@ -117,12 +119,8 @@ class TestQueryGenresTask(TestCase):
 
     def test_unicode_with_real_db(self):
         """ Returns results as expected with unicode """
-        expected_result = [Genre(name='techno', weighting=1.0),
-                           Genre(name='electronic', weighting=1.0),
-                           Genre(name='minimal', weighting=0.636364),
-                           Genre(name='house', weighting=0.272727)]
-        result = get_genres_for_query(unicode("ben klock"))
-        assert result == expected_result
+        result = get_genres_for_query(unicode("björk"))
+        assert len(result)
 
     def test_empty_string_with_real_db(self):
         """ Returns empty list """

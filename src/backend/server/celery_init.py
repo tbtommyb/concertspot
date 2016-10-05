@@ -1,5 +1,6 @@
 """ Create Celery base task with access to DB and EventList """
 
+from __future__ import unicode_literals
 from celery import Celery
 from server.events.db import Database
 

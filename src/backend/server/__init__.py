@@ -1,5 +1,6 @@
 """Initialise the server """
 
+from __future__ import unicode_literals
 import os
 import logging
 from logging.handlers import RotatingFileHandler

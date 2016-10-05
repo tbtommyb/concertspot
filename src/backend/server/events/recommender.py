@@ -2,6 +2,7 @@
     Builds list of recommended events based on genres of query
 """
 
+from __future__ import unicode_literals
 from operator import itemgetter
 from server import Genre
 

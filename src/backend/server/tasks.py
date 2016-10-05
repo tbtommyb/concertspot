@@ -3,6 +3,7 @@
     They are time-consuming so are processed in background tasks where possible.
 """
 
+from __future__ import unicode_literals
 from server import celery as celery_app
 from server import app as flask_app
 from server import Genre
@@ -32,6 +33,7 @@ def get_genres_for_query(query):
         artist and saves to cache as (name, weighting) Genre tuples
     """
     def get_genres(input):
+        # TODO - if this fails, fetch the genres and try again
         if input in [genre for genre in cache.get(cache.genre_list_id())]:
             # Query is a genre
             genres = [Genre(input, 1.0)]
@@ -40,14 +42,18 @@ def get_genres_for_query(query):
                       get_genres_for_query.database.get_genres_for_query(input)]
         return genres
 
-    genres = get_genres(query)
-    if not len(genres):
-        # No results so try removing possible extra search terms
-        terms = ["events", "event", "clubs", "club",  "clubnights", "clubnight", "music", "parties",
-                     "party", "gigs", "gig", "nights", "night"]
-        stripped_query = query
-        for term in terms:
-            stripped_query = stripped_query.replace(term, "").strip()
-        genres = get_genres(stripped_query)
-    cache.add(cache.query_genres_id(query), genres)
-    return genres
+    try:
+        genres = get_genres(query)
+        if not len(genres):
+            # No results so try removing possible extra search terms
+            terms = ["events", "event", "clubs", "club",  "clubnights", "clubnight", "music", "parties",
+                         "party", "gigs", "gig", "nights", "night"]
+            stripped_query = query
+            for term in terms:
+                stripped_query = stripped_query.replace(term, "").strip()
+            genres = get_genres(stripped_query)
+        cache.add(cache.query_genres_id(query), genres)
+        return genres
+    except Exception as e:
+        flask_app.logger.error(e)
+        return []

@@ -1,4 +1,6 @@
 """ Fetch and filter list of local events from Skiddle API """
+
+from __future__ import unicode_literals
 import requests
 from server import app
 

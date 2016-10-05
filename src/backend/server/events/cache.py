@@ -6,6 +6,7 @@
     Cache expiry set to 30 mins by default
 """
 
+from __future__ import unicode_literals
 import hashlib
 import redis
 import simplejson as json

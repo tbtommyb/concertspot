@@ -1,5 +1,6 @@
 """ Test fetching of events """
 
+from __future__ import unicode_literals
 import unittest
 from datetime import date, timedelta
 from flask_testing import TestCase

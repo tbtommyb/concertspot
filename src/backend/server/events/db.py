@@ -1,5 +1,6 @@
 """ Implements connection to Postgres DB server """
 
+from __future__ import unicode_literals
 import sys
 import psycopg2
 from server.conf.database import conf
@@ -36,7 +37,6 @@ class Database(object):
             Get genres and weighting for artist name
         """
         try:
-            artist_name = str(artist_name)
             cur = self.conn.cursor()
             cur.execute("""SELECT genres.name, genres.weighting, artists.id
                            FROM artists
