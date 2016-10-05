@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 import unittest
 from operator import itemgetter
-from mock import Mock, MagicMock, patch
+from mock import patch
 from flask_testing import TestCase
 from server import app as flask_app
 from server import Genre

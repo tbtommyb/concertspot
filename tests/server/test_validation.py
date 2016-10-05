@@ -26,6 +26,7 @@ class TestInputValidation(TestCase):
         return flask_app
 
     def test_valid_terms(self):
+        """ Should validate terms """
         validate(self.terms)
 
     def test_no_query(self):
