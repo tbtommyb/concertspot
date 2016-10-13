@@ -41,7 +41,7 @@ class Event extends Component {
                 <div className="event-wrapper">
                     <EventDetailList event={event} />
                     <div className="tickets">
-                        <a target="_blank" href={link}>Tickets <span className="fa fa-chevron-right" aria-hidden="true"></span></a>
+                        <a target="_blank" rel="noreferrer noopener" href={link}>Tickets <span className="fa fa-chevron-right" aria-hidden="true"></span></a>
                     </div>
                     <EventDescription event={event} dangerDescription={dangerText} />
                 </div>
