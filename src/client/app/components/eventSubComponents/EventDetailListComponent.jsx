@@ -8,7 +8,7 @@ const EventDetailList = props => {
     return (
         <div className="details-list">
             <EventDetail type="venue" icon="fa-map-marker" content={venue.name.toLowerCase()} />
-            <EventDetail type="date"  icon="fa-calendar-o" content={moment(date).format("dddd do MMM").toLowerCase()} />
+            <EventDetail type="date"  icon="fa-calendar-o" content={moment(date).format("dddd Do MMM").toLowerCase()} />
             <EventDetail type="price" icon="fa-ticket" content={price.toLowerCase()} />
             <EventDetail type="times" icon="fa-clock-o" content={times.opening + " - " + times.closing} />
         </div>
