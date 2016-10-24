@@ -12,7 +12,7 @@
     "push-frontend": "rsync -ravzP -delete /Users/thomasbarrett/coding/concertspot/src/client/static -e 'ssh -i /Users/thomasbarrett/coding/aws/ireland-key-pair.pem' ubuntu@52.17.9.164:/home/ubuntu/concertspot",
     "push": "npm run push-backend && npm run push-frontend && npm run restart",
     "build:push": "npm run build && npm run push",
-    "test-backend": "python -m unittest discover /Users/thomasbarrett/coding/concertspot/tests/server",
+    "test-backend": "python -m unittest discover tests/server",
     "test-frontend": "mocha tests/client --compilers js:babel-register --recursive --require ignore-styles tests/client/dom-setup.js",
     "test": "npm run test-backend && npm run test-frontend",
     "test:watch": "npm test -- --watch"
