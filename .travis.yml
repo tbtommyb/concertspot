@@ -4,6 +4,7 @@ node_js:
 before_install:
   - sudo apt-get -qq update
   - pip install --user codecov flask_testing mock voluptuous redis
+  - export PYTHONPATH=$HOME/builds/tbtommyb/concertspot/src/backend
 after_success:
   - codecov --file coverage/lcov.info --disable search
 services:
