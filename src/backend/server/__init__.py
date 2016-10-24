@@ -7,14 +7,30 @@ from logging.handlers import RotatingFileHandler
 from collections import namedtuple
 
 from flask import Flask
+from server.events.cache import cache
+from server.events.db import Database
 import celery_init
 
 def create_flask():
     app = Flask(__name__, template_folder="../../client/static",
                 static_folder="../../client/static",
                 static_url_path="/static")
-    app.config.from_object('server.conf.dev')
-    app.config.from_envvar('FLASK_CONFIG', silent=True)
+    try:
+        app.config.from_object('server.conf.dev')
+        app.config.from_envvar('FLASK_CONFIG', silent=True)
+    except ImportError:
+        app.config.update(
+            DEBUG=os.environ['DEBUG'],
+            SECRET_KEY=os.environ['SECRET_KEY'],
+            SERVER_NAME=os.environ['SERVER_NAME'],
+            SK_API_KEY=os.environ['SK_API_KEY'],
+            SK_URL=os.environ['SK_URL'],
+            CELERY_BROKER_URL=os.environ['CELERY_BROKER_URL'],
+            CELERY_RESULT_BACKEND=os.environ['CELERY_RESULT_BACKEND']
+            )
+
+    """ Initialise cache with list of all genres to check queries against """
+    cache.add(cache.genre_list_id(), Database().get_genre_list(), expiration=False)
 
     if app.debug:
         print "Running in debug mode"

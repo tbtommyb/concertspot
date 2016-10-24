@@ -11,7 +11,6 @@ from flask import abort, request, jsonify, session
 from server import app as flask_app
 from server import Genre
 from server.events.recommender import recommend
-from server.events.db import Database
 from server.validate import validate
 import server.tasks as tasks
 from server.events.cache import cache, CacheKeyError
@@ -24,13 +23,6 @@ if not flask_app.debug:
         """ Log any server errors in production """
         flask_app.logger.error(exception)
         return abort(500, "Internal server error")
-
-# ------- Initialisation --------------
-
-@flask_app.before_first_request
-def get_genre_list():
-    """ Initialise cache with list of all genres to check queries against """
-    cache.add(cache.genre_list_id(), Database().get_genre_list(), expiration=False)
 
 # ------- Flask routes ----------------
 
@@ -54,7 +46,6 @@ def start_search():
             abort(400, "Invalid query terms: {}".format(str(error)))
         flask_app.logger.info(request_terms)
         query = request_terms["query"]
-        print type(query)
 
         events_search_cache_id = cache.events_search_id(request_terms)
         if not cache.exists(events_search_cache_id):

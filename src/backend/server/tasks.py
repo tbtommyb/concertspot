@@ -47,7 +47,7 @@ def get_genres_for_query(query):
         if not len(genres):
             # No results so try removing possible extra search terms
             terms = ["events", "event", "clubs", "club",  "clubnights", "clubnight", "music", "parties",
-                         "party", "gigs", "gig", "nights", "night"]
+                     "party", "gigs", "gig", "nights", "night"]
             stripped_query = query
             for term in terms:
                 stripped_query = stripped_query.replace(term, "").strip()
@@ -55,5 +55,6 @@ def get_genres_for_query(query):
         cache.add(cache.query_genres_id(query), genres)
         return genres
     except Exception as e:
+        print e
         flask_app.logger.error(e)
         return []

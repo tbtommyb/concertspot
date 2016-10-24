@@ -1,9 +1,18 @@
 """ Implements connection to Postgres DB server """
 
 from __future__ import unicode_literals
+import os
 import sys
 import psycopg2
-from server.conf.database import conf
+try:
+    from server.conf.database import conf
+except ImportError:
+    conf = {
+        "name": os.environ["db_name"],
+        "user": os.environ["db_user"],
+        "password": os.environ["db_pass"],
+        "host": os.environ["db_host"]
+    }
 
 class Database(object):
     """ Implement connection to DB """
