@@ -1,7 +1,7 @@
 """ Implements connection to Postgres DB server """
 
-import os
 from __future__ import unicode_literals
+import os
 import sys
 import psycopg2
 try:
