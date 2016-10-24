@@ -54,7 +54,6 @@ def start_search():
             abort(400, "Invalid query terms: {}".format(str(error)))
         flask_app.logger.info(request_terms)
         query = request_terms["query"]
-        print type(query)
 
         events_search_cache_id = cache.events_search_id(request_terms)
         if not cache.exists(events_search_cache_id):
