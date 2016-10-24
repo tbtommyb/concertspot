@@ -3,6 +3,8 @@ node_js:
   - "5.4.1"
 before_install:
   - sudo apt-get -qq update
-  - pip install --user codecov flask_testing mock voluptuous
+  - pip install --user codecov flask_testing mock voluptuous redis
 after_success:
   - codecov --file coverage/lcov.info --disable search
+services:
+  - redis-server
