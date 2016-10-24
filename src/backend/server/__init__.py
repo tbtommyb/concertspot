@@ -7,6 +7,8 @@ from logging.handlers import RotatingFileHandler
 from collections import namedtuple
 
 from flask import Flask
+from server.events.cache import cache
+from server.events.db import Database
 import celery_init
 
 def create_flask():
@@ -15,6 +17,9 @@ def create_flask():
                 static_url_path="/static")
     app.config.from_object('server.conf.dev')
     app.config.from_envvar('FLASK_CONFIG', silent=True)
+
+    """ Initialise cache with list of all genres to check queries against """
+    cache.add(cache.genre_list_id(), Database().get_genre_list(), expiration=False)
 
     if app.debug:
         print "Running in debug mode"
