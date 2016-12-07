@@ -22,7 +22,7 @@ var config = {
     ]),
     output: {
         path: BUILD_DIR,
-        publicPath: "/static/",
+        publicPath: "/",
         filename: "scripts/bundle.js"
     },
     devServer: {

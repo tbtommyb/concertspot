@@ -14,7 +14,7 @@ module.exports = {
     entry: SERVER_DIR + "/start.js",
     output: {
         path: BUILD_DIR,
-        publicPath: "/static/",
+        publicPath: "/",
         filename: "../server.bundle.js",
         libraryTarget: "commonjs2"
     },
