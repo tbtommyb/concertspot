@@ -1,45 +1,34 @@
 
 var path = require("path");
-var htmlWebpackPlugin = require("html-webpack-plugin");
 var extractTextPlugin = require("extract-text-webpack-plugin");
 
-const BUILD_DIR = path.resolve(__dirname, "src/client/static");
-const APP_DIR = path.resolve(__dirname, "src/client/app");
+const BUILD_DIR = path.resolve(__dirname, "src/backend-hapi/static");
+const SERVER_DIR = path.resolve(__dirname, "src/backend-hapi");
 
-function getEntrySources(sources) {
-    if(process.env.NODE_ENV === "serve") {
-        sources.push("webpack-dev-server/client?http://localhost:8080");
-        sources.push("webpack/hot/only-dev-server");
-    }
-    return sources;
-}
-
-var config = {
+module.exports = {
     cache: true,
-    entry: getEntrySources([
-        "react-widgets-webpack!./react-widgets.config.js",
-        APP_DIR + "/index.js"
-    ]),
+    target: "node",
+    node: {
+        __dirname: false
+    },
+    entry: SERVER_DIR + "/start.js",
     output: {
         path: BUILD_DIR,
-        publicPath: "/static/",
-        filename: "scripts/bundle.js"
+        publicPath: "/",
+        filename: "server.bundle.js",
+        libraryTarget: "commonjs2"
     },
-    devServer: {
-        contentBase: BUILD_DIR,
-        proxy: {
-            "/api/**": {
-                target: "http://localhost:5000",
-                changeOrigin: true
-            }
-        }
-    },
+    externals: /^[a-z\-0-9]+$/,
     devtool: "eval-source-map",
     module: {
         loaders: [
             {
+                test: /\.json$/,
+                loader: "json-loader"
+            },
+            {
                 test: /\.jsx?/,
-                include: APP_DIR,
+                include: __dirname + "/src",
                 exclude: /node_modules/,
                 loader: "babel",
                 query: {
@@ -69,15 +58,8 @@ var config = {
         ]
     },
     plugins: [
-        new htmlWebpackPlugin({
-            filename: "index.html",
-            template: APP_DIR + "/index.html",
-            favicon: APP_DIR + "/favicon.png"
-        }),
         new extractTextPlugin("styles/style.css", {
             allChunks: true
         })
     ]
 };
-
-module.exports = config;

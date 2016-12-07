@@ -4,7 +4,6 @@ import EventDetailList from "./eventSubComponents/EventDetailListComponent.jsx";
 import EventDescription from "./eventSubComponents/EventDescriptionComponent.jsx";
 
 require("../styles/Event.scss");
-require("font-awesome-webpack");
 
 class Event extends Component {
     constructor(props) {
