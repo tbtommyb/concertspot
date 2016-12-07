@@ -13,11 +13,7 @@ module.exports = [
         path: "/{param*}",
         handler: {
             directory: {
-                path: () => {
-                    let path = __dirname + '/static/';
-                    console.log(path);
-                    return path;
-                },
+                path: __dirname + '/static/',
                 listing: true,
                 index: true
             }
@@ -70,6 +66,7 @@ function renderFullPage(html, preloadedState) {
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
         </script>
         <script src="scripts/bundle.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0&region=GB"></script>
       </body>
     </html>
     `
