@@ -1,0 +1,71 @@
+
+@import "variables";
+@import "responsive";
+
+nav {
+  background-color: $background-base;
+  color: $font-base;
+  font-size: 1.2em;
+  height: 1.6em;
+  padding: 0 2.5em .6em;
+  position: relative;
+  z-index: 2;
+
+  @include mobile {
+    font-size: 1.2em;
+    padding: 0 .5em .2em;
+  }
+
+  @include tablet {
+    font-size: 1em;
+  }
+}
+
+.sub-nav ul {
+  float: left;
+
+  @include mobile {
+    align-items: center;
+    display: flex;
+    float: none;
+    justify-content: space-between;
+    padding: .4em;
+  }
+
+  @include tablet {
+    margin: .1em;
+    padding: 0;
+  }
+}
+
+.sub-nav+.sub-nav {
+  float: right;
+}
+
+.sub-nav li {
+  display: inline-block;
+  margin: .4em 1em;
+
+  @include mobile {
+    margin: 0 .2em;
+    padding: 0 .2em;
+    line-height: 1em;
+  }
+
+  a {
+    color: $font-base;
+    text-decoration: none;
+
+    &:focus,
+    &:hover {
+      color: $highlight-color;
+      transition: .2s;
+    }
+  }
+}
+
+.logo:focus,
+.logo:hover {
+  color: $font-base !important;
+  transition: .2s;
+}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
-import routes from '../client/app/routes.jsx';
+import routes from '../app/routes.jsx';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-import reducers from "../client/app/reducers";
+import reducers from "../app/reducers";
 
 module.exports = [
     {
@@ -13,7 +13,11 @@ module.exports = [
         path: "/{param*}",
         handler: {
             directory: {
-                path: __dirname,
+                path: () => {
+                    let path = __dirname;
+                    console.log(path);
+                    return path;
+                },
                 listing: true,
                 index: true
             }
@@ -58,14 +62,14 @@ function renderFullPage(html, preloadedState) {
       <head>
         <title>Redux Universal Example</title>
         <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
-        <link href="styles/style.css" rel="stylesheet">
+        <link href="static/styles/initial-render.css" rel="stylesheet">
       </head>
       <body>
         <div id="app">${html}</div>
         <script>
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
         </script>
-        <script src="scripts/bundle.js"></script>
+        <script src="static/scripts/bundle.js"></script>
       </body>
     </html>
     `

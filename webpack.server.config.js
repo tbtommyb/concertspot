@@ -2,7 +2,7 @@
 var path = require("path");
 var extractTextPlugin = require("extract-text-webpack-plugin");
 
-const BUILD_DIR = path.resolve(__dirname, "src/backend-hapi/static");
+const BUILD_DIR = path.resolve(__dirname, "src/build/static");
 const SERVER_DIR = path.resolve(__dirname, "src/backend-hapi");
 
 module.exports = {
@@ -14,8 +14,8 @@ module.exports = {
     entry: SERVER_DIR + "/start.js",
     output: {
         path: BUILD_DIR,
-        publicPath: "/",
-        filename: "server.bundle.js",
+        publicPath: "/static/",
+        filename: "../server.bundle.js",
         libraryTarget: "commonjs2"
     },
     externals: /^[a-z\-0-9]+$/,
@@ -58,7 +58,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new extractTextPlugin("styles/style.css", {
+        new extractTextPlugin("styles/initial-render.css", {
             allChunks: true
         })
     ]

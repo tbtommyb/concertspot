@@ -1,0 +1,90 @@
+
+@import "variables";
+@import "responsive";
+
+.search-input {
+  border-radius: 0 $curve $curve 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font-size: $input-font-size;
+  margin: 0;
+  padding: 0 .2em 1.2em;
+  width: 100%;
+
+  @include mobile {
+    padding: 0 0 .5em;
+  }
+
+  form {
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+.inputs-wrapper {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+
+  @include mobile {
+    margin: 0 auto;
+    width: 98%;
+  }
+
+  > input,
+  & > button {
+    font-size: 1.2em;
+    margin: .2em;
+  }
+
+  > input {
+    background-color: $input-background;
+    display: inline-block;
+    margin-top: auto;
+    max-width: 30%;
+    outline: none;
+    padding: 0 .2em;
+
+    &[type="text"] {
+      height: 1.9em;
+    }
+  }
+
+  > button {
+    padding: .4em 1.8em;
+
+    @include mobile {
+      margin: 0 .2em;
+    }
+
+    @include tablet {
+      max-width: 30%;
+    }
+  }
+}
+
+.datepicker-wrapper {
+  width: 33%;
+
+}
+
+.validation-message {
+  color: $warning;
+  display: inline-block;
+}
+
+.num-input {
+  width: 6em;
+
+  @include tablet {
+    width: 5em;
+  }
+}
+
+.input-label {
+  display: inline;
+  font-size: 1em;
+  margin: .4em .2em .2em;
+}

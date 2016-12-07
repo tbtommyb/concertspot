@@ -1,0 +1,96 @@
+
+@import "variables";
+@import "responsive";
+@import "foundation";
+
+.container {
+  margin: auto;
+  position: relative;
+  width: 1080px;
+  z-index: 1;
+
+  @include mobile {
+    width: 100%;
+  }
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.text-box {
+  background-color: $text-box-background;
+  margin: 1em 10em;
+  padding: 1em;
+  text-align: center;
+
+  h1 {
+    font-size: 3.5em;
+    margin: .5em;
+  }
+
+  @include mobile {
+    margin: .5em 0 0;
+    padding: .5em;
+  }
+
+  @include tablet {
+    margin: 1em 2em;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.screen-reader {
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  top: -1000px;
+  width: 1px;
+}
+
+.no-display {
+  display: none !important;
+}
+
+[type="text"] {
+  background-color: $input-background;
+  border: 0;
+  border-bottom: .05em $input-border solid;
+  color: $font-base;
+  font-weight: 200;
+  outline: none;
+
+  @include mobile {
+    font-weight: 400;
+  }
+
+  &::selection {
+    background: $highlight-color;
+  }
+}
+
+button {
+  background-color: $input-background;
+  border: .05em $input-border solid;
+  color: $font-base;
+
+  &:focus,
+  &:hover {
+    background-color: $highlight-color !important;
+    color: $font-base !important;
+    outline: none;
+  }
+}
+
+li {
+  list-style-type: none;
+}
+
+.logo {
+  color: $highlight-color !important;
+  font-family: $logo-font;
+  font-size: 1.2em;
+}

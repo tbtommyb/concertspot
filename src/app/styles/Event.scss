@@ -1,0 +1,114 @@
+
+@import "variables";
+@import "responsive";
+
+.event-component {
+  background-color: $pale-background;
+  box-sizing: border-box;
+  color: $background-base;
+  float: left;
+  font-size: .9em;
+  margin: .125em 0;
+  padding: .8em .25em;
+  text-align: left;
+  width: 100%;
+
+  h1 {
+    color: $background-base;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $text-box-background;
+  }
+
+  &:first-of-type {
+    margin: 0 0 .125em;
+  }
+
+  &:last-of-type {
+    border-radius: 0 0 $curve;
+    margin: .125em 0 0;
+
+    @include mobile {
+      border-radius: 0;
+    }
+  }
+}
+
+.event-wrapper {
+  display: inline;
+  width: 60%;
+}
+
+.details-list {
+  border-collapse: separate;
+  border-spacing: .25em;
+  float: left;
+  max-width: 70%;
+
+  div {
+    display: table-row-group;
+  }
+
+  .detail {
+    display: table-row;
+    vertical-align: middle;
+
+    .fa {
+      display: table-cell;
+      text-align: center;
+    }
+  }
+}
+
+.tickets {
+  float: right;
+  margin: 1.2em 1em 1em;
+  max-width: 30%;
+  text-align: center;
+
+  > a {
+    background-color: $background-base;
+    border: 0;
+    color: $font-base;
+    cursor: pointer;
+    padding: .5em;
+    text-decoration: none;
+
+    &:focus,
+    &:hover {
+      background-color: $highlight-color;
+    }
+  }
+}
+
+.description {
+  float: left;
+  height: 0;
+  overflow: hidden;
+  width: 100%;
+
+  img {
+    float: right;
+    height: 40%;
+    margin: 0 5px 0 0;
+    width: 40%;
+  }
+
+  .genres {
+    font-size: .8em;
+    margin: .1em;
+  }
+
+  p {
+    margin-top: .4em;
+  }
+
+  &.active {
+    height: auto;
+  }
+}

@@ -3,8 +3,8 @@ var path = require("path");
 var htmlWebpackPlugin = require("html-webpack-plugin");
 var extractTextPlugin = require("extract-text-webpack-plugin");
 
-const BUILD_DIR = path.resolve(__dirname, "src/client/static");
-const APP_DIR = path.resolve(__dirname, "src/client/app");
+const BUILD_DIR = path.resolve(__dirname, "src/build/static");
+const APP_DIR = path.resolve(__dirname, "src/app");
 
 function getEntrySources(sources) {
     if(process.env.NODE_ENV === "serve") {
@@ -18,7 +18,7 @@ var config = {
     cache: true,
     entry: getEntrySources([
         "react-widgets-webpack!./react-widgets.config.js",
-        APP_DIR + "/index.js"
+        APP_DIR + "/index.jsx"
     ]),
     output: {
         path: BUILD_DIR,
