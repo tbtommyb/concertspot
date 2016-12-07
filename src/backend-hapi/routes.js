@@ -1,11 +1,12 @@
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
-import routes from '../app/routes.jsx';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { match, RouterContext } from "react-router";
+import routes from "../app/routes.jsx";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunkMiddleware from "redux-thunk";
 import reducers from "../app/reducers";
+import makeIndexView from "./views/Index.js";
 
 module.exports = [
     {
@@ -13,7 +14,7 @@ module.exports = [
         path: "/{param*}",
         handler: {
             directory: {
-                path: __dirname + '/static/',
+                path: __dirname + "/static/",
                 listing: true,
                 index: true
             }
@@ -44,30 +45,9 @@ module.exports = [
                     } else {
                         reply("Not found").statusCode(404);
                     }
-                    return reply(renderFullPage(markup));
+                    return reply(makeIndexView(markup, initialState));
                 }
             );
         }
     }
 ];
-
-function renderFullPage(html, preloadedState) {
-  return `
-    <!doctype html>
-    <html>
-      <head>
-        <title>Redux Universal Example</title>
-        <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
-        <link href="styles/initial-render.css" rel="stylesheet">
-      </head>
-      <body>
-        <div id="app">${html}</div>
-        <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
-        </script>
-        <script src="scripts/bundle.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0&region=GB"></script>
-      </body>
-    </html>
-    `
-}
