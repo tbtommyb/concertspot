@@ -5,7 +5,8 @@ module.exports = {
     },
     "globals": {
         "google": true,
-        "process": true
+        "process": true,
+        "__dirname": true
     },
     "env": {
         "browser": true,
