@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import reducers from "../app/reducers";
 import makeIndexView from "./views/Index.js";
+import { fetch } from "./events";
 
 module.exports = [
     {
@@ -48,6 +49,17 @@ module.exports = [
                     return reply(makeIndexView(markup, initialState));
                 }
             );
+        }
+    },
+    {
+        method: "POST",
+        path: "/api/search",
+        handler: (request, reply) => {
+            console.log(request.payload);
+            fetch(request.payload, (err, result) => {
+                if(err) { return reply(err); }
+                reply(result);
+            });
         }
     }
 ];

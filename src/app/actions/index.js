@@ -144,8 +144,8 @@ export function fetchEvents(search) {
             },
             body: JSON.stringify({
                 query: search.query,
-                latitude: search.location.coords.lat,
-                longitude: search.location.coords.lng,
+                lat: search.location.coords.lat,
+                lng: search.location.coords.lng,
                 radius: search.radius,
                 mindate: moment(search.minDate).format("YYYY-MM-DD"),
                 maxdate: moment(search.maxDate).format("YYYY-MM-DD")
