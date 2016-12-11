@@ -1,5 +1,5 @@
 export default {
     data: {},
-    get: (key) => { this.data[key]; },
-    set: (key, value) => { this.data[key] = value; }
+    get: (key) => { return this.data[key]; },
+    set: (key, value) => { return this.data[key] = value; }
 };
