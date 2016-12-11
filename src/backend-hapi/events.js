@@ -1,4 +1,5 @@
 const request = require("request");
+import moment from "moment";
 
 require("env2")(__dirname + "/../../config.env");
 
@@ -10,8 +11,8 @@ export const fetch = (query, cb) => {
     const events = [];
     const params = {
         api_key: process.env.SK_KEY,
-        minDate: mindate,
-        maxDate: maxdate,
+        minDate: moment(mindate).format("YYYY-MM-DD"),
+        maxDate: moment(maxdate).format("YYYY-MM-DD"),
         "eventcodes[]": ["CLUB", "LIVE"], // TODO check this is working with the qsStringifyOptions
         latitude: lat,
         longitude: lng,
@@ -24,7 +25,6 @@ export const fetch = (query, cb) => {
     };
     request.get({url: process.env.SK_URL, qs: params, qsStringifyOptions: stringifyOptions}, (err, response, body) => {
         if(err) return cb(err);
-        console.log(response.path)
         const resp = JSON.parse(body);
         events[0] = resp.results;
         const callsToMake = Math.floor(parseInt(resp.totalcount, 10) / 100); // check this gives integer
@@ -44,6 +44,72 @@ export const fetch = (query, cb) => {
         }
         
     });
+};
+
+export const filter = event => {
+    const keys = {
+        "artists": "artists",
+        "date": "date",
+        "description": "description",
+        "genres": "genres",
+        "id": "id",
+        "imageurl": "imageurl",
+        "largeimageurl": "largeimageurl",
+        "link": "link",
+        "price": "entryprice",
+        "tickets": "tickets",
+        "ticketsAvail": "ticketsAvail",
+        "title": "eventname",
+        "venue": "venue"
+    };
+    // TODO - find neater way of doing this
+    const filteredEvent = {};
+    Object.keys(keys).forEach(key => {
+        filteredEvent[key] = event[keys[key]];
+    });
+    filteredEvent.times = {
+        opening: event.openingtimes.doorsopen,
+        closing: event.openingtimes.doorsclose
+    };
+    filteredEvent.active = false;
+    return filteredEvent;
+};
+
+export const createGenreList = genres => {
+    const genresSplitNames = [];
+    genres.forEach(genre => {
+        genre.name.split(" ").forEach(word => {
+            genresSplitNames.push({
+                name: word,
+                weighting: genre.weighting
+            });
+        });
+    });
+    return genresSplitNames;
+};
+
+export const extractEventGenres = event => {
+    return [].concat(...event.genres.map(genre => genre.name.toLowerCase().split(" ")));
+};
+
+export const weightEvent = (event, genreList) => {
+    const eventGenres = extractEventGenres(event);
+    const weightedEvent = Object.assign({}, event);
+    weightedEvent.weighting = genreList.reduce((prev, cur) => {
+        if(eventGenres.indexOf(cur.name.toLowerCase()) > -1) {
+            return prev + cur.weighting;
+        }
+        return prev;
+    }, 0);
+    return weightedEvent;
+};
+
+export const recommend = (events, queryGenres) => {
+    const genreList = createGenreList(queryGenres);
+    return events
+        .map(event => weightEvent(event, genreList))
+        .filter(event => event.weighting >= 0.5)
+        .sort((a, b) => b.weighting - a.weighting);
 };
 /*
 fetch({
