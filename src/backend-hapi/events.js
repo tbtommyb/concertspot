@@ -75,6 +75,7 @@ export const filter = event => {
     return filteredEvent;
 };
 
+// TODO simplify - could use concat and map
 export const createGenreList = genres => {
     const genresSplitNames = [];
     genres.forEach(genre => {

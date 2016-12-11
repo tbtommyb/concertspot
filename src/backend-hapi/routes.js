@@ -7,7 +7,8 @@ import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import reducers from "../app/reducers";
 import makeIndexView from "./views/Index.js";
-import { fetch } from "./events";
+import { fetchEvents, getGenresForQuery } from "./tasks";
+import { recommend } from "./events"; // Make into a task?
 
 module.exports = [
     {
@@ -55,10 +56,13 @@ module.exports = [
         method: "POST",
         path: "/api/search",
         handler: (request, reply) => {
-            console.log(request.payload);
-            fetch(request.payload, (err, result) => {
+            // TODO change to parallel function
+            fetchEvents(request.payload, (err, events) => {
                 if(err) { return reply(err); }
-                reply(result);
+                getGenresForQuery(request.payload.query, (err, genres) => {
+                    if(err) return reply(err);
+                    return reply(recommend(events, genres));
+                });
             });
         }
     }
