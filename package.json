@@ -16,7 +16,8 @@
     "test-backend": "python -m unittest discover tests/server",
     "test-frontend": "istanbul cover _mocha -- tests/client --compilers js:babel-register --recursive --require ignore-styles tests/client/dom-setup.js",
     "test": "npm run test-backend && npm run test-frontend",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "test:server-js": "mocha tests/server --compilers js:babel-register --recursive --require ignore-styles"
   },
   "author": "Tom Barrett",
   "license": "ISC",

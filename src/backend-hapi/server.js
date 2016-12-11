@@ -19,4 +19,4 @@ server.register([Inert, Vision], err => {
     server.route(routes);
 });
 
-module.exports = server;
+export default server;
