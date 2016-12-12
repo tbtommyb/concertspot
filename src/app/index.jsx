@@ -1,15 +1,15 @@
-
 import React from "react";
 import { render } from "react-dom";
-import { renderToString } from "react-dom/server";
 import { Provider } from "react-redux";
 import { Router, browserHistory } from "react-router";
 import configureStore from "./stores";
 import routes from "./routes.jsx";
 
-export const store = configureStore();
+if(process.env.BROWSER === "true") {
+    require("style!css!less!font-awesome-webpack/font-awesome-styles.loader!font-awesome-webpack/font-awesome.config.js");
+}
 
-//require("font-awesome-webpack");
+export const store = configureStore();
 
 render(
     <Provider store={store}>

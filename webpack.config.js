@@ -23,6 +23,7 @@ var config = {
     cache: true,
     entry: getEntrySources([
         "react-widgets-webpack!./react-widgets.config.js",
+        "font-awesome-webpack!./font-awesome.config.js",
         APP_DIR + "/index.jsx"
     ]),
     output: {
@@ -31,13 +32,7 @@ var config = {
         filename: "scripts/bundle.js"
     },
     devServer: {
-        contentBase: BUILD_DIR,
-        proxy: {
-            "/api/**": {
-                target: "http://localhost:5000",
-                changeOrigin: true
-            }
-        }
+        contentBase: BUILD_DIR
     },
     devtool: "eval-source-map",
     module: {

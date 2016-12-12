@@ -15,8 +15,6 @@ module.exports = {
         __dirname: false
     },
     entry: [
-        "react-widgets-webpack!./react-widgets.config.js",
-        "font-awesome-webpack!./font-awesome.config.js",
         SERVER_DIR + "/start.js"
     ],
     output: {
