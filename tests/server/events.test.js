@@ -5,8 +5,8 @@ import { fetch, filter, createGenreList, extractEventGenres,
 
 describe("Fetching events", () => {
     const validParams = {
-        mindate: moment(),
-        maxdate: moment().add(3, "days"),
+        mindate: moment().format("YYYY-MM-DD"),
+        maxdate: moment().add(3, "days").format("YYYY-MM-DD"),
         lat: 51.534889,
         lng: -0.137289,
         radius: 3
@@ -18,7 +18,7 @@ describe("Fetching events", () => {
             expect(events[0]).toIncludeKeys(["eventname", "link", "date"]);
             done();
         });
-    });
+    }).timeout(5000);
 });
 
 describe("Filtering event keys", () => {
@@ -116,5 +116,47 @@ describe("Adding weighting to an event", () => {
 });
 
 describe("Event recommendation", () => {
-
+    const testEvents = [
+        {
+            name: "techno event",
+            genres: [
+                {name: "techno"},
+                {name: "house"}
+            ]
+        },
+        {
+            name: "soul event",
+            genres: [
+                {name: "soul"},
+                {name: "funk"}
+            ]
+        },
+        {
+            name: "jazz event",
+            genres: [
+                {name: "jazz"},
+                {name: "bebop"}
+            ]
+        }
+    ];
+    const queryGenres = [
+        {
+            name: "techno",
+            weighting: 1.9
+        },
+        {
+            name: "soul",
+            weighting: 0.5
+        }
+    ];
+    it("should return two events in descending order of weighting", () => {
+        const actual = recommend(testEvents, queryGenres);
+        expect(actual.length).toBe(2);
+        expect(actual[0].name).toBe("techno event");
+        let weighting = actual[0].weighting;
+        actual.forEach(event => {
+            expect(event.weighting).toBeLessThanOrEqualTo(weighting);
+            weighting = event.weighting;
+        });
+    });
 });

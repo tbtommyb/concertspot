@@ -1,4 +1,5 @@
 import React from "react";
+import Joi from "joi";
 import { renderToString } from "react-dom/server";
 import { match, RouterContext } from "react-router";
 import routes from "../app/routes.jsx";
@@ -55,13 +56,25 @@ module.exports = [
     {
         method: "POST",
         path: "/api/search",
+        config: {
+            validate: {
+                payload: {
+                    query: Joi.string().required(),
+                    mindate: Joi.string().required(),
+                    maxdate: Joi.string().required(),
+                    lat: Joi.number().required(),
+                    lng: Joi.number().required(),
+                    radius: Joi.number().required()
+                }
+            }
+        },
         handler: (request, reply) => {
             // TODO change to parallel function
             fetchEvents(request.payload, (err, events) => {
                 if(err) { return reply(err); }
                 getGenresForQuery(request.payload.query, (err, genres) => {
                     if(err) return reply(err);
-                    return reply(recommend(events, genres));
+                    return reply({events: recommend(events, genres)});
                 });
             });
         }

@@ -1,6 +1,6 @@
 //require('font-awesome-webpack');
 
-const server = require('./server');
+import server from "./server";
 
 server.start(err => {
     if(err) console.log(err);

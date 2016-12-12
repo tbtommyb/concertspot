@@ -1,6 +1,7 @@
 const Hapi = require("hapi");
 const Inert = require("inert");
 const Vision = require("vision");
+const injectThen = require("inject-then");
 const routes = require("./routes.js");
 const server = new Hapi.Server();
 
@@ -13,7 +14,7 @@ server.connection({
     port
 });
 
-server.register([Inert, Vision], err => {
+server.register([Inert, Vision, injectThen], err => {
     if(err) console.log(err);
 
     server.route(routes);

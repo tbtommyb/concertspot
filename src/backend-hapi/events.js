@@ -11,8 +11,8 @@ export const fetch = (query, cb) => {
     const events = [];
     const params = {
         api_key: process.env.SK_KEY,
-        minDate: moment(mindate).format("YYYY-MM-DD"),
-        maxDate: moment(maxdate).format("YYYY-MM-DD"),
+        minDate: mindate,
+        maxDate: maxdate,
         "eventcodes[]": ["CLUB", "LIVE"], // TODO check this is working with the qsStringifyOptions
         latitude: lat,
         longitude: lng,
@@ -25,6 +25,8 @@ export const fetch = (query, cb) => {
     };
     request.get({url: process.env.SK_URL, qs: params, qsStringifyOptions: stringifyOptions}, (err, response, body) => {
         if(err) return cb(err);
+        console.log(response.url)
+        if(response.statusCode !== 200) return cb(body);
         const resp = JSON.parse(body);
         events[0] = resp.results;
         const callsToMake = Math.floor(parseInt(resp.totalcount, 10) / 100); // check this gives integer
@@ -112,15 +114,4 @@ export const recommend = (events, queryGenres) => {
         .filter(event => event.weighting >= 0.5)
         .sort((a, b) => b.weighting - a.weighting);
 };
-/*
-fetch({
-    mindate: "2016-12-07",
-    maxdate: "2016-12-10",
-    lat: 51.508386,
-    lng: -0.125382,
-    radius: 0.8
-}, (err, result) => {
-    if(err) { console.log("Err", err); }
-});*/
 
-// TODO - filter events
