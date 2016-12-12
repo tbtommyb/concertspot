@@ -2,6 +2,8 @@
 var webpack = require("webpack");
 var config = require("./webpack.config.js");
 
+//require("env2")(__dirname + "/config.env");
+
 config.devtool = "source-map";
 config.plugins.push(
     new webpack.DefinePlugin({

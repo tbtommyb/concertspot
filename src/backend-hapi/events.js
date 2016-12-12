@@ -1,8 +1,6 @@
 const request = require("request");
 import moment from "moment";
 
-require("env2")(__dirname + "/../../config.env");
-
 export const fetch = (query, cb) => {
     if(!process.env.SK_URL || !process.env.SK_KEY) {
         throw new Error("Skiddle URL or key not provided");

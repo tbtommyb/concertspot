@@ -1,10 +1,15 @@
 
 var path = require("path");
+var webpack = require("webpack");
 var htmlWebpackPlugin = require("html-webpack-plugin");
 var extractTextPlugin = require("extract-text-webpack-plugin");
 
+require("env2")(__dirname + "/config.env");
+
 const BUILD_DIR = path.resolve(__dirname, "src/build/static");
 const APP_DIR = path.resolve(__dirname, "src/app");
+
+process.env.BROWSER = true;
 
 function getEntrySources(sources) {
     if(process.env.NODE_ENV === "serve") {
@@ -49,7 +54,7 @@ var config = {
             {
                 test: /\.(css|scss|sass)$/,
                 exclude: /node_modules/,
-                loader: extractTextPlugin.extract("css!sass")
+                loader: extractTextPlugin.extract("isomorphic-style-loader", "css!sass")
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -76,7 +81,11 @@ var config = {
         }),
         new extractTextPlugin("styles/style.css", {
             allChunks: true
-        })
+        }),
+        new webpack.EnvironmentPlugin([
+            'NODE_ENV',
+            'BROWSER']
+        )
     ]
 };
 

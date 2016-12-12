@@ -77,11 +77,13 @@
     "font-awesome-webpack": "0.0.4",
     "ignore-styles": "^4.0.0",
     "inject-then": "^2.0.7",
+    "isomorphic-style-loader": "^1.1.0",
     "istanbul": "^1.0.0-alpha.2",
     "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
     "nock": "^8.0.0",
     "react-addons-test-utils": "^15.3.2",
+    "react-widgets-webpack": "^0.1.0",
     "redux-mock-store": "^1.1.2",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.14.1"
