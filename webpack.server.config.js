@@ -1,9 +1,12 @@
-
+require("env2")(__dirname + "/config.env");
 var path = require("path");
 var extractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require("webpack");
 
 const BUILD_DIR = path.resolve(__dirname, "src/build/static");
 const SERVER_DIR = path.resolve(__dirname, "src/backend-hapi");
+
+process.env.BROWSER = false;
 
 module.exports = {
     cache: true,
@@ -11,7 +14,11 @@ module.exports = {
     node: {
         __dirname: false
     },
-    entry: SERVER_DIR + "/start.js",
+    entry: [
+        "react-widgets-webpack!./react-widgets.config.js",
+        "font-awesome-webpack!./font-awesome.config.js",
+        SERVER_DIR + "/start.js"
+    ],
     output: {
         path: BUILD_DIR,
         publicPath: "/",
@@ -38,7 +45,7 @@ module.exports = {
             {
                 test: /\.(css|scss|sass)$/,
                 exclude: /node_modules/,
-                loader: extractTextPlugin.extract("css!sass")
+                loader: extractTextPlugin.extract("isomorphic-style-loader", "css!sass")
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -58,8 +65,16 @@ module.exports = {
         ]
     },
     plugins: [
-        new extractTextPlugin("styles/initial-render.css", {
+        new extractTextPlugin("styles/style.css", {
             allChunks: true
-        })
+        }),
+        new webpack.EnvironmentPlugin([
+            "NODE_ENV",
+            "BROWSER",
+            "DB_URL",
+            "DB_MAX_CONNECTIONS",
+            "SK_KEY",
+            "SK_URL"]
+        )
     ]
 };
