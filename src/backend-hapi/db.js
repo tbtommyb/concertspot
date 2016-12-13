@@ -1,12 +1,12 @@
 import conn from "./db_connection";
 
-export const getGenres = (cb) => {
+export const getGenreList = (cb) => {
     conn.query(`SELECT DISTINCT genres.name
                 FROM artist_genres genres
                 ORDER BY genres.name;`,
         (err, result) => {
             if(err) return cb(err);
-            cb(null, result.rows);
+            cb(null, result.rows.map(genre => genre.name));
         });
 };
 

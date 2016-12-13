@@ -76,7 +76,7 @@ export const filter = event => {
 };
 
 // TODO simplify - could use concat and map
-export const createGenreList = genres => {
+export const createGenreList = (genres) => {
     const genresSplitNames = [];
     genres.forEach(genre => {
         genre.name.split(" ").forEach(word => {
@@ -89,7 +89,7 @@ export const createGenreList = genres => {
     return genresSplitNames;
 };
 
-export const extractEventGenres = event => {
+export const extractEventGenres = (event) => {
     return [].concat(...event.genres.map(genre => genre.name.toLowerCase().split(" ")));
 };
 

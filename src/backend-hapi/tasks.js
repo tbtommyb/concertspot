@@ -1,21 +1,39 @@
 import { fetch, filter } from "./events";
-import { getGenres, getGenresForArtist } from "./db";
-import cache from "./cache";
+import { getGenreList, getGenresForArtist } from "./db";
+import * as cache from "./cache";
 
 // TODO add in all the proper handling in tasks.py
 export const fetchEvents = (query, cb) => {
-    fetch(query, (err, events) => {
+    const eventSearchId = cache.generateEventSearchId(query);
+    cache.get(eventSearchId, (err, events) => {
         if(err) { return cb(err); }
-        const filtered = events.map(filter);
-        cache.set("test1", filtered);
-        cb(null, filtered);
+        if(events) { return cb(null, events); }
+        fetch(query, (err, fetchedEvents) => {
+            if(err) { return cb(err); }
+            const filtered = fetchedEvents.map(filter);
+            cache.add(eventSearchId, filtered);
+            cb(null, filtered);
+        });
     });
 };
 
 export const getGenresForQuery = (query, cb) => {
-    getGenresForArtist(query, (err, genres) => {
-        if(err) return cb(err);
-        cache.set(`genres:${query}`, genres);
-        cb(null, genres);
+    const queryGenreId = cache.generateQueryGenreId(query);
+    cache.get(queryGenreId, (err, genres) => {
+        if(err) { return cb(err); }
+        if(genres) { return cb(null, genres); }
+        getGenresForArtist(query, (err, genres) => {
+            if(err) { return cb(err); }
+            cache.add(queryGenreId, genres);
+            cb(null, genres);
+        });
+    });
+};
+
+export const cacheGenreList = (cb) => {
+    getGenreList((err, genres) => {
+        if(err) { return cb(err); }
+        cache.add(cache.generateGenreListId(), genres);
+        cb(null);
     });
 };
