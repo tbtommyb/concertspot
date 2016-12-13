@@ -4,8 +4,8 @@
   "description": "Find great events near you",
   "main": "index.js",
   "scripts": {
-    "dev": "npm-run-all --parallel build build-server",
-    "dev:watch": "npm-run-all --parallel build:watch build-server:watch",
+    "dev": "npm-run-all --parallel build build-server redis",
+    "dev:watch": "npm-run-all --parallel build:watch build-server:watch redis",
     "build": "webpack --config webpack.config.js",
     "build:watch": "webpack --config webpack.config.js --progress --colours --watch",
     "build-server": "webpack --config webpack.server.config.js",
@@ -20,7 +20,8 @@
     "test-backend": "mocha tests/server --compilers js:babel-register --recursive --require ignore-styles",
     "test-frontend": "istanbul cover _mocha -- tests/client --compilers js:babel-register --recursive --require ignore-styles tests/client/dom-setup.js",
     "test": "npm run test-backend && npm run test-frontend",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "redis": "redis-server &"
   },
   "author": "Tom Barrett",
   "license": "ISC",
