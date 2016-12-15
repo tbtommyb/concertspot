@@ -106,6 +106,7 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// TODO - need to handle errors better. Console gives various errors when no results returned
 function handleErrors(response) {
     if(response.status === 202) {
         var error = new Error();

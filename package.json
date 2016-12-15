@@ -26,6 +26,7 @@
   "author": "Tom Barrett",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.1.4",
     "babel-loader": "^6.2.4",
     "css-loader": "^0.23.1",
     "env2": "^2.1.1",

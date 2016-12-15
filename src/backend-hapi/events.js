@@ -1,13 +1,24 @@
 const request = require("request");
 import moment from "moment";
+import each from "async/each";
 
-export const fetch = (query, cb) => {
-    if(!process.env.SK_URL || !process.env.SK_KEY) {
-        throw new Error("Skiddle URL or key not provided");
+const RESULTS_LIMIT = 100;
+const RESULTS_ORDER = 4;
+
+const buildOffsets = (totalCount) => {
+    const offsets = [];
+    const limit = Math.floor(parseInt(totalCount, 10) / RESULTS_LIMIT);
+    for(let i = 1; i <= limit; i++) {
+        offsets.push(RESULTS_LIMIT * i);
     }
+    return offsets;
+};
+
+const buildQueryOptions = (query, offset) => {
     const { mindate, maxdate, lat, lng, radius } = query;
-    const events = [];
-    const params = {
+    const options = {};
+    options.url = process.env.SK_URL;
+    options.qs = {
         api_key: process.env.SK_KEY,
         minDate: mindate,
         maxDate: maxdate,
@@ -15,34 +26,42 @@ export const fetch = (query, cb) => {
         latitude: lat,
         longitude: lng,
         radius: radius,
-        order: 4,
-        limit: 100
+        order: RESULTS_ORDER,
+        limit: RESULTS_LIMIT
     };
-    const stringifyOptions = {
+    options.stringifyOptions = {
         arrayFormat: "brackets"
     };
-    request.get({url: process.env.SK_URL, qs: params, qsStringifyOptions: stringifyOptions}, (err, response, body) => {
-        if(err) return cb(err);
-        console.log(response.url)
-        if(response.statusCode !== 200) return cb(body);
-        const resp = JSON.parse(body);
-        events[0] = resp.results;
-        const callsToMake = Math.floor(parseInt(resp.totalcount, 10) / 100); // check this gives integer
-        if(!callsToMake) { return cb(null, [].concat.apply([],events)); }
+    return options;
+};
 
-        let completionCount = 0;
-        for(let i = 1; i <= callsToMake; i++) {
-            request.get({url: process.env.SK_URL, qs: Object.assign({}, params, {offset: 100 * i})},
-                (err, response, body) => {
-                    let resp = JSON.parse(body);
-                    events[i] = resp.results;
-                    completionCount++;
-                    if(completionCount === callsToMake) {
-                        cb(null, [].concat.apply([],events));
-                    }
-                });
-        }
-        
+export const fetch = (query, cb) => {
+    if(!process.env.SK_URL || !process.env.SK_KEY) {
+        throw new Error("Skiddle URL or key not provided");
+    }
+    let events = [];
+    request.get(buildQueryOptions(query), (err, res, body) => {
+        if(err) { return cb(err); }
+        if(res.statusCode !== 200) { return cb(body); }
+
+        const response = JSON.parse(body);
+        events = events.concat(response.results);
+
+        const callsToMake = buildOffsets(response.totalcount); // check this gives integer
+        if(!callsToMake.length) { return cb(null, events); }
+        // We don't have all the results yet so need to send off more queries
+
+        each(callsToMake, (offset, callback) => {
+            // TODO - debug this function
+            request.get(buildQueryOptions(query, offset), (err, res, body) => {
+                if(err) { return callback(err); }
+                events = events.concat(JSON.parse(body).results);
+                callback();
+            });
+        }, (err) => {
+            if(err) { return cb(err); }
+            cb(null, events);
+        });
     });
 };
 
