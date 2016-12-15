@@ -21,7 +21,7 @@
     "test-frontend": "istanbul cover _mocha -- tests/client --compilers js:babel-register --recursive --require ignore-styles tests/client/dom-setup.js",
     "test": "npm run test-backend && npm run test-frontend",
     "test:watch": "npm test -- --watch",
-    "redis": "redis-server &"
+    "redis": "redis-server"
   },
   "author": "Tom Barrett",
   "license": "ISC",
