@@ -32,6 +32,9 @@ const buildQueryOptions = (query, offset) => {
     options.stringifyOptions = {
         arrayFormat: "brackets"
     };
+    if(offset) {
+        options.qs.offset = offset;
+    }
     return options;
 };
 
@@ -46,13 +49,14 @@ export const fetch = (query, cb) => {
 
         const response = JSON.parse(body);
         events = events.concat(response.results);
+        const pageOffsets = buildOffsets(response.totalcount);
 
-        const callsToMake = buildOffsets(response.totalcount); // check this gives integer
-        if(!callsToMake.length) { return cb(null, events); }
-        // We don't have all the results yet so need to send off more queries
-
-        each(callsToMake, (offset, callback) => {
-            // TODO - debug this function
+        // No offsets so we don't need to fetch more results pages
+        if(!pageOffsets.length) {
+            return cb(null, events);
+        }
+        
+        each(pageOffsets, (offset, callback) => {
             request.get(buildQueryOptions(query, offset), (err, res, body) => {
                 if(err) { return callback(err); }
                 events = events.concat(JSON.parse(body).results);
