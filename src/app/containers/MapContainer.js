@@ -1,12 +1,12 @@
 
 import { connect } from "react-redux";
-import { setMapCenter, setMapZoom, openEvent, closeEvent  } from "../actions";
+import { updateMap, openEvent, closeEvent  } from "../actions";
 import MapComponent from "../components/MapComponent.jsx";
 
 const mapStateToProps = state => {
     // Add in additional map state
     let searchLocation;
-    const { currentSearch, searches, map: { center, zoomLevel, markers } } = state;
+    const { currentSearch, searches, map: { center, zoom, markers } } = state;
 
     if(currentSearch) {
         searchLocation = searches[currentSearch].location;
@@ -15,18 +15,22 @@ const mapStateToProps = state => {
     return {
         markers: markers[currentSearch] || [],
         center,
-        zoomLevel,
+        zoom,
         searchLocation
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setMapCenter: (center) => {
-            dispatch(setMapCenter(center));
+        updateMap: (center, zoom) => {
+            dispatch(updateMap(center, zoom));
         },
-        setMapZoom: (zoomLevel) => {
-            dispatch(setMapZoom(zoomLevel));
+        toggleEvent: (marker) => {
+            if(marker.active) {
+                dispatch(closeEvent(marker.id));
+            } else {
+                dispatch(openEvent(marker.id));
+            }
         },
         openEvent: id => {
             dispatch(openEvent(id));

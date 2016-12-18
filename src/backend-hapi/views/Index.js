@@ -11,6 +11,7 @@ module.exports = (html, preloadedState) => { return `
         <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
         </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0&region=GB"></script>
         <script src="static/scripts/bundle.js"></script>
     </body>
 </html>`;

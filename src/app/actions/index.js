@@ -28,17 +28,10 @@ export function closeEvent(id) {
 
 // ------ Map action creators -------------------
 
-export function setMapCenter(center) {
+export function updateMap(changes) {
     return {
-        type: "SET_MAP_CENTER",
-        center
-    };
-}
-
-export function setMapZoom(zoomLevel) {
-    return {
-        type: "SET_MAP_ZOOM",
-        zoomLevel
+        type: "UPDATE_MAP",
+        changes
     };
 }
 

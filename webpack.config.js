@@ -78,9 +78,9 @@ var config = {
             allChunks: true
         }),
         new webpack.EnvironmentPlugin([
-            'NODE_ENV',
-            'BROWSER']
-        )
+            "NODE_ENV",
+            "BROWSER"
+        ])
     ]
 };
 

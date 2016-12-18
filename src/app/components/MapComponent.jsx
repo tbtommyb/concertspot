@@ -1,56 +1,48 @@
 
 /* Google Maps Component
- *
- * Map centre, zoom and search location are maintained by local state and updated
- * by props from Redux store, allowing state to persist across route changes. Changes
- * are detected by handlers which call actions to update store state, which comes back to
- * component state via props. The current search is also maintained in local
- * state so that the map can detect new search locations and update.
- * Bounding is done after markers have loaded.
  */
 
 import GoogleMap from "google-map-react";
 import React, { Component } from "react";
 import config from "../config.js";
-import ExampleMarker from "./ExampleMarker.jsx";
+import Marker from "./Marker.jsx";
 
 require("../styles/MapContainer.scss");
-var active = require("../images/orange-marker-small.png");
-var inactive = require("../images/blue-marker-small.png");
 
 export default class MapComponent extends Component {
-
-  //shouldComponentUpdate = shouldPureComponentUpdate;
-
     constructor(props) {
         super(props);
-        this.state = {
-            center: this.props.center,
-            zoomLevel: this.props.zoomLevel,
-            location: this.props.searchLocation
-        };
-        this.prepareMarkers = this.prepareMarkers.bind(this);
+        this.setActive = this.setActive.bind(this);
+        this.handleMarkerClick = this.handleMarkerClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
-    prepareMarkers(markers) {
+    componentWillReceiveProps(nextProps) {
+        const { searchLocation } = nextProps;
+        if(searchLocation && searchLocation.query !== this.props.searchLocation.query) {
+            // Re-centre for a new search
+            this.props.updateMap({
+                center: searchLocation.coords,
+                zoom: config.map.zoom
+            });
+        }
+    }
+    handleChange(changes) {
+        return this.props.updateMap(changes);
+    }
+    handleMarkerClick(marker) {
+        return this.props.toggleEvent(marker);
+    }
+    setActive(markers) {
         const { events } = this.props;
         return markers.map(marker => {
             const event = events.find(event => event.id === marker.id);
-            if(event && event.active) {
-                marker.icon = active;
-                marker.zIndex = config.marker.zIndex.max;
-                marker.active = true;
-            } else {
-                marker.icon = inactive;
-                marker.zIndex = config.marker.zIndex.min;
-                marker.active = false;
-            }
+            marker.active = (event && event.active);
             return marker;
         });
     }
     render() {
-        const { center, zoomLevel } = this.state;
-        const preparedMarkers = this.prepareMarkers(this.props.markers);
-        console.log(preparedMarkers);
+        const { center, zoom } = this.props;
+        const preparedMarkers = this.setActive(this.props.markers);
         return (
             <div id="map-outer-container">
                 <GoogleMap
@@ -58,11 +50,18 @@ export default class MapComponent extends Component {
                         key: "AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0",
                         region: "GB"
                     }}
-                    defaultCenter={center}
-                    defaultZoom={zoomLevel}>
+                    onChange={this.handleChange}
+                    center={center}
+                    zoom={zoom}>
                     {preparedMarkers.map(marker => {
-                        console.log(marker);
-                        return <ExampleMarker {...marker.position} text={'A'} />;
+                        return <Marker
+                            {...marker.position}
+                            handleClick={this.handleMarkerClick}
+                            key={marker.id}
+                            id={marker.id}
+                            active={marker.active}
+                            text={"A"}
+                        />;
                     })}
                 </GoogleMap>
             </div>
@@ -72,7 +71,7 @@ export default class MapComponent extends Component {
 
 MapComponent.defaultProps = {
     center: config.map.center,
-    zoomLevel: config.map.zoomLevel,
+    zoom: config.map.zoom,
     searchLocation: {
         query: "initial",
         coords: {}
@@ -87,22 +86,22 @@ export default class MapComponent extends React.Component {
         super(props);
         this.state = {
             center: this.props.center,
-            zoomLevel: this.props.zoomLevel,
+            zoom: this.props.zoom,
             location: this.props.searchLocation
         };
         this.handleZoomChanged = this.handleZoomChanged.bind(this);
         this.handleDragEnded = this.handleDragEnded.bind(this);
         this.handleMarkerClick = this.handleMarkerClick.bind(this);
         this.handleGoogleMapLoad = this.handleGoogleMapLoad.bind(this);
-        this.prepareMarkers = this.prepareMarkers.bind(this);
+        this.setActive = this.setActive.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-        const { center, zoomLevel, searchLocation, markers, googleMapsApi } = nextProps;
+        const { center, zoom, searchLocation, markers, googleMapsApi } = nextProps;
         if(center != this.props.center) {
             this.setState({center});
         }
-        if(zoomLevel !== this.props.zoomLevel) {
-            this.setState({zoomLevel});
+        if(zoom !== this.props.zoom) {
+            this.setState({zoom});
         }
         if(searchLocation && searchLocation.query !== this.state.location.query) {
             // Re-centre for a new search
@@ -135,16 +134,16 @@ export default class MapComponent extends React.Component {
         this.props.setMapCenter(center);
     }
     handleZoomChanged() {
-        const zoomLevel = this._googleMapComponent.getZoom();
-        if(zoomLevel === this.props.zoomLevel) {
+        const zoom = this._googleMapComponent.getZoom();
+        if(zoom === this.props.zoom) {
             return;
         }
-        this.props.setMapZoom(zoomLevel);
+        this.props.setMapZoom(zoom);
     }
     handleGoogleMapLoad(googleMap) {
         this._googleMapComponent = googleMap;
     }
-    prepareMarkers(markers) {
+    setActive(markers) {
         const { events } = this.props;
         return markers.map(marker => {
             const event = events.find(event => event.id === marker.id);
@@ -161,8 +160,8 @@ export default class MapComponent extends React.Component {
         });
     }
     render() {
-        const { center, zoomLevel } = this.state;
-        const preparedMarkers = this.prepareMarkers(this.props.markers);
+        const { center, zoom } = this.state;
+        const preparedMarkers = this.setActive(this.props.markers);
         return (
             <div id="map-outer-container">
                 <GoogleMapLoader
@@ -170,7 +169,7 @@ export default class MapComponent extends React.Component {
                     googleMapElement={
                         <GoogleMap
                             ref={this.handleGoogleMapLoad}
-                            zoom={zoomLevel}
+                            zoom={zoom}
                             center={center}
                             onZoomChanged={this.handleZoomChanged}
                             onDragend={this.handleDragEnded}>
@@ -192,7 +191,7 @@ MapComponent.propTypes = {
     events: PropTypes.array,
     markers: PropTypes.array,
     center: PropTypes.object.isRequired,
-    zoomLevel: PropTypes.number.isRequired,
+    zoom: PropTypes.number.isRequired,
     searchLocation: PropTypes.object.isRequired,
     googleMapsApi: PropTypes.object.isRequired,
     setMapCenter: PropTypes.func.isRequired,
@@ -203,7 +202,7 @@ MapComponent.propTypes = {
 
 MapComponent.defaultProps = {
     center: config.map.center,
-    zoomLevel: config.map.zoomLevel,
+    zoom: config.map.zoom,
     searchLocation: {
         query: "initial",
         coords: {}

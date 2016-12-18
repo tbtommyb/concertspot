@@ -13,7 +13,7 @@ const config = {
             lat: 51.508056,
             lng: -0.128056
         },
-        zoomLevel: 13,
+        zoom: 13,
         markers: []
     },
     marker: {

@@ -17,14 +17,8 @@ export function map(state = { markers: {} }, action) {
             const center = action.search.location.coords;
             return Object.assign({}, state, { center });
         }
-        case "SET_MAP_CENTER": {
-            const center = {lat: action.center.lat(), lng: action.center.lng()};
-            return Object.assign({}, state, { center });
-        }
-        case "SET_MAP_ZOOM": {
-            return Object.assign({}, state, {
-                zoomLevel: action.zoomLevel
-            });
+        case "UPDATE_MAP": {
+            return Object.assign({}, state, action.changes);
         }
         case "FETCH_EVENTS_SUCCESS": {
             return Object.assign({}, state, update(state, {

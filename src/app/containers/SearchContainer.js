@@ -7,10 +7,6 @@ import SplashForm from "../components/SplashComponent.jsx";
 import SearchInputForm from "../components/SearchInputComponent.jsx";
 import config from "../config.js";
 
-if(process.env.BROWSER !== "true") {
-    const google = {};
-}
-
 const getInitialValues = search => {
     if(!search) { return {}; }
     return {
