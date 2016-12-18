@@ -31,12 +31,6 @@ const mapDispatchToProps = (dispatch) => {
             } else {
                 dispatch(openEvent(marker.id));
             }
-        },
-        openEvent: id => {
-            dispatch(openEvent(id));
-        },
-        closeEvent: id => {
-            dispatch(closeEvent(id));
         }
     };
 };
