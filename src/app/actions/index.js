@@ -99,31 +99,21 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// TODO - need to handle errors better. Console gives various errors when no results returned
+// TODO - need to handle errors better. Remove one of these functions.
+// Console gives various errors when no results returned
 function handleErrors(response) {
-    if(response.status === 202) {
-        var error = new Error();
-        error.response = response;
-        throw error;
-    }
-    else if(!response.ok) {
+    if(!response.ok) {
         throw new Error(response.statusText);
     }
     return response;
 }
 
 function catchErrors(error, search, dispatch) {
-    if(!error.response) {
-        if(config.env !== "production") {
-            console.log(error);
-        }
-        return dispatch(fetchEventsFailure(search, error));
+    if(config.env !== "production") {
+        console.log(error);
     }
-    if(error.response.status === 202) {
-        return delay(500).then(() => {
-            return dispatch(checkIfReady(search));
-        });
-    }
+    return dispatch(fetchEventsFailure(search, error));
+
 }
 
 export function fetchEvents(search) {
@@ -151,20 +141,3 @@ export function fetchEvents(search) {
         .catch(error => catchErrors(error, search, dispatch));
     };
 }
-
-export function checkIfReady(search) {
-    return function(dispatch) {
-        dispatch(fetchEventsRequest(search));
-        return fetch(config.url.search, {
-            credentials: "include",
-            headers: {
-                "Access-Control-Allow-Credentials": true
-            }
-        })
-        .then(handleErrors)
-        .then(response => response.json())
-        .then(json => dispatch(fetchEventsSuccess(search, json)))
-        .catch(error => catchErrors(error, search, dispatch));
-    };
-}
-

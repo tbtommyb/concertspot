@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
     const searchCount = Object.keys(searches).length;
     const currentSearchObj = searches[currentSearch] || {};
     const { events } = currentSearchObj;
-
     if(events && events.length) {
         eventList = events.map(id => Object.assign({}, state.events[id]));
     }
