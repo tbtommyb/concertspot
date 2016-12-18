@@ -27,7 +27,6 @@ module.exports = [
         method: "GET",
         path: "/{path*}",
         handler: (request, reply) => {
-            console.log("matched path")
             match(
                 {routes, location: request.url},
                 (err, redirectLocation, renderProps) => {
