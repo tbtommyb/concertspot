@@ -20,7 +20,7 @@ const Main = props => {
             </ReactCSSTransitionsGroup>
             {isFetching ? <Notification loading={true}/> : null}
             <MediaQuery minWidth={640}>
-                <MapContainer events={props.events} googleMapsApi={google.maps}/>
+                <MapContainer events={props.events}/>
             </MediaQuery>
         </div>
     );

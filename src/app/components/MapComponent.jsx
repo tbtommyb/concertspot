@@ -9,12 +9,76 @@
  * Bounding is done after markers have loaded.
  */
 
-import { GoogleMap, GoogleMapLoader, Marker } from "react-google-maps";
-import React, { PropTypes } from "react";
+import GoogleMap from "google-map-react";
+import React, { Component } from "react";
 import config from "../config.js";
+import ExampleMarker from "./ExampleMarker.jsx";
 
 require("../styles/MapContainer.scss");
+var active = require("../images/orange-marker-small.png");
+var inactive = require("../images/blue-marker-small.png");
 
+export default class MapComponent extends Component {
+
+  //shouldComponentUpdate = shouldPureComponentUpdate;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            center: this.props.center,
+            zoomLevel: this.props.zoomLevel,
+            location: this.props.searchLocation
+        };
+        this.prepareMarkers = this.prepareMarkers.bind(this);
+    }
+    prepareMarkers(markers) {
+        const { events } = this.props;
+        return markers.map(marker => {
+            const event = events.find(event => event.id === marker.id);
+            if(event && event.active) {
+                marker.icon = active;
+                marker.zIndex = config.marker.zIndex.max;
+                marker.active = true;
+            } else {
+                marker.icon = inactive;
+                marker.zIndex = config.marker.zIndex.min;
+                marker.active = false;
+            }
+            return marker;
+        });
+    }
+    render() {
+        const { center, zoomLevel } = this.state;
+        const preparedMarkers = this.prepareMarkers(this.props.markers);
+        console.log(preparedMarkers);
+        return (
+            <div id="map-outer-container">
+                <GoogleMap
+                    bootstrapURLKeys={{
+                        key: "AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0",
+                        region: "GB"
+                    }}
+                    defaultCenter={center}
+                    defaultZoom={zoomLevel}>
+                    {preparedMarkers.map(marker => {
+                        console.log(marker);
+                        return <ExampleMarker {...marker.position} text={'A'} />;
+                    })}
+                </GoogleMap>
+            </div>
+        );
+    }
+}
+
+MapComponent.defaultProps = {
+    center: config.map.center,
+    zoomLevel: config.map.zoomLevel,
+    searchLocation: {
+        query: "initial",
+        coords: {}
+    }
+};
+/*
 var active = require("../images/orange-marker-small.png");
 var inactive = require("../images/blue-marker-small.png");
 
@@ -61,9 +125,13 @@ export default class MapComponent extends React.Component {
     }
     handleDragEnded() {
         const center = this._googleMapComponent.getCenter();
-        if (center.equals(new google.maps.LatLng(this.props.center))) {
+        if(center.lat() === this.props.center.lat &&
+            center.lng() === this.props.center.lng) {
             return;
         }
+        //if (center.equals(new google.maps.LatLng(this.props.center))) {
+        //    return;
+        //}
         this.props.setMapCenter(center);
     }
     handleZoomChanged() {
@@ -141,4 +209,4 @@ MapComponent.defaultProps = {
         coords: {}
     }
 };
-
+*/

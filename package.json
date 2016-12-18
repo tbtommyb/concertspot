@@ -33,6 +33,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "font-awesome-webpack": "0.0.4",
+    "google-map-react": "^0.22.0",
     "hapi": "^16.0.1",
     "hapi-react-views": "^9.2.1",
     "html-webpack-plugin": "^2.22.0",
