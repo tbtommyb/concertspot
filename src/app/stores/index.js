@@ -1,4 +1,5 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import { persistStore, autoRehydrate } from "redux-persist";
 import thunk from "redux-thunk";
 import reducers from "../reducers";
 
@@ -6,7 +7,7 @@ export default function(initialState) {
     const store = createStore(
         reducers,
         initialState,
-        applyMiddleware(thunk)
+        compose(autoRehydrate(), applyMiddleware(thunk))
     );
 
     if (module.hot) {
@@ -16,6 +17,8 @@ export default function(initialState) {
             store.replaceReducer(nextReducer);
         });
     }
-
+    persistStore(store, {
+        blacklist: ["splashImage"]
+    });
     return store;
 }
