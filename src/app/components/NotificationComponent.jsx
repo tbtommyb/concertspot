@@ -4,11 +4,11 @@ import React, { PropTypes } from "react";
 require("../styles/Notification.scss");
 
 const Notification = props => {
-    const { message, loading } = props;
+    const { message } = props;
 
     return (
         <div className="notification-wrapper">
-            <div className={loading ? "loader" : "notification"}>
+            <div className={"notification"}>
                 <p>{message}</p>
             </div>
         </div>
