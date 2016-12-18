@@ -28,7 +28,7 @@ var config = {
     ]),
     output: {
         path: BUILD_DIR,
-        publicPath: "/",
+        publicPath: "/static/",
         filename: "scripts/bundle.js"
     },
     devServer: {

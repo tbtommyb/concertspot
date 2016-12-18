@@ -19,7 +19,7 @@ module.exports = {
     ],
     output: {
         path: BUILD_DIR,
-        publicPath: "/",
+        publicPath: "/static/",
         filename: "../server.bundle.js",
         libraryTarget: "commonjs2"
     },

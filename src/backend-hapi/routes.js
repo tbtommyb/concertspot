@@ -14,7 +14,7 @@ import configureStore from "../app/stores";
 module.exports = [
     {
         method: "GET",
-        path: "/{param*}",
+        path: "/static/{param*}",
         handler: {
             directory: {
                 path: __dirname + "/static/",
@@ -25,8 +25,9 @@ module.exports = [
     },
     {
         method: "GET",
-        path: "/",
+        path: "/{path*}",
         handler: (request, reply) => {
+            console.log("matched path")
             match(
                 {routes, location: request.url},
                 (err, redirectLocation, renderProps) => {
@@ -34,6 +35,12 @@ module.exports = [
                     if(redirectLocation) {
                         return reply.redirect(redirectLocation.pathname + redirectLocation.search).statusCode(302);
                     }
+                    if(!renderProps) {
+                        throw new Error("no renderProps");
+                        // TODO better error handling
+                    }
+                    //const components = renderProps.components;
+                    //const Comp = components[components.length - 1].WrappedComponent;
 
                     const store = configureStore({
                         splashImage: config.getRandomSplashImage()
