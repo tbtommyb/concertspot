@@ -1,3 +1,4 @@
+import random from "./scripts/random.js";
 
 const PRODUCTION_PATH = "https://www.concertspot.co.uk";
 const DEV_PATH = "http://localhost:8000";
@@ -74,7 +75,10 @@ const config = {
             url: "https://flic.kr/p/EqqPjq",
             author: "Bruno"
         }
-    ]
+    ],
+    getRandomSplashImage: function() {
+        return this.splashImages[random(this.splashImages.length)];
+    }
 };
 
 export default config;

@@ -4,13 +4,12 @@ import parallel from "async/parallel";
 import { renderToString } from "react-dom/server";
 import { match, RouterContext } from "react-router";
 import routes from "../app/routes.jsx";
-import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import thunkMiddleware from "redux-thunk";
-import reducers from "../app/reducers";
 import makeIndexView from "./views/Index.js";
 import { fetchEvents, getGenresForQuery } from "./tasks";
 import { recommend } from "./events"; // Make into a task?
+import config from "../app/config.js";
+import configureStore from "../app/stores";
 
 module.exports = [
     {
@@ -36,8 +35,9 @@ module.exports = [
                         return reply.redirect(redirectLocation.pathname + redirectLocation.search).statusCode(302);
                     }
 
-                    const initialState = {};
-                    const store = createStore(reducers, initialState, applyMiddleware(thunkMiddleware));
+                    const store = configureStore({
+                        splashImage: config.getRandomSplashImage()
+                    });
 
                     let markup;
                     if(renderProps) {
@@ -49,7 +49,7 @@ module.exports = [
                     } else {
                         reply("Not found").statusCode(404);
                     }
-                    return reply(makeIndexView(markup, initialState));
+                    return reply(makeIndexView(markup, store.getState()));
                 }
             );
         }

@@ -194,5 +194,6 @@ export default combineReducers({
     currentSearch,
     events,
     searches,
-    form: formReducer.plugin(formReducerSpec)
+    form: formReducer.plugin(formReducerSpec),
+    splashImage: (state = {}) => state
 });

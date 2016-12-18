@@ -21,6 +21,7 @@ const getInitialValues = search => {
 const mapStateToProps = state => {
     return {
         initialValues: getInitialValues(state.searches[state.currentSearch]),
+        splashImage: state.splashImage
     };
 };
 
@@ -79,5 +80,5 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export const SplashContainer = connect(undefined, mapDispatchToProps)(SplashForm);
+export const SplashContainer = connect(mapStateToProps, mapDispatchToProps)(SplashForm);
 export const SearchInputContainer = connect(mapStateToProps, mapDispatchToProps)(SearchInputForm);

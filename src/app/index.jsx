@@ -9,7 +9,9 @@ if(process.env.BROWSER === "true") {
     require("style!css!less!font-awesome-webpack/font-awesome-styles.loader!font-awesome-webpack/font-awesome.config.js");
 }
 
-export const store = configureStore();
+const preloadedState = window.__PRELOADED_STATE__;
+
+export const store = configureStore(preloadedState);
 
 render(
     <Provider store={store}>

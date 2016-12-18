@@ -2,20 +2,15 @@
 import React, { PropTypes, Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import config from "../config.js";
-import random from "../scripts/random.js";
 
 require("../styles/Splash.scss");
 
 export class Splash extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            image: config.splashImages[random(config.splashImages.length)]
-        };
     }
     render() {
-        const { handleSubmit } = this.props;
-        const { image } = this.state;
+        const { handleSubmit, splashImage } = this.props;
         return (
             <div className="splash-component container">
                 <div className="cover-message">
@@ -41,8 +36,8 @@ export class Splash extends Component {
                     </div>
                 </div>
                 <div className="cover-img">
-                    <img src={require("../images/"+image.filename)} className="img-bg" alt=""/>
-                    <a className="credit" href={image.url}>{image.author}</a>
+                    <img src={require("../images/"+splashImage.filename)} className="img-bg" alt=""/>
+                    <a className="credit" href={splashImage.url}>{splashImage.author}</a>
                 </div>
             </div>
         );

@@ -1,4 +1,4 @@
-module.exports = (html, preloadedState) => {return `
+module.exports = (html, preloadedState) => { return `
 <!DOCTYPE html>
 <html>
     <head>
