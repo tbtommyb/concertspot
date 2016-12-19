@@ -43,9 +43,9 @@ export function submitSearch(search) {
         const searchWithID = Object.assign({}, search, {
             id: Object.keys(searches).length + 1
         });
-        dispatch(fetchEvents(searchWithID));
         dispatch(addSearch(searchWithID));
         dispatch(setCurrentSearch(searchWithID));
+        dispatch(fetchEvents(searchWithID));
     };
 }
 

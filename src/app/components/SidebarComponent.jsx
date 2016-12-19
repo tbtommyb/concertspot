@@ -20,7 +20,7 @@ const Sidebar = (props) => {
             <SearchNavButtons currentSearch={props.currentSearch} searchCount={props.searchCount}
                               searches={props.searches} setCurrentSearch={props.setCurrentSearch} />
             <SearchInputContainer />
-            <LoadingBar active={isFetching !== false}/>
+            <LoadingBar active={isFetching}/>
             {isError     ? <Notification message={config.messages.error}/> : null}
             {noResults   ? <Notification message={config.messages.noResults}/> : null}
             <EventList events={events} toggleEvent={props.toggleEvent} />
