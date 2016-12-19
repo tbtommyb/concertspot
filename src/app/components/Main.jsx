@@ -10,7 +10,7 @@ const MediaQuery = require("react-responsive");
 const Main = props => {
     return (
         <div>
-            {process.env.BROWSER === "true" ?
+            {process.env.RENDER_ENV === "browser" ?
                 <ReactCSSTransitionsGroup transitionName="sidebar-slide"
                     transitionEnterTimeout={600} transitionLeaveTimeout={600}
                     transitionAppear={true} transitionAppearTimeout={600}>

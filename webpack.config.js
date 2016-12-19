@@ -1,4 +1,3 @@
-
 var path = require("path");
 var webpack = require("webpack");
 var htmlWebpackPlugin = require("html-webpack-plugin");
@@ -9,7 +8,7 @@ require("env2")(__dirname + "/config.env");
 const BUILD_DIR = path.resolve(__dirname, "src/build/static");
 const APP_DIR = path.resolve(__dirname, "src/app");
 
-process.env.BROWSER = true;
+process.env.RENDER_ENV = "browser";
 
 function getEntrySources(sources) {
     if(process.env.NODE_ENV === "serve") {
@@ -79,7 +78,7 @@ var config = {
         }),
         new webpack.EnvironmentPlugin([
             "NODE_ENV",
-            "BROWSER"
+            "RENDER_ENV"
         ])
     ]
 };

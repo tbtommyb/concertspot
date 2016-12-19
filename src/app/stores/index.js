@@ -3,11 +3,15 @@ import { persistStore, autoRehydrate } from "redux-persist";
 import thunk from "redux-thunk";
 import reducers from "../reducers";
 
+const composeEnhancers = (
+    process.env.NODE_ENV !== "production" && process.env.RENDER_ENV === "browser"
+    && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose);
+
 export default function(initialState) {
     const store = createStore(
         reducers,
         initialState,
-        compose(autoRehydrate(), applyMiddleware(thunk))
+        composeEnhancers(autoRehydrate(), applyMiddleware(thunk))
     );
 
     if (module.hot) {

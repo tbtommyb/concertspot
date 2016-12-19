@@ -5,7 +5,7 @@ import { Router, browserHistory } from "react-router";
 import configureStore from "./stores";
 import routes from "./routes.jsx";
 
-if(process.env.BROWSER === "true") {
+if(process.env.RENDER_ENV === "browser") {
     require("style!css!less!font-awesome-webpack/font-awesome-styles.loader!font-awesome-webpack/font-awesome.config.js");
 }
 

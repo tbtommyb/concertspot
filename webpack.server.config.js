@@ -6,7 +6,7 @@ var webpack = require("webpack");
 const BUILD_DIR = path.resolve(__dirname, "src/build/static");
 const SERVER_DIR = path.resolve(__dirname, "src/backend-hapi");
 
-process.env.BROWSER = false;
+process.env.RENDER_ENV = "server";
 
 module.exports = {
     cache: true,
@@ -68,7 +68,7 @@ module.exports = {
         }),
         new webpack.EnvironmentPlugin([
             "NODE_ENV",
-            "BROWSER",
+            "RENDER_ENV",
             "DB_URL",
             "DB_MAX_CONNECTIONS",
             "SK_KEY",
