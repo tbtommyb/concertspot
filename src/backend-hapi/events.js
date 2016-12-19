@@ -20,8 +20,8 @@ const buildQueryOptions = (query, offset) => {
     options.url = process.env.SK_URL;
     options.qs = {
         api_key: process.env.SK_KEY,
-        minDate: mindate,
-        maxDate: maxdate,
+        minDate: moment(mindate).format("YYYY-MM-DD"),
+        maxDate: moment(maxdate).format("YYYY-MM-DD"),
         "eventcodes[]": ["CLUB", "LIVE"], // TODO check this is working with the qsStringifyOptions
         latitude: lat,
         longitude: lng,
@@ -113,6 +113,7 @@ export const createGenreList = (genres) => {
 };
 
 export const extractEventGenres = (event) => {
+    if(!event.genres) { return []; }
     return [].concat(...event.genres.map(genre => genre.name.toLowerCase().split(" ")));
 };
 
@@ -129,6 +130,7 @@ export const weightEvent = (event, genreList) => {
 };
 
 export const recommend = (events, queryGenres) => {
+    if(!events || !queryGenres) { return []; }
     const genreList = createGenreList(queryGenres);
     return events
         .map(event => weightEvent(event, genreList))

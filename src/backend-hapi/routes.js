@@ -67,11 +67,11 @@ module.exports = [
             validate: {
                 payload: {
                     query: Joi.string().required(),
-                    mindate: Joi.string().required(),
-                    maxdate: Joi.string().required(),
-                    lat: Joi.number().required(),
-                    lng: Joi.number().required(),
-                    radius: Joi.number().required()
+                    mindate: Joi.date().required(),
+                    maxdate: Joi.date().required(),
+                    lat: Joi.number().min(-90.0).max(90.0).required(),
+                    lng: Joi.number().min(-180.0).max(180.0).required(),
+                    radius: Joi.number().min(1.0).max(9.0).required()
                 }
             }
         },
@@ -90,7 +90,7 @@ module.exports = [
                     });
                 }
             }, (err, results) => {
-                if(err) { return reply(err); }
+                if(err) { console.log(err); return reply(err).statusCode(500); }
                 return reply({events: recommend(results.events, results.genres)});
             });
         }
