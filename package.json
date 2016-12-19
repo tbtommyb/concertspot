@@ -17,10 +17,11 @@
     "push-frontend": "rsync -ravzP -delete /Users/thomasbarrett/coding/concertspot/src/client/static -e 'ssh -i /Users/thomasbarrett/coding/aws/ireland-key-pair.pem' ubuntu@52.17.9.164:/home/ubuntu/concertspot",
     "push": "npm run push-backend && npm run push-frontend && npm run restart",
     "build:push": "npm run build && npm run push",
-    "test-backend": "mocha tests/server --compilers js:babel-register --recursive --require ignore-styles",
+    "test-backend": "mocha tests/server/mocha --compilers js:babel-register --recursive --require ignore-styles",
     "test-frontend": "istanbul cover _mocha -- tests/client --compilers js:babel-register --recursive --require ignore-styles tests/client/dom-setup.js",
     "test": "npm run test-backend && npm run test-frontend",
     "test:watch": "npm test -- --watch",
+    "test-mocha": "mocha-webpack --webpack-config webpack.test.config.babel.js --colors \"tests/server/webpack/**/*.test.js\"",
     "redis": "redis-server"
   },
   "author": "Tom Barrett",
@@ -91,6 +92,7 @@
     "jsdom": "^9.4.1",
     "less-loader": "^2.2.3",
     "mocha": "^2.5.3",
+    "mocha-webpack": "^0.7.0",
     "nock": "^8.0.0",
     "npm-run-all": "^3.1.2",
     "raw-loader": "^0.5.1",
@@ -98,6 +100,7 @@
     "react-widgets-webpack": "^0.1.0",
     "redux-mock-store": "^1.1.2",
     "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-node-externals": "^1.5.4"
   }
 }

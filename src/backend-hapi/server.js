@@ -21,3 +21,5 @@ server.register([Inert, Vision, injectThen], err => {
 });
 
 export default server;
+
+module.exports = server;

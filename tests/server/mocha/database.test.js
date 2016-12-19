@@ -1,12 +1,11 @@
-import { getGenres, getGenresForArtist } from "../../src/backend-hapi/db";
+import { getGenreList, getGenresForArtist } from "../../../src/backend-hapi/db";
 import expect from "expect";
 
 describe("Querying the database", () => {
 
     it("should return a list of genres", (done) => {
-        getGenres((err, rows) => {
+        getGenreList((err, rows) => {
             expect(rows.length).toExist();
-            expect(rows[0]).toIncludeKey("name");
             done();
         });
     });
