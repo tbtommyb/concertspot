@@ -4,6 +4,7 @@ import React from "react";
 import { SearchInputContainer } from "../containers/SearchContainer";
 import SearchNavButtons from "./SearchNavButtonsComponent.jsx";
 import LoadingBar from "./LoadingBar.jsx";
+import Notification from "./NotificationComponent.jsx";
 import EventList from "./EventListComponent.jsx";
 import config from "../config.js";
 
