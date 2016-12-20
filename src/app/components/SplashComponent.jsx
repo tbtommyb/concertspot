@@ -10,7 +10,11 @@ export class Splash extends Component {
         super(props);
     }
     render() {
-        const { handleSubmit, splashImage } = this.props;
+        let { handleSubmit, splashImage } = this.props;
+        // Default for testing where splashImage isn't provided as prop
+        if(!splashImage) {
+            splashImage = config.splashImages[0];
+        }
         return (
             <div className="splash-component container">
                 <div className="cover-message">
