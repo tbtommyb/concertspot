@@ -1,11 +1,11 @@
-
 var webpack = require("webpack");
-var config = require("./webpack.config.js");
+var browserConfig = require("./webpack.browser.config.js");
 
-//require("env2")(__dirname + "/config.env");
+var config = {
+    devtool: "source-map",
+};
 
-config.devtool = "source-map";
-config.plugins.push(
+var productionPlugins = [
     new webpack.DefinePlugin({
         "process.env": {
             "NODE_ENV": JSON.stringify("production")
@@ -17,6 +17,9 @@ config.plugins.push(
             warnings: true
         }
     })
-);
+];
 
-module.exports = config;
+var productionConfig = Object.assign({}, browserConfig, config);
+productionConfig.plugins.push(...productionPlugins);
+
+module.exports = productionConfig;
