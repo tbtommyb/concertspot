@@ -90,24 +90,6 @@ export function fetchEventsFailure(search, error) {
 
 // ------ Event fetching middleware -------------
 
-/* POST information to server and then check if it is ready with a GET request.
- * Server will respond 202 if the response is not ready yet. Query term is kept
- * in session by server.
- */
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// TODO - need to handle errors better. Remove one of these functions.
-// Console gives various errors when no results returned
-function handleErrors(response) {
-    if(!response.ok) {
-        throw new Error(response.statusText);
-    }
-    return response;
-}
-
 function catchErrors(error, search, dispatch) {
     if(config.env !== "production") {
         console.log(error);
@@ -135,7 +117,6 @@ export function fetchEvents(search) {
                 maxdate: moment(search.maxDate).format("YYYY-MM-DD")
             })
         })
-        .then(handleErrors)
         .then(response => response.json())
         .then(json => dispatch(fetchEventsSuccess(search, json)))
         .catch(error => catchErrors(error, search, dispatch));

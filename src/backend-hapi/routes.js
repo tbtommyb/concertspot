@@ -8,7 +8,7 @@ import routes from "../app/routes.jsx";
 import { Provider } from "react-redux";
 import makeIndexView from "./views/Index.js";
 import { fetchEvents, getGenresForQuery } from "./tasks";
-import { recommend } from "./events"; // Make into a task?
+import { recommend } from "./events";
 import config from "../app/config.js";
 import configureStore from "../app/stores";
 
@@ -39,8 +39,6 @@ module.exports = [
                         throw new Error("no renderProps");
                         // TODO better error handling
                     }
-                    //const components = renderProps.components;
-                    //const Comp = components[components.length - 1].WrappedComponent;
 
                     const store = configureStore({
                         splashImage: config.getRandomSplashImage()
@@ -91,7 +89,7 @@ module.exports = [
                     });
                 }
             }, (err, results) => {
-                if(err) { console.log(err); return reply(err).statusCode(500); }
+                if(err) { return reply(err).statusCode(500); }
                 return reply({events: recommend(results.events, results.genres)});
             });
         }

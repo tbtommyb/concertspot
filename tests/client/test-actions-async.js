@@ -61,15 +61,15 @@ describe("Fetching events", () => {
             .post("/api/search")
             .reply(400, "Bad Request");
 
-        const expectedActions = [
-            {type: "FETCH_EVENTS_REQUEST", search},
-            {type: "FETCH_EVENTS_FAILURE", search, error: new Error}
-        ];
         const store = mockStore({ search: {}, events: {} });
 
         return store.dispatch(actions.fetchEvents(search))
             .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
+                const actions = store.getActions();
+                expect(actions[0].type).toEqual("FETCH_EVENTS_REQUEST");
+                expect(actions[0]).toIncludeKeys(["type", "search"]);
+                expect(actions[1].type).toEqual("FETCH_EVENTS_FAILURE");
+                expect(actions[1]).toIncludeKeys(["type", "search", "error"]);
             });
     });
 

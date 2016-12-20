@@ -85,7 +85,6 @@ export const filter = event => {
         "title": "eventname",
         "venue": "venue"
     };
-    // TODO - find neater way of doing this
     const filteredEvent = {};
     Object.keys(keys).forEach(key => {
         filteredEvent[key] = event[keys[key]];
@@ -132,4 +131,3 @@ export const recommend = (events, queryGenres) => {
         .filter(event => event.weighting >= 0.5)
         .sort((a, b) => b.weighting - a.weighting);
 };
-

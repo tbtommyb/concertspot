@@ -1,5 +1,3 @@
-/* TODO - for some reason isFetching is not being set to true
- * when a search is initiated but is instead undefined. */
 import React from "react";
 import { SearchInputContainer } from "../containers/SearchContainer";
 import SearchNavButtons from "./SearchNavButtonsComponent.jsx";

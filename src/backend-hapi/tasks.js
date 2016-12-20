@@ -48,7 +48,7 @@ export const getGenresForQuery = (query, cb) => {
         getGenresForArtist(query, (err, genres) => {
             if(err) { return cb(err); }
             if(genres.length) {
-                // Query is a matching artist
+                // Matched - query is an artist
                 cache.add(queryGenreId, genres);
                 return cb(null, genres);
             }
