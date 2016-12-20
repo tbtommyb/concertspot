@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi";
 import parallel from "async/parallel";
+import moment from "moment";
 import { renderToString } from "react-dom/server";
 import { match, RouterContext } from "react-router";
 import routes from "../app/routes.jsx";
@@ -67,8 +68,8 @@ module.exports = [
             validate: {
                 payload: {
                     query: Joi.string().required(),
-                    mindate: Joi.date().required(),
-                    maxdate: Joi.date().required(),
+                    mindate: Joi.date().min(moment().format("YYYY-MM-DD")).required(),
+                    maxdate: Joi.date().min(Joi.ref("mindate")).required(),
                     lat: Joi.number().min(-90.0).max(90.0).required(),
                     lng: Joi.number().min(-180.0).max(180.0).required(),
                     radius: Joi.number().min(1.0).max(9.0).required()
