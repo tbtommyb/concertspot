@@ -1,4 +1,4 @@
-import conn from "./db_connection";
+import conn from "./connection";
 
 export const getGenreList = (cb) => {
     conn.query(`SELECT DISTINCT genres.name
