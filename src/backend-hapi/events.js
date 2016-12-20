@@ -98,18 +98,13 @@ export const filter = event => {
     return filteredEvent;
 };
 
-// TODO simplify - could use concat and map
 export const createGenreList = (genres) => {
-    const genresSplitNames = [];
-    genres.forEach(genre => {
-        genre.name.split(" ").forEach(word => {
-            genresSplitNames.push({
-                name: word,
-                weighting: genre.weighting
-            });
-        });
-    });
-    return genresSplitNames;
+    return genres.reduce((list, genre) => {
+        return list.concat(genre.name.split(" ").map(word => ({
+            name: word,
+            weighting: genre.weighting
+        })));
+    }, []);
 };
 
 export const extractEventGenres = (event) => {
