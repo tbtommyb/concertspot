@@ -1,7 +1,7 @@
 import expect from "expect";
 import React from "react";
 import { shallow } from "enzyme";
-import SearchNavButtons from "../../src/client/app/components/SearchNavButtonsComponent";
+import SearchNavButtons from "../../src/app/components/SearchNavButtonsComponent";
 
 function setup(currentSearch, searchCount) {
     const props = {

@@ -1,6 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import * as actions from "../../src/client/app/actions";
+import * as actions from "../../src/app/actions";
 import nock from "nock";
 import moment from "moment";
 import expect from "expect";
