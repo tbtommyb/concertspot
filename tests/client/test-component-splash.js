@@ -1,7 +1,7 @@
 import expect from "expect";
 import React from "react";
 import { shallow } from "enzyme";
-import { Splash } from "../../src/app/components/SplashComponent";
+import { Splash } from "../../src/app/components/SplashComponent.jsx";
 
 function setup() {
     const props = {

@@ -15,16 +15,16 @@ describe("Submitting a new search", () => {
     });
 
     it("should correctly dispatch actions", () => {
-        nock("http://localhost:8080")
-            .post("/api/search")
-            .reply(200, { events });
+        nock("http://localhost:8000")
+           .post("/api/search")
+           .reply(200, { events });
 
         const store = mockStore({ searches: [] });
         const searchWithID = Object.assign({}, search, {id: 1});
         const expectedActions = [
-            { type: "FETCH_EVENTS_REQUEST", search: searchWithID },
             { type: "ADD_SEARCH", search: searchWithID },
-            { type: "SET_CURRENT_SEARCH", search: searchWithID }
+            { type: "SET_CURRENT_SEARCH", search: searchWithID },
+            { type: "FETCH_EVENTS_REQUEST", search: searchWithID }
         ];
 
         store.dispatch(actions.submitSearch(search));
@@ -38,15 +38,12 @@ describe("Fetching events", () => {
     });
 
     it("successfully handles normal case", () => {
-        nock("http://localhost:8080")
-            .persist()
+        nock("http://localhost:8000")
+            //.persist()
             .post("/api/search")
-            .reply(202)
-            .get("/api/search")
             .reply(200, { events });
 
         const expectedActions = [
-            {type: "FETCH_EVENTS_REQUEST", search},
             {type: "FETCH_EVENTS_REQUEST", search},
             {type: "FETCH_EVENTS_SUCCESS", search, events}
         ];
@@ -59,7 +56,7 @@ describe("Fetching events", () => {
     });
 
     it("creates FETCH_EVENTS_FAILURE when no results are returned", () => {
-        nock("http://localhost:8080")
+        nock("http://localhost:8000")
             .persist()
             .post("/api/search")
             .reply(400, "Bad Request");

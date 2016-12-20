@@ -46,21 +46,30 @@ describe("Actions", () => {
     // Map action creators
 
     it("should create an action to set the map centre", () => {
-        const center = { lat: -50, lng: -0.1 };
-        const expectedAction = {
-            type: "SET_MAP_CENTER",
-            center
+        const changes = {
+            center: {
+                lat: -50,
+                lng: -0.1
+            }
         };
-        expect(actions.setMapCenter(center)).toEqual(expectedAction);
+        const expectedAction = {
+            type: "UPDATE_MAP",
+            changes
+        };
+        expect(actions.updateMap(changes)).toEqual(expectedAction);
     });
 
     it("should create an action to set the map zoom level", () => {
-        const zoomLevel = 8;
-        const expectedAction = {
-            type: "SET_MAP_ZOOM",
-            zoomLevel
+        const changes = {
+            center: {
+                zoom: 8
+            }
         };
-        expect(actions.setMapZoom(zoomLevel)).toEqual(expectedAction);
+        const expectedAction = {
+            type: "UPDATE_MAP",
+            changes
+        };
+        expect(actions.updateMap(changes)).toEqual(expectedAction);
     });
 
     // Search action creators (sync)
