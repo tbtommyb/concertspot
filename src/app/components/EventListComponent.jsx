@@ -27,7 +27,7 @@ class EventList extends Component {
     render() {
         const { events } = this.props;
         return (
-            <div className="list events" ref="eventlist">
+            <div className="results-list" ref="eventlist">
                 <ul>
                     <ReactCSSTransitionsGroup transitionName="add-event" transitionEnterTimeout={300}
                                               transitionLeaveTimeout={300}>

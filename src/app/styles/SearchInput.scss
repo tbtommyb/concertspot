@@ -1,28 +1,24 @@
-
 @import "variables";
 @import "responsive";
 
-.search-input {
-  border-radius: 0 $curve $curve 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  font-size: $input-font-size;
-  margin: 0;
-  padding: 0 .2em 1.2em;
-  width: 100%;
+.search.l-splash.is-collapsed {
+  button,
+  input {
+    background-color: $splash-input-background;
+    color: $font-base;
+    font-size: 1em;
 
-  @include mobile {
-    padding: 0 0 .5em;
+    @include mobile {
+      margin: .8em auto;
+    }
   }
 
-  form {
-    margin: 0 auto;
-    width: 100%;
+  button {
+    font-size: .8em;
   }
 }
 
-.inputs-wrapper {
+.search-inputs-wrapper {
   align-items: flex-start;
   display: flex;
   justify-content: space-around;
@@ -32,59 +28,15 @@
     margin: 0 auto;
     width: 98%;
   }
-
-  > input,
-  & > button {
-    font-size: 1.2em;
-    margin: .2em;
-  }
-
-  > input {
-    background-color: $input-background;
-    display: inline-block;
-    margin-top: auto;
-    max-width: 30%;
-    outline: none;
-    padding: 0 .2em;
-
-    &[type="text"] {
-      height: 1.9em;
-    }
-  }
-
-  > button {
-    padding: .4em 1.8em;
-
-    @include mobile {
-      margin: 0 .2em;
-    }
-
-    @include tablet {
-      max-width: 30%;
-    }
-  }
 }
 
-.datepicker-wrapper {
-  width: 33%;
-
-}
-
-.validation-message {
-  color: $warning;
-  display: inline-block;
-}
-
-.num-input {
-  width: 6em;
-
-  @include tablet {
-    width: 5em;
-  }
-}
-
-.input-label {
+.search-input-label {
   display: inline;
   font-size: 1em;
   margin: .4em .2em .2em;
+}
+
+.search-validation-message {
+  color: $warning;
+  display: inline-block;
 }

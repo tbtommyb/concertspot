@@ -1,13 +1,7 @@
-
-/* Google Maps Component
- */
-
 import GoogleMap from "google-map-react";
 import React, { Component, PropTypes } from "react";
 import config from "../config.js";
 import Marker from "./Marker.jsx";
-
-require("../styles/MapContainer.scss");
 
 export default class MapComponent extends Component {
     constructor(props) {
@@ -51,7 +45,7 @@ export default class MapComponent extends Component {
         const { center, zoom } = this.props;
         const activatedMarkers = this.setActive(this.props.markers);
         return (
-            <div id="map-outer-container">
+            <div className="l-fullscreen">
                 <GoogleMap
                     bootstrapURLKeys={{
                         key: "AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0",

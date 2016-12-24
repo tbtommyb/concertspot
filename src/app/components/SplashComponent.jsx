@@ -16,13 +16,11 @@ export class Splash extends Component {
             splashImage = config.splashImages[0];
         }
         return (
-            <div className="splash-component container">
-                <div className="cover-message">
-                    <div>
-                        <h1>{config.splash.heading}</h1>
-                        <p>{config.splash.message}</p>
-                    </div>
-                    <div>
+            <div className="l-contained">
+                <div className="splash">
+                    <h1 className="splash-heading">{config.splash.heading}</h1>
+                    <p className="splash-message">{config.splash.message}</p>
+                    <div className="search l-splash is-collapsed">
                         <form onSubmit={handleSubmit(this.props.submitSearch)} id="splash-form">
                             <Field name="query"
                                 component="input"
@@ -39,7 +37,7 @@ export class Splash extends Component {
                         </form>
                     </div>
                 </div>
-                <div className="cover-img">
+                <div className="splash-img">
                     <img src={require("../images/"+splashImage.filename)} className="img-bg" alt=""/>
                     <a className="credit" href={splashImage.url}>{splashImage.author}</a>
                 </div>

@@ -6,7 +6,7 @@ import Notification from "./NotificationComponent.jsx";
 import EventList from "./EventListComponent.jsx";
 import config from "../config.js";
 
-require("../styles/Sidebar.scss");
+require("../styles/Results.scss");
 
 const Sidebar = (props) => {
     const { events, currentSearchObj } = props;
@@ -14,7 +14,7 @@ const Sidebar = (props) => {
     const noResults = (isError === false && isFetching === false && !events.length);
 
     return (
-        <section className="sidebar">
+        <section id="results" className="l-sidebar">
             <SearchNavButtons currentSearch={props.currentSearch} searchCount={props.searchCount}
                               searches={props.searches} setCurrentSearch={props.setCurrentSearch} />
             <SearchInputContainer />

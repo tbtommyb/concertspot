@@ -4,7 +4,7 @@ module.exports = (html, preloadedState) => { return `
     <head>
         <title>ConcertSpot | Find the perfect gig</title>
         <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
-        <link href="static/styles/initial-render.css" rel="stylesheet">
+        <link href="static/styles/style.css" rel="stylesheet">
     </head>
     <body>
         <div id="app">${html}</div>

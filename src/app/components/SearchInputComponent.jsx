@@ -13,12 +13,12 @@ require("../styles/SearchInput.scss");
 // Needed to work with redux-form
 const renderDateTimePicker = props => {
     const { input, label, meta: { error, dirty } } = props;
-    const classes = "validation-message" + (dirty && error ? "" : " hidden");
+    const validationClass = "search-validation-message" + (dirty && error ? "" : " hidden");
     return (
-        <div className="datepicker-wrapper">
-            <label className="input-label">{label}</label>
+        <div>
+            <label className="search-input-label">{label}</label>
             <DateTimePicker {...input} {...props} format={"D MMM"} />
-            <span className={classes}>{config.messages.validation}</span>
+            <span className={validationClass}>{config.messages.validation}</span>
         </div>
     );
 };
@@ -27,7 +27,7 @@ const renderNumberPicker = props => {
     const { input, label } = props;
     return (
         <div>
-            <label className="input-label">{label}</label>
+            <label className="search-input-label">{label}</label>
             <NumberPicker {...input} {...props} />
         </div>
     );
@@ -58,9 +58,9 @@ export class SearchInput extends Component {
     render() {
         const { handleSubmit, invalid } = this.props;
         return (
-            <div className="search-input">
+            <div className="search l-sidebar">
                 <form onSubmit={handleSubmit(this.props.submitSearch)}>
-                    <div className="inputs-wrapper">
+                    <div className="search-inputs-wrapper">
                         <Field name="query"
                             component="input"
                             type="text"
@@ -73,7 +73,7 @@ export class SearchInput extends Component {
                             placeholder={config.placeholder.location}/>
                         <button ref="submit" disabled={invalid} type="submit">Submit</button>
                     </div>
-                    <div className="inputs-wrapper">
+                    <div className="search-inputs-wrapper">
                         <Field
                             name="minDate"
                             aria-labelledby="min_date"
@@ -97,8 +97,7 @@ export class SearchInput extends Component {
                             min={1}
                             max={9}
                             onBlur={null}
-                            label="radius"
-                            className="num-input"/>
+                            label="radius"/>
                     </div>
                 </form>
             </div>

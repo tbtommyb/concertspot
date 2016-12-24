@@ -36,7 +36,7 @@ module.exports = [
                         return reply.redirect(redirectLocation.pathname + redirectLocation.search).statusCode(302);
                     }
                     if(!renderProps) {
-                        throw new Error("no renderProps");
+                        return reply("no renderProps");
                         // TODO better error handling
                     }
 

@@ -1,4 +1,3 @@
-
 @import "variables";
 
 * {
@@ -6,7 +5,6 @@
   margin: 0;
   padding: 0;
 }
-
 
 // Stop mobile browsers auto-zooming fonts
 html {
@@ -58,14 +56,23 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style-type: none;
+}
+
 // Reset button appearance
 button {
-  background: none;
+  background-color: $input-background;
+  border: .05em $input-border solid;
+  color: $font-base;
   cursor: pointer;
-  font: inherit;
-  -webkit-font-smoothing: inherit;
-  letter-spacing: inherit;
-  overflow: visible;
+
+  &:focus,
+  &:hover {
+    background-color: $highlight-color !important;
+    color: $font-base !important;
+    outline: none;
+  }
 }
 
 // Get rid of Firefox button bug
@@ -82,3 +89,51 @@ img {
   border: 0;
   height: auto;
 }
+
+.is-hidden {
+  visibility: hidden;
+}
+
+.screen-reader {
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  top: -1000px;
+  width: 1px;
+}
+
+.no-display {
+  display: none !important;
+}
+
+[type="text"] {
+  background-color: $input-background;
+  border: 0;
+  border-bottom: .05em $input-border solid;
+  color: $font-base;
+  font-weight: 200;
+  outline: none;
+
+  @include mobile {
+    font-weight: 400;
+  }
+
+  &::selection {
+    background: $highlight-color;
+  }
+}
+
+.table {
+  display: table-row-group;
+}
+
+.table-row {
+  display: table-row;
+  vertical-align: middle;
+}
+
+.table-cell {
+  display: table-cell;
+  text-align: center;
+}
+

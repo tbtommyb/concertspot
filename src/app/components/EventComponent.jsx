@@ -31,15 +31,15 @@ class Event extends Component {
             onClick: this._handleToggle,
             onKeyDown: this._handleToggle,
             key: id,
-            className: active ? "active event-component" : "event-component",
+            className: active ? "results-item is-active" : "results-item",
             role: "option"
         };
         return (
             <li {...listProps}>
-                <h1 title="title" dangerouslySetInnerHTML={dangerTitle}></h1>
-                <div className="event-wrapper">
+                <h1 className="item-title" dangerouslySetInnerHTML={dangerTitle}></h1>
+                <div className="item-details-wrapper">
                     <EventDetailList event={event} />
-                    <div className="tickets">
+                    <div className="item-ticket-btn">
                         <a target="_blank" rel="noreferrer noopener" href={link}>Tickets <span className="fa fa-chevron-right" aria-hidden="true"></span></a>
                     </div>
                     <EventDescription event={event} dangerDescription={dangerText} />

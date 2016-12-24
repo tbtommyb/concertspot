@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router";
 
@@ -7,12 +6,12 @@ require("../styles/NavBar.scss");
 const NavBar = props => {
     return (
         <nav>
-            <ul className="nav-bar">
-                <li className="sub-nav">
+            <ul>
+                <li className="subnav left">
                     <ul>
-                        <li><Link to={"/"} className="logo">ConcertSpot</Link></li>
-                        <li><Link to={"/events"}>events</Link></li>
-                        <li><Link to={"/contact"}>contact</Link></li>
+                        <li className="subnav-item"><Link to={"/"} className="logo">ConcertSpot</Link></li>
+                        <li className="subnav-item"><Link to={"/events"}>events</Link></li>
+                        <li className="subnav-item"><Link to={"/contact"}>contact</Link></li>
                     </ul>
                 </li>
             </ul>

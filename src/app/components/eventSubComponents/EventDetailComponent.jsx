@@ -5,10 +5,10 @@ const EventDetail = props => {
     const { type, content, icon } = props;
 
     return (
-        <div>
+        <div className="table">
             <span className="screen-reader">{type}</span>
-            <p className="detail">
-                <span className={"fa " + icon} aria-hidden="true"></span>
+            <p className="table-row">
+                <span className={"table-cell fa " + icon} aria-hidden="true"></span>
                     {"\u00a0" + content}
             </p>
         </div>

@@ -1,8 +1,7 @@
-
 @import "variables";
 @import "responsive";
 
-.event-component {
+.results-item {
   background-color: $pale-background;
   box-sizing: border-box;
   color: $background-base;
@@ -13,15 +12,7 @@
   text-align: left;
   width: 100%;
 
-  h1 {
-    color: $background-base;
-    font-size: 1em;
-    font-weight: bold;
-    text-align: left;
-  }
-
-  &:hover,
-  &:active {
+  &:hover {
     background-color: $text-box-background;
   }
 
@@ -39,33 +30,30 @@
   }
 }
 
-.event-wrapper {
+.results-item.is-active {
+  background-color: $text-box-background;
+}
+
+.item-title {
+  color: $background-base;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+}
+
+.item-details-wrapper {
   display: inline;
   width: 60%;
 }
 
-.details-list {
+.item-details-list {
   border-collapse: separate;
   border-spacing: .25em;
   float: left;
   max-width: 70%;
-
-  div {
-    display: table-row-group;
-  }
-
-  .detail {
-    display: table-row;
-    vertical-align: middle;
-
-    .fa {
-      display: table-cell;
-      text-align: center;
-    }
-  }
 }
 
-.tickets {
+.item-ticket-btn {
   float: right;
   margin: 1.2em 1em 1em;
   max-width: 30%;
@@ -86,29 +74,29 @@
   }
 }
 
-.description {
+.item-description {
   float: left;
   height: 0;
   overflow: hidden;
   width: 100%;
+}
 
-  img {
-    float: right;
-    height: 40%;
-    margin: 0 5px 0 0;
-    width: 40%;
-  }
+.item-description.is-active {
+  height: auto;
+}
 
-  .genres {
-    font-size: .8em;
-    margin: .1em;
-  }
+.item-description-text {
+  margin-top: .4em;
+}
 
-  p {
-    margin-top: .4em;
-  }
+.item-img {
+  float: right;
+  height: 40%;
+  margin: 0 5px 0 0;
+  width: 40%;
+}
 
-  &.active {
-    height: auto;
-  }
+.item-genres {
+  font-size: .8em;
+  margin: .1em;
 }

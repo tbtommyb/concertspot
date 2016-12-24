@@ -1,18 +1,18 @@
-
+// TOOD img and genres should be in different component
 import React, { PropTypes } from "react";
 
 const EventDescription = props => {
     const { event: {active, largeimageurl, genres}, dangerDescription } = props;
 
     return (
-        <div className={active ? "active description" : "description"}>
-            <img src={largeimageurl} alt=""/>
+        <div className={active ? "item-description is-active" : "item-description"}>
+            <img className="item-img" src={largeimageurl} alt=""/>
             <span className="screen-reader">genres</span>
-            <span className="genres">
+            <span className="item-genres">
                 <i>{genres.map(genre => genre.name.toLowerCase() + " ")}</i>
             </span>
             <span className="screen-reader">description</span>
-            <p dangerouslySetInnerHTML={dangerDescription}></p>
+            <p className="item-description-text" dangerouslySetInnerHTML={dangerDescription}></p>
         </div>
     );
 };

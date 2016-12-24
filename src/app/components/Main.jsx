@@ -1,6 +1,6 @@
 // Only render sidebar in client to avoid FOUC from Font Awesome
 import React, { PropTypes } from "react";
-import Sidebar from "./SidebarComponent.jsx";
+import Results from "./ResultsComponent.jsx";
 import MapContainer from "../containers/MapContainer";
 import ReactCSSTransitionsGroup from "react-addons-css-transition-group";
 
@@ -14,7 +14,7 @@ const Main = props => {
                 <ReactCSSTransitionsGroup transitionName="sidebar-slide"
                     transitionEnterTimeout={600} transitionLeaveTimeout={600}
                     transitionAppear={true} transitionAppearTimeout={600}>
-                    <Sidebar {...props} />
+                    <Results {...props} />
                 </ReactCSSTransitionsGroup>
                 : null
             }
