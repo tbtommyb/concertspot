@@ -18,7 +18,22 @@
   }
 }
 
-.search-inputs-wrapper {
+.search-btn {
+  position: absolute;
+  font-size: 1.3em
+}
+
+.search-btn.right {
+  right: 2em;
+  top: 6em;
+}
+
+.search-btn.left {
+  left: 2em;
+  top: 6em;
+}
+
+.search-details-wrapper {
   align-items: flex-start;
   display: flex;
   justify-content: space-around;
@@ -39,4 +54,25 @@
 .search-validation-message {
   color: $warning;
   display: inline-block;
+}
+
+// TODO - animate this change
+.search.l-sidebar {
+  min-height: 9em;
+  .search-details-wrapper {
+    display: inline-block;
+  }
+}
+.search.l-sidebar.is-collapsed {
+  .search-details-wrapper {
+    display: none;
+  }
+}
+
+.search-details-wrapper {
+  padding-top: 3em;
+  div {
+    width: 30%;
+    display: inline-block
+  }
 }

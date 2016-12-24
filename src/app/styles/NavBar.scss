@@ -21,6 +21,10 @@ nav {
   }
 }
 
+.subnav {
+  height: inherit;
+}
+
 .subnav ul {
   height: inherit;
 
@@ -29,7 +33,7 @@ nav {
     display: flex;
     float: none;
     justify-content: space-between;
-    padding: .4em;
+    padding: 0;
   }
 
   @include tablet {
@@ -40,6 +44,10 @@ nav {
 
 .subnav.left ul {
   float: left;
+
+  @include mobile {
+    float: none;
+  }
 }
 
 .subnav.right ul {

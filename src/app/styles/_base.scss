@@ -66,6 +66,8 @@ button {
   border: .05em $input-border solid;
   color: $font-base;
   cursor: pointer;
+  font-size: 1em;
+  padding: .2em;
 
   &:focus,
   &:hover {
@@ -90,6 +92,15 @@ img {
   height: auto;
 }
 
+.centered {
+  margin: auto;
+  text-align: center;
+}
+
+.whole-row {
+  clear: both;
+}
+
 .is-hidden {
   visibility: hidden;
 }
@@ -111,8 +122,11 @@ img {
   border: 0;
   border-bottom: .05em $input-border solid;
   color: $font-base;
+  font-size: 1.2em;
   font-weight: 200;
   outline: none;
+  padding: .4em;
+  width: 80%;
 
   @include mobile {
     font-weight: 400;
