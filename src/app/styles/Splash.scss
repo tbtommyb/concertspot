@@ -4,7 +4,7 @@
 .splash {
   color: $font-base;
   font-size: 1.6em;
-  margin: 4em;
+  margin: 4em auto;
   overflow: hidden;
   position: absolute;
   text-align: center;
@@ -42,7 +42,7 @@
   }
 
   .img-bg {
-    max-width: 1080px;
+    max-width: 1024px;
 
     @include mobile {
       width: inherit;
@@ -51,7 +51,7 @@
 }
 
 .splash-heading {
-  font-size: 3.5em;
+  font-size: 2.5em;
   margin: .6em;
 
   @include mobile {

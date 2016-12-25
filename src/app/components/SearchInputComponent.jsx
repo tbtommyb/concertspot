@@ -11,11 +11,11 @@ import config from "../config.js";
 require("../styles/SearchInput.scss");
 
 // Needed to work with redux-form
-const renderDateTimePicker = props => {
+const RenderDateTimePicker = props => {
     const { input, label, meta: { error, dirty } } = props;
     const validationClass = "search-validation-message" + (dirty && error ? "" : " is-hidden");
     return (
-        <div>
+        <div className="search-details-item whole-row">
             <label className="search-input-label">{label}</label>
             <DateTimePicker {...input} {...props} format={"D MMM"} />
             <span className={validationClass}>{config.messages.validation}</span>
@@ -23,12 +23,12 @@ const renderDateTimePicker = props => {
     );
 };
 
-const renderNumberPicker = props => {
+const RenderRange = props => {
     const { input, label } = props;
     return (
-        <div>
+        <div className="search-details-item whole-row">
             <label className="search-input-label">{label}</label>
-            <NumberPicker {...input} {...props} />
+            <input className="search-input-range" {...input} {...props}/>
         </div>
     );
 };
@@ -60,7 +60,6 @@ export class SearchInput extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
-        console.log("click!")
         this.setState({
             showDetails: !this.state.showDetails
         });
@@ -68,6 +67,7 @@ export class SearchInput extends Component {
     render() {
         const { handleSubmit, invalid } = this.props;
         const { showDetails } = this.state;
+        const buttonText = showDetails ? "See less" : "See more";
         return (
             <div className={showDetails ? "search l-sidebar" : "search l-sidebar is-collapsed"}>
                 <form onSubmit={handleSubmit(this.props.submitSearch)}>
@@ -86,40 +86,51 @@ export class SearchInput extends Component {
                             placeholder={config.placeholder.location}/>
                     </div>
                     <div className="whole-row centered">
-                        <button className="search-btn left" type="button" onClick={this.handleClick}>See more</button>
+                        <button className="search-btn left" type="button" onClick={this.handleClick}>{buttonText}</button>
                         <button className="search-btn right" ref="submit" disabled={invalid} type="submit">Submit</button>
-                        <div className="search-details-wrapper">
-                            <Field
-                                name="minDate"
-                                aria-labelledby="min_date"
-                                component={renderDateTimePicker}
-                                min={new Date()}
-                                time={false}
-                                onBlur={null}
-                                label="from"/>
-                            <Field
-                                name="maxDate"
-                                aria-labelledby="max_date"
-                                component={renderDateTimePicker}
-                                min={new Date()}
-                                time={false}
-                                onBlur={null}
-                                label="to"/>
-                            <Field
-                                name="radius"
-                                aria-labelledby="radius"
-                                component={renderNumberPicker}
-                                min={1}
-                                max={9}
-                                onBlur={null}
-                                label="radius"/>
-                        </div>
+                    </div>
+                    <div className="search-details-wrapper">
+                        <Field
+                            name="minDate"
+                            aria-labelledby="min_date"
+                            component={RenderDateTimePicker}
+                            min={new Date()}
+                            time={false}
+                            onBlur={null}
+                            label="from"/>
+                        <Field
+                            name="maxDate"
+                            aria-labelledby="max_date"
+                            component={RenderDateTimePicker}
+                            min={new Date()}
+                            time={false}
+                            onBlur={null}
+                            label="to"/>
+                        <Field
+                            name="radius"
+                            aria-labelledby="radius"
+                            component={RenderRange}
+                            type="range"
+                            min={0}
+                            max={9}
+                            step={1}
+                            onBlur={null}
+                            label="radius"/>
                     </div>
                 </form>
             </div>
         );
     }
 }
+
+/* <Field
+                                name="radius"
+                                aria-labelledby="radius"
+                                component={renderNumberPicker}
+                                min={1}
+                                max={9}
+                                onBlur={null}
+                                label="radius"/> */
 
 SearchInput.displayName = "SearchInputComponent";
 SearchInput.propTypes = {

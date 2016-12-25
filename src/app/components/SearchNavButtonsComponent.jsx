@@ -17,12 +17,12 @@ const SearchNavButtons = props => {
 
     return (
         <div className="search-nav">
-            <button className={showPrevious ? null : "hidden"}
+            <button className={showPrevious ? null : "is-hidden"}
                     onClick={_decrementSearch}
                     type="button">
                 &lt;
             </button>
-            <button className={showNext ? null : "hidden"}
+            <button className={showNext ? null : "is-hidden"}
                     onClick={_incrementSearch}
                     type="button">
                 &gt;

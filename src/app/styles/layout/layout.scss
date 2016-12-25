@@ -21,7 +21,9 @@
 #content .l-contained {
   margin: auto;
   margin-top: .4em;
-  width: 1080px;
+  overflow-x: hidden;
+  position: relative;
+  width: 1024px;
   z-index: 1;
 
   @include mobile {
