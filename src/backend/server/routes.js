@@ -4,13 +4,13 @@ import parallel from "async/parallel";
 import moment from "moment";
 import { renderToString } from "react-dom/server";
 import { match, RouterContext } from "react-router";
-import routes from "../app/routes.jsx";
+import routes from "../../app/routes.jsx";
 import { Provider } from "react-redux";
-import makeIndexView from "./views/Index.js";
-import { fetchEvents, getGenresForQuery } from "./tasks";
-import { recommend } from "./events";
-import config from "../app/config.js";
-import configureStore from "../app/stores";
+import makeIndexView from "../views/Index.js";
+import { fetchEvents, getGenresForQuery } from "../tasks";
+import { recommend } from "../events";
+import config from "../../app/config.js";
+import configureStore from "../../app/stores";
 
 module.exports = [
     {

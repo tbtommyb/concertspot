@@ -1,4 +1,4 @@
-const request = require("request");
+import request from "request";
 import moment from "moment";
 import each from "async/each";
 

@@ -1,9 +1,17 @@
+import Hapi from "hapi";
+import Inert from "inert";
+import Vision from "vision";
+import injectThen from "inject-then";
+import routes from "./routes";
+
+const server = new Hapi.Server();
+/*
 const Hapi = require("hapi");
 const Inert = require("inert");
 const Vision = require("vision");
 const injectThen = require("inject-then");
 const routes = require("./routes.js");
-const server = new Hapi.Server();
+const server = new Hapi.Server();*/
 
 require("babel-register")({
     presets: ["es2015", "react"]

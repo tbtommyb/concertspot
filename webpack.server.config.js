@@ -5,7 +5,7 @@ var baseConfig = require("./webpack.base.config.js");
 require("env2")(__dirname + "/config.env");
 
 const BUILD_DIR = path.resolve(__dirname, "src/build/static");
-const SERVER_DIR = path.resolve(__dirname, "src/backend-hapi");
+const SERVER_DIR = path.resolve(__dirname, "src/backend");
 
 process.env.RENDER_ENV = "server";
 
@@ -42,7 +42,7 @@ var config = {
         __dirname: false
     },
     entry: [
-        SERVER_DIR + "/start.js"
+        SERVER_DIR + "/server/start.js"
     ],
     output: {
         path: BUILD_DIR,
@@ -58,4 +58,3 @@ serverConfig.module.loaders.push(...serverLoaders);
 serverConfig.plugins.push(...serverPlugins);
 
 module.exports = serverConfig;
-
