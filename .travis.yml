@@ -3,7 +3,9 @@ node_js:
   - "5.4.1"
 before_install:
   - sudo apt-get -qq update
-  - pip install --user codecov flask_testing mock voluptuous redis psycopg2 celery requests simplejson
+  - npm i nodemon
+  - npm install
+  - pip install --user codecov redis
 env:
   global:
     - PYTHONPATH="/home/travis/build/tbtommyb/concertspot/src/backend"
