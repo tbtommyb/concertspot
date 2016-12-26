@@ -1,4 +1,4 @@
-import { getGenreList, getGenresForArtist } from "../../../src/backend-hapi/db/queries";
+import { getGenreList, getGenresForArtist } from "../../../src/backend/db/queries";
 import expect from "expect";
 
 describe("Querying the database", () => {

@@ -1,6 +1,6 @@
 var expect = require("expect");
 var moment = require("moment");
-var server = require("../../../src/backend-hapi/server");
+var server = require("../../../src/backend/server/server");
 
 describe("The basic server routes", () => {
     const options = {

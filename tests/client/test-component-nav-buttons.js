@@ -37,12 +37,12 @@ describe("SearchNavButtonsComponent", () => {
 
     it("should not render a left button if currentSearch is below 2", () => {
         const { wrapper } = setup(1, 2);
-        expect(wrapper.find("button").first().hasClass("hidden")).toBe(true);
+        expect(wrapper.find("button").first().hasClass("is-hidden")).toBe(true);
     });
 
     it("should not render a right button if currentSearch is the same as searchCount", () => {
         const { wrapper } = setup(3, 3);
-        expect(wrapper.find("button").last().hasClass("hidden")).toBe(true);
+        expect(wrapper.find("button").last().hasClass("is-hidden")).toBe(true);
     });
 
     it("should dispatch SET_CURRENT_SEARCH with a decrease on clicking left button", () => {

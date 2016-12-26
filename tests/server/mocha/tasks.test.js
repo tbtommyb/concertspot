@@ -1,5 +1,5 @@
 import expect from "expect";
-import { sanitise } from "../../../src/backend-hapi/tasks";
+import { sanitise } from "../../../src/backend/tasks";
 
 describe("Sanitise function", () => {
     it("should return 'techno' from 'TECHNO music'", () => {

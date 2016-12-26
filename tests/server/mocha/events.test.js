@@ -1,7 +1,7 @@
 import expect from "expect";
 import moment from "moment";
 import { fetch, filter, createGenreList, extractEventGenres,
-         weightEvent, recommend } from "../../../src/backend-hapi/events";
+         weightEvent, recommend } from "../../../src/backend/events";
 
 describe("Fetching events", () => {
     const validParams = {
