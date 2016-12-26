@@ -29,6 +29,7 @@ const RenderRange = props => {
         <div className="search-details-item whole-row">
             <label className="search-input-label">{label}</label>
             <input className="search-input-range" {...input} {...props}/>
+            <span className="search-input-value">{input.value} miles</span>
         </div>
     );
 };
