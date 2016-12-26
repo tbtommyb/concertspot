@@ -26,14 +26,13 @@ describe("The basic server routes", () => {
     it("should return 200 OK for index", (done) => {
         server.inject(options, resp => {
             expect(resp.statusCode).toBe(200);
-            server.stop();
             done();
         });
     });
 
-    it("should return a JSON list of event sorted by weighting", (done) => {
+    it("should return a JSON list of event sorted by weighting", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(200);
@@ -44,93 +43,84 @@ describe("The basic server routes", () => {
                     expect(event.weighting).toBeLessThanOrEqualTo(weighting);
                     weighting = event.weighting;
                 });
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 400 Bad Request for a bad radius", (done) => {
+    it("should return 400 Bad Request for a bad radius", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.radius = "dsfdsfs";
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(400);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 400 Bad Request for an empty query", (done) => {
+    it("should return 400 Bad Request for an empty query", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.query = "";
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(400);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 200 OK for unicode", (done) => {
+    it("should return 200 OK for unicode", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.query = "björk";
         testOptions.payload.radius = 3.0; // Otherwise it uses nonsense string for radius (Webpack not updating?)
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(200);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 400 Bad Request for invalid lat/lng", (done) => {
+    it("should return 400 Bad Request for invalid lat/lng", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.lng = 240.3;
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(400);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 400 Bad Request for invalid dates", (done) => {
+    it("should return 400 Bad Request for invalid dates", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.mindate = "2013-02-02";
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(400);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 400 Bad Request for negative radius", (done) => {
+    it("should return 400 Bad Request for negative radius", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.radius = -5;
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(400);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
 
-    it("should return 400 Bad Request for zero radius", (done) => {
+    it("should return 400 Bad Request for zero radius", () => {
         var testOptions = Object.assign({}, postOptions, {payload: validPayload});
         testOptions.payload.radius = 0;
-        server
+        return server
             .injectThen(testOptions)
             .then(resp => {
                 expect(resp.statusCode).toBe(400);
-                server.stop();
-                done();
             });
-    }).timeout(5000);
+    });
+
+    after(done => {
+        server.stop({timeout: 0}, () => {
+            done();
+            process.exit(0); // Hack to deal with Mocha's refusal to quit.
+        });
+    });
 });
