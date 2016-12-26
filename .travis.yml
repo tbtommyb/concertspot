@@ -5,10 +5,10 @@ before_install:
   - sudo apt-get -qq update
   - npm i nodemon
   - pip install --user codecov redis
+before_script:
+  - redi-server &
 env:
   global:
     - PYTHONPATH="/home/travis/build/tbtommyb/concertspot/src/backend"
 after_success:
   - codecov --file coverage/lcov.info --disable search
-services:
-  - redis-server
