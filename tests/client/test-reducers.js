@@ -1,6 +1,6 @@
 import expect from "expect";
 import moment from "moment";
-import * as reducers from "../../src/client/app/reducers";
+import * as reducers from "../../src/app/reducers";
 
 describe("Maps reducer", () => {
 
@@ -29,12 +29,14 @@ describe("Maps reducer", () => {
         });
     });
 
-    it("should set map center from Google Maps object when SET_MAP_CENTER is dispatched", () => {
+    it("should set map center from Google Maps object when UPDATE_MAP is dispatched", () => {
         expect(reducers.map(state, {
-            type: "SET_MAP_CENTER",
-            center: {
-                lat: () => "51.5073509",
-                lng: () => "-0.12775829999998223"
+            type: "UPDATE_MAP",
+            changes: {
+                center: {
+                    lat: "51.5073509",
+                    lng: "-0.12775829999998223"
+                }
             }
         })).toEqual({
             name: "testing",
@@ -46,14 +48,16 @@ describe("Maps reducer", () => {
         });
     });
 
-    it("should set zoom level when SET_MAP_ZOOM is dispatched", () => {
+    it("should set zoom level when UPDATE_MAP is dispatched", () => {
         expect(reducers.map(state, {
-            type: "SET_MAP_ZOOM",
-            zoomLevel: 5
+            type: "UPDATE_MAP",
+            changes: {
+                zoom: 5
+            }
         })).toEqual({
             name: "testing",
             markers: {},
-            zoomLevel: 5
+            zoom: 5
         });
     });
 

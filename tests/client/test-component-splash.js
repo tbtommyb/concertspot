@@ -1,7 +1,7 @@
 import expect from "expect";
 import React from "react";
 import { shallow } from "enzyme";
-import { Splash } from "../../src/client/app/components/SplashComponent";
+import { Splash } from "../../src/app/components/SplashComponent.jsx";
 
 function setup() {
     const props = {
@@ -19,7 +19,6 @@ function setup() {
 describe("Splash", () => {
     it("should render a <form> element", () => {
         const { wrapper } = setup();
-        expect(wrapper.find("div").first().hasClass("splash-component container")).toBe(true);
         expect(wrapper.find("form")).toExist();
     });
 

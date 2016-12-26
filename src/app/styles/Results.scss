@@ -1,0 +1,12 @@
+@import "variables";
+@import "responsive";
+
+#results {
+  background: $background-base;
+  color: $font-base;
+
+  @include mobile {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

@@ -1,6 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import * as actions from "../../src/client/app/actions";
+import * as actions from "../../src/app/actions";
 import nock from "nock";
 import moment from "moment";
 import expect from "expect";
@@ -15,16 +15,16 @@ describe("Submitting a new search", () => {
     });
 
     it("should correctly dispatch actions", () => {
-        nock("http://localhost:8080")
-            .post("/api/search")
-            .reply(200, { events });
+        nock("http://localhost:8000")
+           .post("/api/search")
+           .reply(200, { events });
 
         const store = mockStore({ searches: [] });
         const searchWithID = Object.assign({}, search, {id: 1});
         const expectedActions = [
-            { type: "FETCH_EVENTS_REQUEST", search: searchWithID },
             { type: "ADD_SEARCH", search: searchWithID },
-            { type: "SET_CURRENT_SEARCH", search: searchWithID }
+            { type: "SET_CURRENT_SEARCH", search: searchWithID },
+            { type: "FETCH_EVENTS_REQUEST", search: searchWithID }
         ];
 
         store.dispatch(actions.submitSearch(search));
@@ -38,15 +38,12 @@ describe("Fetching events", () => {
     });
 
     it("successfully handles normal case", () => {
-        nock("http://localhost:8080")
-            .persist()
+        nock("http://localhost:8000")
+            //.persist()
             .post("/api/search")
-            .reply(202)
-            .get("/api/search")
             .reply(200, { events });
 
         const expectedActions = [
-            {type: "FETCH_EVENTS_REQUEST", search},
             {type: "FETCH_EVENTS_REQUEST", search},
             {type: "FETCH_EVENTS_SUCCESS", search, events}
         ];
@@ -59,20 +56,20 @@ describe("Fetching events", () => {
     });
 
     it("creates FETCH_EVENTS_FAILURE when no results are returned", () => {
-        nock("http://localhost:8080")
+        nock("http://localhost:8000")
             .persist()
             .post("/api/search")
             .reply(400, "Bad Request");
 
-        const expectedActions = [
-            {type: "FETCH_EVENTS_REQUEST", search},
-            {type: "FETCH_EVENTS_FAILURE", search, error: new Error}
-        ];
         const store = mockStore({ search: {}, events: {} });
 
         return store.dispatch(actions.fetchEvents(search))
             .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
+                const actions = store.getActions();
+                expect(actions[0].type).toEqual("FETCH_EVENTS_REQUEST");
+                expect(actions[0]).toIncludeKeys(["type", "search"]);
+                expect(actions[1].type).toEqual("FETCH_EVENTS_FAILURE");
+                expect(actions[1]).toIncludeKeys(["type", "search", "error"]);
             });
     });
 

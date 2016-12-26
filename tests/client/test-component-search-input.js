@@ -1,7 +1,7 @@
 import expect from "expect";
 import React from "react";
 import { shallow } from "enzyme";
-import { SearchInput } from "../../src/client/app/components/SearchInputComponent";
+import { SearchInput } from "../../src/app/components/SearchInputComponent.jsx";
 
 function setup() {
     const props = {
@@ -25,7 +25,7 @@ function setup() {
 describe("SearchInput component", () => {
     it("should render a form", () => {
         const { wrapper } = setup();
-        expect(wrapper.find("div").first().hasClass("search-input")).toBe(true);
+        expect(wrapper.find("div").first().hasClass("search")).toBe(true);
         expect(wrapper.find("form")).toExist();
     });
 
@@ -45,7 +45,7 @@ describe("SearchInput component", () => {
 
     it("should correctly submit a search", () => {
         const { wrapper, props } = setup();
-        wrapper.find("button").simulate("click");
+        wrapper.find(".search-btn.right").simulate("click");
         expect(props.handleSubmit).toHaveBeenCalled();
     });
 });
