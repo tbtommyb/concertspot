@@ -26,6 +26,7 @@
     "test": "npm-run-all -s test-server test-frontend",
     "test:watch": "npm test -- --watch",
     "serve": "node src/build/server.bundle.js",
+    "start": "nodemon src/build/server.bundle.js",
     "redis": "redis-server"
   },
   "author": "Tom Barrett",
