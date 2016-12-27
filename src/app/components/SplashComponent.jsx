@@ -12,7 +12,7 @@ export class Splash extends Component {
     render() {
         let { handleSubmit, splashImage } = this.props;
         // Default for testing where splashImage isn't provided as prop
-        if(!splashImage.filename) {
+        if(!splashImage) {
             splashImage = config.splashImages[0];
         }
         return (
