@@ -18,9 +18,7 @@ module.exports = [
         path: "/static/{param*}",
         handler: {
             directory: {
-                path: __dirname + "/static/",
-                listing: true,
-                index: true
+                path: __dirname + "/static/"
             }
         }
     },
