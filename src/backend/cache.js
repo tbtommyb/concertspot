@@ -1,5 +1,6 @@
 import redis from "redis";
 import md5 from "md5";
+const console = require("./server/logging.js");
 
 const client = redis.createClient();
 const hashFields = ["mindate", "maxdate", "radius", "lat", "lng"];
