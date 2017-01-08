@@ -15,7 +15,7 @@
     "build-all": "npm-run-all -s build build-server",
     "build-all:production": "npm-run-all -s build:production build-server",
     "restart": "ssh ec2 'sudo service nginx restart; sudo supervisorctl restart all'",
-    "push": "rsync -ravzP --delete /Users/thomasbarrett/coding/concertspot/ --exclude '.git' -e 'ssh -i /Users/thomasbarrett/coding/aws/ireland-key-pair.pem' ubuntu@52.17.9.164:/home/ubuntu/concertspot",
+    "push": "rsync -ravzP --delete /Users/thomasbarrett/coding/concertspot/ --exclude '.git' --exclude concertspot.log -e 'ssh -i /Users/thomasbarrett/coding/aws/ireland-key-pair.pem' ubuntu@52.17.9.164:/home/ubuntu/concertspot",
     "push:restart": "npm run push && npm run restart",
     "build-all:push": "npm run build-all:production && npm run push:restart",
     "test-frontend": "istanbul cover _mocha -- tests/client --compilers js:babel-register --recursive --require ignore-styles tests/client/dom-setup.js",
@@ -96,6 +96,7 @@
     "react-addons-test-utils": "^15.3.2",
     "redux-mock-store": "^1.1.2",
     "webpack-dev-server": "^1.14.1",
-    "webpack-node-externals": "^1.5.4"
+    "webpack-node-externals": "^1.5.4",
+    "winston": "^2.3.0"
   }
 }
