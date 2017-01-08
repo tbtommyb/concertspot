@@ -32,11 +32,6 @@ var browserLoaders = [
 ];
 
 var browserPlugins = [
-    new htmlWebpackPlugin({
-        filename: "index.html",
-        template: APP_DIR + "/index.html",
-        favicon: APP_DIR + "/favicon.png"
-    }),
     new webpack.EnvironmentPlugin([
         "NODE_ENV",
         "RENDER_ENV"
