@@ -1,12 +1,40 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
+import * as router from "react-router";
 import * as actions from "../../src/app/actions";
 import nock from "nock";
 import moment from "moment";
 import expect from "expect";
+import sinon from "sinon";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+
+before(() => {
+    window.google = {
+        maps: {
+            GeocoderStatus: {
+                OK: "OK"
+            },
+            Geocoder() {
+                return {
+                    geocode(_, cb) {
+                        return cb([
+                            {
+                                geometry: {
+                                    location: {
+                                        lat() { return "51.5073509" },
+                                        lng() { return "-0.12775829999998223" }
+                                    }
+                                }
+                            }
+                        ], "OK");
+                    }
+                }
+            }
+        }
+    };
+});
 
 describe("Submitting a new search", () => {
 
@@ -20,15 +48,19 @@ describe("Submitting a new search", () => {
            .reply(200, { events });
 
         const store = mockStore({ searches: [] });
-        const searchWithID = Object.assign({}, search, {id: 1});
         const expectedActions = [
-            { type: "ADD_SEARCH", search: searchWithID },
-            { type: "SET_CURRENT_SEARCH", search: searchWithID },
-            { type: "FETCH_EVENTS_REQUEST", search: searchWithID }
+            { type: "ADD_SEARCH", search: expectedSubmittedSearch },
+            { type: "SET_CURRENT_SEARCH", search: expectedSubmittedSearch },
+            { type: "FETCH_EVENTS_REQUEST", search: expectedSubmittedSearch }
         ];
 
-        store.dispatch(actions.submitSearch(search));
-        expect(store.getActions()).toEqual(expectedActions);
+        router.browserHistory = { push: () => {} };
+        let browserHistoryPushStub = sinon.stub(router.browserHistory, "push", () => { });
+
+        return store.dispatch(actions.submitSearch(search))
+            .then(() => {
+                expect(store.getActions()).toEqual(expectedActions);
+            });
     });
 
 });
@@ -44,12 +76,12 @@ describe("Fetching events", () => {
             .reply(200, { events });
 
         const expectedActions = [
-            {type: "FETCH_EVENTS_REQUEST", search},
-            {type: "FETCH_EVENTS_SUCCESS", search, events}
+            {type: "FETCH_EVENTS_REQUEST", search: expectedSubmittedSearch},
+            {type: "FETCH_EVENTS_SUCCESS", search: expectedSubmittedSearch, events}
         ];
         const store = mockStore({ searches: {}, events: {} });
 
-        return store.dispatch(actions.fetchEvents(search))
+        return store.dispatch(actions.fetchEvents(expectedSubmittedSearch))
             .then(() => {
                 expect(store.getActions()).toEqual(expectedActions);
             });
@@ -63,7 +95,7 @@ describe("Fetching events", () => {
 
         const store = mockStore({ search: {}, events: {} });
 
-        return store.dispatch(actions.fetchEvents(search))
+        return store.dispatch(actions.fetchEvents(expectedSubmittedSearch))
             .then(() => {
                 const actions = store.getActions();
                 expect(actions[0].type).toEqual("FETCH_EVENTS_REQUEST");
@@ -78,14 +110,24 @@ describe("Fetching events", () => {
 const search = {
     query: "surgeon",
     radius: "5",
+    location: "london",
+    minDate: moment().format("YYYY-MM-DD"),
+    maxDate: moment().format("YYYY-MM-DD")
+};
+
+const expectedSubmittedSearch = {
+    query: "surgeon",
+    radius: "5",
+    id: 1,
     location: {
         coords: {
             lat: "51.5073509",
             lng: "-0.12775829999998223"
-        }
+        },
+        query: "london"
     },
-    minDate: moment().format("YYYY-MM-DD"),
-    maxDate: moment().format("YYYY-MM-DD")
+    maxDate: moment().format("YYYY-MM-DD"),
+    minDate: moment().format("YYYY-MM-DD")
 };
 
 const events = [

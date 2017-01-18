@@ -47,10 +47,10 @@ function catchErrors(error, search, dispatch) {
 // ------ Search action creators ----------------
 
 function geocodeSearch(search) {
-    const geocoder = new google.maps.Geocoder();
+    const geocoder = new window.google.maps.Geocoder();
     const promise = new Promise((resolve, reject) => {
         geocoder.geocode({address: search.location}, (results, status) => {
-            if (status === google.maps.GeocoderStatus.OK) {
+            if (status === window.google.maps.GeocoderStatus.OK) {
                 const { lat, lng } = results[0].geometry.location;
                 const geocodedSearch = Object.assign({}, search, {
                     location: {
@@ -87,14 +87,14 @@ export function submitSearch(search) {
         if(!searchWithID.radius) {
             searchWithID = addDefaultsToSearch(searchWithID);
         }
-        geocodeSearch(searchWithID)
-        .then(geocodedSearch => {
-            dispatch(addSearch(geocodedSearch));
-            dispatch(setCurrentSearch(geocodedSearch));
-            dispatch(fetchEvents(geocodedSearch));
-            browserHistory.push("/events");
-        })
-        .catch(error => catchErrors(error, searchWithID, dispatch));
+        return geocodeSearch(searchWithID)
+            .then(geocodedSearch => {
+                dispatch(addSearch(geocodedSearch));
+                dispatch(setCurrentSearch(geocodedSearch));
+                dispatch(fetchEvents(geocodedSearch));
+                browserHistory.push("/events");
+            })
+            .catch(error => catchErrors(error, searchWithID, dispatch));
     };
 }
 
