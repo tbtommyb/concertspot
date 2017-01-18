@@ -1,5 +1,7 @@
+import { browserHistory } from "react-router";
 import { fetchEventsFailure } from "../actions";
 import config from "../config.js";
+import moment from "moment";
 
 const geocode = search => {
     const geocoder = new google.maps.Geocoder();
@@ -20,6 +22,7 @@ export const geocodeSearch = store => next => action => {
         return next(action);
     }
     console.log("in middleware");
+    console.log(action)
     geocode(action.search)
     .then(results => {
         const geocodedSearch = Object.assign({}, action.search, {
@@ -33,6 +36,7 @@ export const geocodeSearch = store => next => action => {
         });
         const newAction = Object.assign({}, action, { search: geocodedSearch });
         console.log(newAction);
+        browserHistory.push("/events");
         return next(newAction);
     })
     .catch(error => {
@@ -41,4 +45,26 @@ export const geocodeSearch = store => next => action => {
         }
         return next(fetchEventsFailure(action.search, error));
     });
-}
+};
+
+const addDefaultsToSearch = search => {
+    console.log("adding defaults to search", search)
+    return Object.assign({}, search, {
+        radius: config.search.radius,
+        minDate: moment().format("YYYY-MM-DD"),
+        maxDate: moment().add(config.search.range, "days").format("YYYY-MM-DD")
+    });
+};
+
+export const addDefaults = store => next => action => {
+    if(action.type !== "ADD_SEARCH") {
+        return next(action);
+    }
+    console.log("in defaults middleware")
+    if(action.search.minDate && action.search.maxDate && action.search.radius) {
+        // Search already has the properties so no need to add defaults
+        return next(action);
+    }
+    const newAction = Object.assign({}, action, { search: addDefaultsToSearch(action.search) });
+    return next(newAction);
+};
