@@ -1,4 +1,4 @@
-require("env2")(__dirname + "/../../config.env");
+require("env2")(__dirname + "/../../../config.env");
 
 import server from "./server";
 const console = require("./logging");
