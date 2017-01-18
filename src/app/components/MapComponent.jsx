@@ -45,7 +45,7 @@ export default class MapComponent extends Component {
         const { center, zoom } = this.props;
         const activatedMarkers = this.setActive(this.props.markers);
         return (
-            <div className="l-fullscreen">
+            <div className="l-fullscreen map-component">
                 <GoogleMap
                     bootstrapURLKeys={{
                         key: "AIzaSyBpmIDzWPhT6E3KFNfnKUbFy_5uhmh-No0",
