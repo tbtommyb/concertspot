@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import { persistStore, autoRehydrate } from "redux-persist";
 import thunk from "redux-thunk";
-import { geocodeSearch, addDefaults } from "../middleware";
 import reducers from "../reducers";
 
 const composeEnhancers = (
@@ -12,7 +11,7 @@ export default function(initialState) {
     const store = createStore(
         reducers,
         initialState,
-        composeEnhancers(/*autoRehydrate(), */applyMiddleware(addDefaults, geocodeSearch, thunk))
+        composeEnhancers(/*autoRehydrate(), */applyMiddleware(thunk))
     );
 
     if (module.hot) {

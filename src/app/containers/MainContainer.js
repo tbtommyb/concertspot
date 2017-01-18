@@ -1,4 +1,3 @@
-
 import { connect } from "react-redux";
 import { setCurrentSearch, toggleEvent } from "../actions";
 import Main from "../components/Main.jsx";
