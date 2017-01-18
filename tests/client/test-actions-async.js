@@ -59,6 +59,7 @@ describe("Submitting a new search", () => {
 
         return store.dispatch(actions.submitSearch(search))
             .then(() => {
+                expect(browserHistoryPushStub.called).toBe(true);
                 expect(store.getActions()).toEqual(expectedActions);
             });
     });
