@@ -50,6 +50,7 @@ export function submitSearch(search) {
 }
 
 export function addSearch(search) {
+    console.log(search);
     return {
         type: "ADD_SEARCH",
         search

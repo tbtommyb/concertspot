@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import moment from "moment";
 import SplashForm from "../components/SplashComponent.jsx";
 import SearchInputForm from "../components/SearchInputComponent.jsx";
-import config from "../config.js";
 
 const getInitialValues = search => {
     if(!search) { return {}; }
@@ -34,21 +33,7 @@ const addDefaults = search => {
 };
 
 
-const geocode = (search) => {
-    const geocoder = new google.maps.Geocoder();
-    const promise = new Promise((resolve, reject) => {
-        geocoder.geocode({address: search.location}, (results, status) => {
-            if (status === google.maps.GeocoderStatus.OK) {
-                resolve(results[0].geometry.location);
-            } else {
-                reject(status);
-            }
-        });
-    });
-    return promise;
-};
-
-const mapDispatchToProps = dispatch => {
+/*const mapDispatchToProps = dispatch => {
     return {
         submitSearch: search => {
             geocode(search)
@@ -76,6 +61,14 @@ const mapDispatchToProps = dispatch => {
                     console.log("Error with status: ", error);
                 }
             });
+        }
+    };
+};*/
+
+const mapDispatchToProps = dispatch => {
+    return {
+        submitSearch: search => {
+            dispatch(submitSearch(search));
         }
     };
 };
