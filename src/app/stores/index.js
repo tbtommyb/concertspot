@@ -11,7 +11,7 @@ export default function(initialState) {
     const store = createStore(
         reducers,
         initialState,
-        composeEnhancers(autoRehydrate(), applyMiddleware(thunk))
+        composeEnhancers(/*autoRehydrate(), */applyMiddleware(thunk))
     );
 
     if (module.hot) {

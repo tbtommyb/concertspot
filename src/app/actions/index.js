@@ -1,4 +1,4 @@
-
+import { browserHistory } from "react-router";
 import fetch from "isomorphic-fetch";
 import moment from "moment";
 import config from "../config.js";
@@ -35,17 +35,66 @@ export function updateMap(changes) {
     };
 }
 
+// ------ Error handling ------------------------
+
+function catchErrors(error, search, dispatch) {
+    if(config.env !== "production") {
+        console.log(error);
+    }
+    return dispatch(fetchEventsFailure(search, error));
+}
+
 // ------ Search action creators ----------------
+
+function geocodeSearch(search) {
+    const geocoder = new window.google.maps.Geocoder();
+    const promise = new Promise((resolve, reject) => {
+        geocoder.geocode({address: search.location}, (results, status) => {
+            if (status === window.google.maps.GeocoderStatus.OK) {
+                const { lat, lng } = results[0].geometry.location;
+                const geocodedSearch = Object.assign({}, search, {
+                    location: {
+                        query: search.location,
+                        coords: {
+                            lat: lat(),
+                            lng: lng()
+                        }
+                    }
+                });
+                resolve(geocodedSearch);
+            } else {
+                reject(status);
+            }
+        });
+    });
+    return promise;
+};
+
+function addDefaultsToSearch(search) {
+    return Object.assign({}, search, {
+        radius: config.search.radius,
+        minDate: moment().format("YYYY-MM-DD"),
+        maxDate: moment().add(config.search.range, "days").format("YYYY-MM-DD")
+    });
+};
 
 export function submitSearch(search) {
     return function(dispatch, getState) {
         const { searches } = getState();
-        const searchWithID = Object.assign({}, search, {
+        let searchWithID = Object.assign({}, search, {
             id: Object.keys(searches).length + 1
         });
-        dispatch(addSearch(searchWithID));
-        dispatch(setCurrentSearch(searchWithID));
-        dispatch(fetchEvents(searchWithID));
+        if(!searchWithID.radius) {
+            searchWithID = addDefaultsToSearch(searchWithID);
+        }
+        return geocodeSearch(searchWithID)
+            .then(geocodedSearch => {
+                dispatch(addSearch(geocodedSearch));
+                dispatch(setCurrentSearch(geocodedSearch));
+                dispatch(fetchEvents(geocodedSearch));
+                browserHistory.push("/events");
+            })
+            .catch(error => catchErrors(error, searchWithID, dispatch));
     };
 }
 
@@ -89,14 +138,6 @@ export function fetchEventsFailure(search, error) {
 }
 
 // ------ Event fetching middleware -------------
-
-function catchErrors(error, search, dispatch) {
-    if(config.env !== "production") {
-        console.log(error);
-    }
-    return dispatch(fetchEventsFailure(search, error));
-
-}
 
 export function fetchEvents(search) {
     return function(dispatch) {
