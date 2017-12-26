@@ -4,7 +4,7 @@ var htmlWebpackPlugin = require("html-webpack-plugin");
 
 require("env2")(__dirname + "/config.env");
 
-const BUILD_DIR = path.resolve(__dirname, "src/build/static");
+const BUILD_DIR = path.resolve(__dirname, "build/static");
 const APP_DIR = path.resolve(__dirname, "src/app");
 
 process.env.RENDER_ENV = "browser";

@@ -1,0 +1,54 @@
+#! /usr/bin/python
+
+""" Script to automate downloading new XML and processing """
+
+import urllib
+import os
+import errno
+from datetime import date
+import artists
+import genres
+import setup_db
+
+ROOT_PATH = "http://discogs-data.s3-us-west-2.amazonaws.com/data/discogs_{}_{}.xml.gz"
+DATE_STRING = date.today().replace(day=01).strftime("%Y%m%d")
+ARTISTS_PATH = ROOT_PATH.format(DATE_STRING, "artists")
+MASTERS_PATH = ROOT_PATH.format(DATE_STRING, "masters")
+ARTISTS_FILE = "artists.xml.gz"
+MASTERS_FILE = "masters.xml.gz"
+ARTISTS_JSON = "artists.json"
+GENRES_JSON = "genres.json"
+
+def silent_remove(filename):
+    try:
+        os.remove(filename)
+    except OSError as e:
+        if e.errno != errno.ENOENT:
+            raise
+
+if __name__ == "__main__":
+    for file in [ARTISTS_FILE, ARTISTS_JSON, MASTERS_FILE, GENRES_JSON]:
+        silent_remove(file)
+
+    print "Downloading artists file..."
+    urllib.urlretrieve(ARTISTS_PATH, ARTISTS_FILE)
+    print "Downloading masters file..."
+    urllib.urlretrieve(MASTERS_PATH, MASTERS_FILE)
+
+    artists.run_processor(ARTISTS_FILE, ARTISTS_JSON)
+    print "Artist processing complete"
+    genres.run_processor(MASTERS_FILE, GENRES_JSON)
+    print "Genre processing complete"
+
+    silent_remove(ARTISTS_FILE)
+    silent_remove(MASTERS_FILE)
+    print "Removed .xml.gz files"
+    
+    print "Setting up database..."
+    setup_db.setup(ARTISTS_JSON, GENRES_JSON, "concertspot")
+    print "Database setup complete"
+
+    silent_remove(ARTISTS_JSON)
+    silent_remove(GENRES_JSON)
+    print "Removed .json files. Setup complete"
+    
