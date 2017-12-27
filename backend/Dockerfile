@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /usr/src/app/backend
+WORKDIR /concertspot/backend
 
 COPY . ./
 

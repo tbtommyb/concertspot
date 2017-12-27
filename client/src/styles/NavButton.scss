@@ -1,0 +1,40 @@
+@import "variables";
+
+.search-nav {
+  display: inline-block;
+  height: 1.5em;
+  padding: 0 0 .2em;
+  position: relative;
+  text-align: center;
+  width: 100%;
+
+  p {
+    display: inline-block;
+    font-size: .8em;
+    line-height: 1em;
+    vertical-align: bottom;
+    width: 60%;
+  }
+
+  button {
+    background: $background-base;
+    border: 0;
+    color: $font-base;
+    float: left;
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 0 10px;
+    width: 20%;
+
+    &:hover,
+    &:focus {
+      background: $input-focus;
+      color: $background-base;
+    }
+
+    &:last-child {
+      border-radius: 0 $curve 0 0;
+      float: right;
+    }
+  }
+}

@@ -1,0 +1,77 @@
+@import "variables";
+@import "responsive";
+
+nav {
+  background-color: $background-base;
+  color: $font-base;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0 .2em;
+
+  ul {
+    height: inherit;
+  }
+
+  @include mobile {
+    font-size: 1.2em;
+  }
+
+  @include tablet {
+    font-size: 1em;
+  }
+}
+
+.subnav {
+  height: inherit;
+}
+
+.subnav ul {
+  height: inherit;
+
+  @include mobile {
+    align-items: center;
+    display: flex;
+    float: none;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  @include tablet {
+    margin: .1em;
+    padding: 0;
+  }
+}
+
+.subnav.left ul {
+  float: left;
+
+  @include mobile {
+    float: none;
+  }
+}
+
+.subnav.right ul {
+  float: right;
+}
+
+.subnav-item {
+  display: inline-block;
+  margin: .4em 1em;
+
+  @include mobile {
+    line-height: 1em;
+    margin: 0 .2em;
+    padding: 0 .2em;
+  }
+
+  a {
+    color: $font-base;
+    text-decoration: none;
+
+    &:focus,
+    &:hover {
+      color: $highlight-color;
+      transition: .2s;
+    }
+  }
+}
