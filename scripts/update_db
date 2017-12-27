@@ -10,10 +10,11 @@ import artists
 import genres
 import setup_db
 
-ROOT_PATH = "http://discogs-data.s3-us-west-2.amazonaws.com/data/discogs_{}_{}.xml.gz"
+ROOT_PATH = "http://discogs-data.s3-us-west-2.amazonaws.com/data/{}/discogs_{}_{}.xml.gz"
+YEAR = date.today().year
 DATE_STRING = date.today().replace(day=01).strftime("%Y%m%d")
-ARTISTS_PATH = ROOT_PATH.format(DATE_STRING, "artists")
-MASTERS_PATH = ROOT_PATH.format(DATE_STRING, "masters")
+ARTISTS_PATH = ROOT_PATH.format(YEAR, DATE_STRING, "artists")
+MASTERS_PATH = ROOT_PATH.format(YEAR, DATE_STRING, "masters")
 ARTISTS_FILE = "artists.xml.gz"
 MASTERS_FILE = "masters.xml.gz"
 ARTISTS_JSON = "artists.json"
@@ -27,6 +28,8 @@ def silent_remove(filename):
             raise
 
 if __name__ == "__main__":
+    db = setup_db.init_db()
+
     for file in [ARTISTS_FILE, ARTISTS_JSON, MASTERS_FILE, GENRES_JSON]:
         silent_remove(file)
 
@@ -43,12 +46,12 @@ if __name__ == "__main__":
     silent_remove(ARTISTS_FILE)
     silent_remove(MASTERS_FILE)
     print "Removed .xml.gz files"
-    
+
     print "Setting up database..."
-    setup_db.setup(ARTISTS_JSON, GENRES_JSON, "concertspot")
+    setup_db.load_data(db, ARTISTS_JSON, GENRES_JSON)
     print "Database setup complete"
 
     silent_remove(ARTISTS_JSON)
     silent_remove(GENRES_JSON)
     print "Removed .json files. Setup complete"
-    
+

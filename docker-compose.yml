@@ -2,11 +2,24 @@ version: "3"
 services:
   redis:
     image: redis
+    ports:
+      - "6379:6379"
   db:
     image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - cs_pg_data:/var/lib/postgresql/data
   server:
     build:
       context: backend
     depends_on:
       - db
       - redis
+  setup-db:
+    build:
+      context: scripts
+    depends_on:
+      - db
+volumes:
+  cs_pg_data:
