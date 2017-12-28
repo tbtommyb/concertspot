@@ -22,7 +22,7 @@ var browserLoaders = [
         test: /\.jsx?/,
         include: APP_DIR,
         exclude: /node_modules/,
-        loader: "babel",
+        loader: "babel-loader",
         query: {
             cacheDirectory: true
         }
