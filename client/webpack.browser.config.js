@@ -2,10 +2,8 @@ var path = require("path");
 var webpack = require("webpack");
 var htmlWebpackPlugin = require("html-webpack-plugin");
 
-require("env2")(__dirname + "/config.env");
-
-const BUILD_DIR = path.resolve(__dirname, "src/build/static");
-const APP_DIR = path.resolve(__dirname, "src/app");
+const BUILD_DIR = path.resolve(__dirname, "build");
+const APP_DIR = path.resolve(__dirname, "src");
 
 process.env.RENDER_ENV = "browser";
 
@@ -24,7 +22,7 @@ var browserLoaders = [
         test: /\.jsx?/,
         include: APP_DIR,
         exclude: /node_modules/,
-        loader: "babel",
+        loader: "babel-loader",
         query: {
             cacheDirectory: true
         }

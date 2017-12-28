@@ -1,8 +1,5 @@
 """ Initialise DB. Usage:
     setup_db artist_input.json genre_input.json db_name
-
-    NOTE 'id' has been changed to 'artist_id' in artist_genres. Queries will need updated
-    next time this is run.
 """
 import sys
 import psycopg2
@@ -13,7 +10,7 @@ ROWS_PER_INSERT = 100000
 class Database:
     """ Initialise database with JSON data from args """
     def __init__(self):
-        conn = psycopg2.connect("dbname=concertspot user=ubuntu password=horsey56 host=flask.cistmx04u3hj.eu-west-1.rds.amazonaws.com")
+        conn = psycopg2.connect("dbname=postgres user=postgres password=example host=db")
         self.conn = conn
         self.cur = conn.cursor()
 
@@ -82,12 +79,13 @@ class Database:
         self.cur.execute("CREATE INDEX ON artists (LOWER(name))")
         self.commit()
 
-
-def setup(artist_input, genre_input, database):
-
+def init_db():
     db = Database()
     db.create_artists_table()
     db.create_artist_genres_table()
+    return db
+
+def load_data(db, artist_input, genre_input):
 
     print "Loading {}...".format(artist_input)
     with open(artist_input) as artist_file:
@@ -112,4 +110,5 @@ def setup(artist_input, genre_input, database):
     db.close()
 
 if __name__ == "__main__":
-    setup(sys.argv[1], sys.argv[2], sys.argv[3])
+    db = init_db()
+    load_data(db, sys.argv[1], sys.argv[2])

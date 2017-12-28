@@ -1,7 +1,5 @@
 var extractTextPlugin = require("extract-text-webpack-plugin");
 
-require("env2")(__dirname + "/config.env");
-
 var config = {
     cache: true,
     devtool: "eval-source-map",

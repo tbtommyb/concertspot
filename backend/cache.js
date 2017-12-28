@@ -1,8 +1,8 @@
-import redis from "redis";
-import md5 from "md5";
+const redis = require("redis");
+const md5 = require("md5");
 const console = require("./server/logging.js");
 
-const client = redis.createClient();
+const client = redis.createClient({ host: "redis" });
 const hashFields = ["mindate", "maxdate", "radius", "lat", "lng"];
 const defaultExpiration = 1800;
 
@@ -19,32 +19,41 @@ function generateHash(input) {
     return md5(valueToHash).slice(0, 10);
 }
 
-export function generateEventSearchId(searchTerms) {
+function generateEventSearchId(searchTerms) {
     return `events:${generateHash(searchTerms)}`;
 }
 
-export function generateQueryGenreId(query) {
+function generateQueryGenreId(query) {
     return `query_genres:${query}`;
 }
 
-export function generateGenreListId() {
+function generateGenreListId() {
     return "genres";
 }
 
-export function add(cacheId, data, expiration = defaultExpiration) {
+function add(cacheId, data, expiration = defaultExpiration) {
     client.set(cacheId, JSON.stringify(data));
     if(expiration) {
         client.expire(cacheId, expiration);
     }
 }
 
-export function get(cacheId, cb) {
+function get(cacheId, cb) {
     client.get(cacheId, (err, result) => {
         if(err) { return cb(err); }
         return cb(null, JSON.parse(result));
     });
 }
 
-export function exists(cacheId) {
+function exists(cacheId) {
     return client.exists(cacheId);
 }
+
+module.exports = {
+  generateEventSearchId,
+  generateQueryGenreId,
+  generateGenreListId,
+  add,
+  get,
+  exists
+};

@@ -1,6 +1,6 @@
-import conn from "./connection";
+const conn = require("./connection");
 
-export const getGenreList = (cb) => {
+const getGenreList = (cb) => {
     conn.query(`SELECT DISTINCT genres.name
                 FROM artist_genres genres
                 ORDER BY genres.name;`,
@@ -10,7 +10,7 @@ export const getGenreList = (cb) => {
         });
 };
 
-export const getGenresForArtist = (artist, cb) => {
+const getGenresForArtist = (artist, cb) => {
     conn.query(`SELECT genres.name, genres.weighting
                 FROM artists
                 INNER JOIN artist_genres genres
@@ -22,4 +22,9 @@ export const getGenresForArtist = (artist, cb) => {
         if(err) return cb(err);
         cb(null, result.rows);
     });
+};
+
+module.exports = {
+  getGenreList,
+  getGenresForArtist
 };

@@ -1,7 +1,7 @@
-require("env2")(__dirname + "/../../../config.env");
+require("env2")(__dirname + "/config.env");
 
-import server from "./server";
-import { cacheGenreList } from "../tasks";
+const server = require("./server");
+const { cacheGenreList } = require("./tasks.js");
 
 cacheGenreList((err) => {
     if(err) {
