@@ -30,11 +30,11 @@ const fetchEvents = (query, cb) => {
     cache.get(eventSearchId, (err, events) => {
         if(err) { return cb(err); }
         if(events) { return cb(null, events); }
-        fetch(query, (err, fetchedEvents) => {
+        fetch(query, (err, resp) => {
             if(err) { return cb(err); }
-            const filtered = fetchedEvents.map(filter);
-            cache.add(eventSearchId, filtered);
-            cb(null, filtered);
+            const filteredEvents = resp.map(filter);
+            cache.add(eventSearchId, filteredEvents);
+            cb(null, filteredEvents);
         });
     });
 };
