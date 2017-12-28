@@ -2,7 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 var htmlWebpackPlugin = require("html-webpack-plugin");
 
-const BUILD_DIR = path.resolve(__dirname, "build/static");
+const BUILD_DIR = path.resolve(__dirname, "build");
 const APP_DIR = path.resolve(__dirname, "src");
 
 process.env.RENDER_ENV = "browser";

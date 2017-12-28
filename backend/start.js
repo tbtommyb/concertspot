@@ -1,7 +1,7 @@
-require("env2")(__dirname + "/../config.env");
+require("env2")(__dirname + "/config.env");
 
 const server = require("./server");
-const { cacheGenreList } = require("../tasks");
+const { cacheGenreList } = require("./tasks.js");
 
 cacheGenreList((err) => {
     if(err) {

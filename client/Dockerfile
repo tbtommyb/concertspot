@@ -1,6 +1,6 @@
 FROM node:latest
 
-WORKDIR /concertspot/client
+WORKDIR /concertspot/
 
 COPY package*.json ./
 COPY .babelrc ./

@@ -20,13 +20,13 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - webpack_output:/concertspot/build
+      - webpack_output:/concertspot/server/build
   client:
     build:
       context: client
     volumes:
-      - webpack_output:/concertspot/client/build
-      - ./client/src:/concertspot/client/src
+      - webpack_output:/concertspot/build
+      - ./client/src:/concertspot/src
   setup-db:
     build:
       context: scripts

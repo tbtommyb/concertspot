@@ -4,13 +4,15 @@ const moment = require("moment");
 const { fetchEvents, getGenresForQuery } = require("../tasks");
 const { recommend } = require("../events");
 
+console.log("*******")
+console.log(__dirname + "/build/")
 module.exports = [
     {
         method: "GET",
         path: "/static/{param*}",
         handler: {
             directory: {
-                path: __dirname + "/static/"
+                path: __dirname + "/build/"
             }
         }
     },
