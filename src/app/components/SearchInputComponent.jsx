@@ -1,4 +1,3 @@
-
 import React, { PropTypes, Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
@@ -14,10 +13,11 @@ require("../styles/SearchInput.scss");
 const RenderDateTimePicker = props => {
     const { input, label, meta: { error, dirty } } = props;
     const validationClass = "search-validation-message" + (dirty && error ? "" : " is-hidden");
+  console.log(input.value)
     return (
         <div className="search-details-item whole-row">
             <label className="search-input-label">{label}</label>
-            <DateTimePicker {...input} {...props} format={"D MMM"} />
+            <DateTimePicker {...input} {...props} format={"D MMM"} onBlur={null}/>
             <span className={validationClass}>{config.messages.validation}</span>
         </div>
     );
@@ -97,7 +97,6 @@ export class SearchInput extends Component {
                             component={RenderDateTimePicker}
                             min={new Date()}
                             time={false}
-                            onBlur={null}
                             label="from"/>
                         <Field
                             name="maxDate"
@@ -105,7 +104,6 @@ export class SearchInput extends Component {
                             component={RenderDateTimePicker}
                             min={new Date()}
                             time={false}
-                            onBlur={null}
                             label="to"/>
                         <Field
                             name="radius"
