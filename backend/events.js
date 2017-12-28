@@ -133,5 +133,7 @@ const recommend = (events, queryGenres) => {
 };
 
 module.exports = {
-  recommend
+  recommend,
+  fetch,
+  filter
 };
