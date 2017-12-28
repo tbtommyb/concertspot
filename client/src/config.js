@@ -1,7 +1,7 @@
 import random from "./scripts/random.js";
 
 const PRODUCTION_PATH = "https://www.concertspot.co.uk";
-const DEV_PATH = "http://localhost:8000";
+const DEV_PATH = "http://localhost:8080";
 
 const config = {
     env: process.env.NODE_ENV || "dev",
