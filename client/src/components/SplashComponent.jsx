@@ -1,4 +1,3 @@
-
 import React, { PropTypes, Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import config from "../config.js";

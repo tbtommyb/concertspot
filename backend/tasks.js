@@ -1,16 +1,16 @@
-import { fetch, filter } from "./events";
-import { getGenreList, getGenresForArtist } from "./db/queries";
-import * as cache from "./cache";
+const { fetch, filter } = require("./events");
+const { getGenreList, getGenresForArtist } = require("./db/queries");
+const cache = require("./cache");
 
 const TERMS = ["events", "event", "clubs", "club",  "clubnights",
                "clubnight", "music", "parties", "party", "gigs", "gig",
                "nights", "night"];
 
-export const sanitise = (query) => {
+const sanitise = (query) => {
     return query.toLowerCase().replace(new RegExp(TERMS.join("|")), "").trim();
 };
 
-export const checkIfGenre = (query, cb) => {
+const checkIfGenre = (query, cb) => {
     cache.get(cache.generateGenreListId(), (err, genres) => {
         if(err) { return cb(err); }
         const sanitisedQuery = sanitise(query);
@@ -25,21 +25,21 @@ export const checkIfGenre = (query, cb) => {
     });
 };
 
-export const fetchEvents = (query, cb) => {
+const fetchEvents = (query, cb) => {
     const eventSearchId = cache.generateEventSearchId(query);
     cache.get(eventSearchId, (err, events) => {
         if(err) { return cb(err); }
         if(events) { return cb(null, events); }
-        fetch(query, (err, fetchedEvents) => {
+        fetch(query, (err, resp) => {
             if(err) { return cb(err); }
-            const filtered = fetchedEvents.map(filter);
-            cache.add(eventSearchId, filtered);
-            cb(null, filtered);
+            const filteredEvents = resp.map(filter);
+            cache.add(eventSearchId, filteredEvents);
+            cb(null, filteredEvents);
         });
     });
 };
 
-export const getGenresForQuery = (query, cb) => {
+const getGenresForQuery = (query, cb) => {
     const queryGenreId = cache.generateQueryGenreId(query);
     cache.get(queryGenreId, (err, genres) => {
         if(err) { return cb(err); }
@@ -62,10 +62,16 @@ export const getGenresForQuery = (query, cb) => {
     });
 };
 
-export const cacheGenreList = (cb) => {
+const cacheGenreList = (cb) => {
     getGenreList((err, genres) => {
         if(err) { return cb(err); }
         cache.add(cache.generateGenreListId(), genres);
         cb(null);
     });
+};
+
+module.exports = {
+  fetchEvents,
+  getGenresForQuery,
+  cacheGenreList,
 };
