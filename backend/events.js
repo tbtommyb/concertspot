@@ -27,7 +27,8 @@ const buildQueryOptions = (query, offset) => {
         longitude: lng,
         radius: radius,
         order: RESULTS_ORDER,
-        limit: RESULTS_LIMIT
+        limit: RESULTS_LIMIT,
+        description: true
     };
     options.stringifyOptions = {
         arrayFormat: "brackets"
