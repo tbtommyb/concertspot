@@ -1,8 +1,8 @@
 const Joi = require("joi");
 const parallel = require("async/parallel");
 const moment = require("moment");
-const { fetchEvents, getGenresForQuery } = require("../tasks");
-const { recommend } = require("../events");
+const { fetchEvents, getGenresForQuery } = require("../lib/tasks");
+const { recommend } = require("../lib/events");
 
 module.exports = [
     {

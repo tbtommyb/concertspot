@@ -1,5 +1,5 @@
 const { fetch, filter } = require("./events");
-const { getGenreList, getGenresForArtist } = require("./db/queries");
+const { getGenreList, getGenresForArtist } = require("../db/queries");
 const cache = require("./cache");
 
 const TERMS = ["events", "event", "clubs", "club",  "clubnights",
