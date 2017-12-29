@@ -18,9 +18,7 @@ module.exports = [
         method: "GET",
         path: "/{param*}",
         handler: {
-            directory: {
-                path: __dirname + "/views/"
-            }
+            file: __dirname + "/views/index.html"
         }
     },
     {
