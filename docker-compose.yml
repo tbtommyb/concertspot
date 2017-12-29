@@ -21,6 +21,7 @@ services:
       - "8080:8080"
     volumes:
       - webpack_output:/concertspot/server/build
+      - ./backend:/concertspot
   client:
     build:
       context: client

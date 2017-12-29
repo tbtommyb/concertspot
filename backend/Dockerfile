@@ -2,7 +2,7 @@ FROM node
 
 WORKDIR /concertspot/
 
-COPY . ./
+COPY package*.json ./
 
 RUN npm install
 
