@@ -65,7 +65,7 @@ async function fetch(query) {
     return eventList;
 }
 
-const filter = event => {
+const filterKeys = event => {
     const keys = {
         "artists": "artists",
         "date": "date",
@@ -131,5 +131,5 @@ const recommend = (events, queryGenres) => {
 module.exports = {
   recommend,
   fetch,
-  filter
+  filterKeys
 };
