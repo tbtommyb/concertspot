@@ -28,6 +28,7 @@ services:
     volumes:
       - webpack_output:/concertspot/build
       - ./client/src:/concertspot/src
+      - ./client/test:/concertspot/test
   setup-db:
     build:
       context: scripts

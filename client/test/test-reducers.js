@@ -1,6 +1,6 @@
 import expect from "expect";
 import moment from "moment";
-import * as reducers from "../../src/app/reducers";
+import * as reducers from "../src/reducers";
 
 describe("Maps reducer", () => {
 
