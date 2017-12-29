@@ -22,7 +22,7 @@ lab.experiment("POST to /api", () => {
     };
 
     lab.experiment("with a valid payload", () => {
-        const validPayload = {
+        const payload = {
             query: "ben UFO",
             mindate: moment().format("YYYY-MM-DD"),
             maxdate: moment().add(3, "days").format("YYYY-MM-DD"),
@@ -31,13 +31,53 @@ lab.experiment("POST to /api", () => {
             radius: 2.0
         };
 
+        const expectedFields = [
+            "artists",
+            "date",
+            "description",
+            "genres",
+            "id",
+            "imageurl",
+            "largeimageurl",
+            "link",
+            "price",
+            "tickets",
+            "title",
+            "venue",
+            "times",
+            "active",
+            "weighting"
+        ];
+
+
+        const maxWeighting = 100;
+
         lab.test("returns a JSON list of events", async () => {
-            const response = await server.inject({ ...postOptions, payload: validPayload });
+            const response = await server.inject({ ...postOptions, payload });
 
             expect(response.statusCode).to.equal(200);
             expect(response.headers["content-type"])
                 .to.equal("application/json; charset=utf-8");
             expect(response.result.events).to.be.an.array();
+        });
+
+        lab.test("returns events with required fields", async () => {
+            const response = await server.inject({ ...postOptions, payload });
+            const event = response.result.events[0];
+
+            expect(event).to.only.include(expectedFields);
+        });
+
+        lab.test("returns events in descending order of weighting", async () => {
+            const response = await server.inject({ ...postOptions, payload });
+            const events = response.result.events;
+
+            let weighting = maxWeighting;
+
+            events.forEach(event => {
+                expect(event.weighting).to.satisfy(w => w <= weighting);
+                weighting = event.weighting;
+            });
         });
     });
 
