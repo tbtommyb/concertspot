@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --config webpack.browser.config.js --watch --watch-poll",
-    "test": "mocha test --compilers js:babel-register --recursive --require ignore-styles"
+    "test": "mocha test --compilers js:babel-register --recursive --require ignore-styles",
+    "build": "NODE_ENV=production webpack -p --config webpack.production.config.js"
   },
   "dependencies": {
     "css-loader": "^0.23.1",

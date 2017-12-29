@@ -16,3 +16,18 @@ build-server:
 .PHONY: build-client
 build-client:
 	docker-compose build client
+
+.PHONY: client-production-build
+client-production-build:
+	docker-compose run client npm run build
+
+.PHONY: setup-db
+setup-db:
+	docker-compose run setup-db
+
+.PHONY: run-server
+run-server:
+	docker-compose up server
+
+.PHONY: deploy
+deploy: client-production-build run-server
