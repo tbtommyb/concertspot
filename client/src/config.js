@@ -1,8 +1,5 @@
 import random from "./scripts/random.js";
 
-const PRODUCTION_PATH = "https://www.concertspot.co.uk";
-const DEV_PATH = "http://localhost:8080";
-
 const config = {
     env: process.env.NODE_ENV || "dev",
     event: {
@@ -27,22 +24,10 @@ const config = {
         radius: 3,
         range: 3
     },
-    splash: {
-        heading: "Find the perfect gig",
-        message: "Discover great new events. Just enter the music you're looking for and your location. We'll do the rest."
-    },
     messages: {
         noResults: "No events were found. Please try different search terms",
         error: "Sorry, something went wrong. Please try again",
         validation: "invalid date"
-    },
-    placeholder: {
-        artist: "artist / genre",
-        location: "town / postcode",
-        submit: "Find events"
-    },
-    url: {
-        search: (process.env.NODE_ENV === "production" ? PRODUCTION_PATH : DEV_PATH) + "/api/search",
     },
     splashImages: [
         {

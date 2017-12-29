@@ -75,15 +75,15 @@ export class SearchInput extends Component {
                         <Field name="query"
                             component="input"
                             type="text"
-                            aria-labelledby={config.placeholder.artist}
-                            placeholder={config.placeholder.artist}/>
+                            aria-labelledby="artist"
+                            placeholder=""/>
                     </div>
                     <div className="whole-row centered">
                         <Field name="location"
                             component="input"
                             type="text"
-                            aria-labelledby={config.placeholder.location}
-                            placeholder={config.placeholder.location}/>
+                            aria-labelledby="location"
+                            placeholder=""/>
                     </div>
                     <div className="whole-row centered">
                         <button className="search-btn left" type="button" onClick={this.handleClick}>{buttonText}</button>

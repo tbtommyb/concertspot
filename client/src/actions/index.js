@@ -142,7 +142,7 @@ export function fetchEventsFailure(search, error) {
 export function fetchEvents(search) {
     return function(dispatch) {
         dispatch(fetchEventsRequest(search));
-        return fetch(config.url.search, {
+        return fetch("/api/search", {
             credentials: "include",
             method: "POST",
             headers: {

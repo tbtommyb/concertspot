@@ -17,22 +17,22 @@ export class Splash extends Component {
         return (
             <div className="l-contained">
                 <div className="splash">
-                    <h1 className="splash-heading">{config.splash.heading}</h1>
-                    <p className="splash-message">{config.splash.message}</p>
+                    <h1 className="splash-heading">Find the perfect gig</h1>
+                    <p className="splash-message">Discover great new events. Just enter the music you're looking for and your location. We'll do the rest.</p>
                     <div className="search l-splash is-collapsed">
                         <form onSubmit={handleSubmit(this.props.submitSearch)} id="splash-form">
                             <Field name="query"
                                 component="input"
                                 role="input"
                                 type="text"
-                                aria-labelledby={config.placeholder.artist}
-                                placeholder={config.placeholder.artist}/>
+                                aria-labelledby="query"
+                                placeholder="artist / genre"/>
                             <Field name="location"
                                 component="input"
                                 type="text"
-                                aria-labelledby={config.placeholder.location}
-                                placeholder={config.placeholder.location}/>
-                            <button ref="submit" type="submit">{config.placeholder.submit}</button>
+                                aria-labelledby="location"
+                                placeholder="town / postcode"/>
+                            <button ref="submit" type="submit">Find events</button>
                         </form>
                     </div>
                 </div>
