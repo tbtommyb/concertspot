@@ -1,6 +1,6 @@
 require("env2")(__dirname + "/config.env");
 
-const server = require("./server");
+const initialiseServer = require("./server");
 const { cacheGenreList } = require("./tasks.js");
 
 cacheGenreList((err) => {
@@ -9,7 +9,15 @@ cacheGenreList((err) => {
     }
 });
 
-server.start(err => {
-    if(err) { throw new Error(err); }
-    console.log(`Server running on ${server.info.uri}`);
-});
+async function start() {
+    try {
+        const server = await initialiseServer();
+        await server.start();
+        console.log(`Server running on ${server.info.uri}`);
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+start();
