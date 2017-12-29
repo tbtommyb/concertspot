@@ -6,7 +6,7 @@ COPY package*.json ./
 COPY .babelrc ./
 COPY *.config* ./
 
-RUN npm install webpack -g
+RUN npm install webpack mocha -g
 
 RUN npm install
 

@@ -1,7 +1,7 @@
 import expect from "expect";
 import React from "react";
 import { shallow } from "enzyme";
-import { SearchInput } from "../../src/app/components/SearchInputComponent.jsx";
+import { SearchInput } from "../src/components/SearchInputComponent.jsx";
 
 function setup() {
     const props = {

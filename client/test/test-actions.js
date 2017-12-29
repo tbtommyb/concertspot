@@ -1,5 +1,5 @@
 import expect from "expect";
-import * as actions from "../../src/app/actions";
+import * as actions from "../src/actions";
 
 describe("Actions", () => {
 

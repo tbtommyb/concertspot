@@ -1,7 +1,7 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import * as router from "react-router";
-import * as actions from "../../src/app/actions";
+import * as actions from "../src/actions";
 import nock from "nock";
 import moment from "moment";
 import expect from "expect";
@@ -71,8 +71,7 @@ describe("Fetching events", () => {
     });
 
     it("successfully handles normal case", () => {
-        nock("http://localhost:8000")
-            //.persist()
+        nock("http://localhost:8080")
             .post("/api/search")
             .reply(200, { events });
 
@@ -89,7 +88,7 @@ describe("Fetching events", () => {
     });
 
     it("creates FETCH_EVENTS_FAILURE when no results are returned", () => {
-        nock("http://localhost:8000")
+        nock("http://localhost:8080")
             .persist()
             .post("/api/search")
             .reply(400, "Bad Request");
