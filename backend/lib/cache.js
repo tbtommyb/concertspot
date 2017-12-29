@@ -1,6 +1,10 @@
 const redis = require("redis");
 const md5 = require("md5");
 const console = require("../server/logging.js");
+const bluebird = require("bluebird");
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
 
 const client = redis.createClient({ host: "redis" });
 const hashFields = ["mindate", "maxdate", "radius", "lat", "lng"];
@@ -38,11 +42,9 @@ function add(cacheId, data, expiration = defaultExpiration) {
     }
 }
 
-function get(cacheId, cb) {
-    client.get(cacheId, (err, result) => {
-        if(err) { return cb(err); }
-        return cb(null, JSON.parse(result));
-    });
+async function get(cacheId) {
+    const result = await client.getAsync(cacheId);
+    return JSON.parse(result);
 }
 
 function exists(cacheId) {

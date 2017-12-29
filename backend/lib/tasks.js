@@ -10,65 +10,53 @@ const sanitise = (query) => {
     return query.toLowerCase().replace(new RegExp(TERMS.join("|")), "").trim();
 };
 
-const checkIfGenre = (query, cb) => {
-    cache.get(cache.generateGenreListId(), (err, genres) => {
-        if(err) { return cb(err); }
-        const sanitisedQuery = sanitise(query);
-        const results = [];
-        if(genres.includes(sanitisedQuery)) {
-            results.push({
-                name: sanitisedQuery,
-                weighting: 1.0
-            });
-        }
-        return cb(null, results);
-    });
-};
+async function checkIfGenre(query) {
+    const genres = await cache.get(cache.generateGenreListId());
+    const sanitisedQuery = sanitise(query);
 
-const fetchEvents = (query, cb) => {
+    const results = [];
+    if(genres.includes(sanitisedQuery)) {
+        results.push({ name: sanitisedQuery, weighting: 1.0 });
+    }
+
+    return results;
+}
+
+async function fetchEvents(query) {
     const eventSearchId = cache.generateEventSearchId(query);
-    cache.get(eventSearchId, (err, events) => {
-        if(err) { return cb(err); }
-        if(events) { return cb(null, events); }
-        fetch(query, (err, resp) => {
-            if(err) { return cb(err); }
-            const filteredEvents = resp.map(filter);
-            cache.add(eventSearchId, filteredEvents);
-            cb(null, filteredEvents);
-        });
-    });
-};
+    const events = await cache.get(eventSearchId);
 
-const getGenresForQuery = (query, cb) => {
+    if(events) { return events; }
+
+    const resp = await fetch(query);
+    cache.add(eventSearchId, resp.map(filter)); // TODO change name of filter
+    const cachedEvents = cache.get(eventSearchId);
+    return cachedEvents;
+}
+
+async function getGenresForQuery(query) {
+    // TODO improve names in this function
     const queryGenreId = cache.generateQueryGenreId(query);
-    cache.get(queryGenreId, (err, genres) => {
-        if(err) { return cb(err); }
-        if(genres) { return cb(null, genres); }
-        // Check if query matches any artists
-        getGenresForArtist(query, (err, genres) => {
-            if(err) { return cb(err); }
-            if(genres.length) {
-                // Matched - query is an artist
-                cache.add(queryGenreId, genres);
-                return cb(null, genres);
-            }
-            // Check if query matches any genres
-            checkIfGenre(query, (err, genres) => {
-                if(err) { return cb(err); }
-                cache.add(queryGenreId, genres);
-                return cb(null, genres);
-            });
-        });
-    });
-};
+    const genres = await cache.get(queryGenreId);
 
-const cacheGenreList = (cb) => {
-    getGenreList((err, genres) => {
-        if(err) { return cb(err); }
-        cache.add(cache.generateGenreListId(), genres);
-        cb(null);
-    });
-};
+    if(genres) { return genres; }
+
+    const artistGenres = await getGenresForArtist(query);
+    if(artistGenres.length) {
+        cache.add(queryGenreId, artistGenres);
+        return artistGenres;
+    }
+    const queryGenres = await checkIfGenre(query);
+    if(queryGenres.length) {
+        cache.add(queryGenreId, queryGenres);
+        return queryGenres;
+    }
+}
+
+async function cacheGenreList() {
+    const genres = await getGenreList();
+    cache.add(cache.generateGenreListId(), genres);
+}
 
 module.exports = {
   fetchEvents,

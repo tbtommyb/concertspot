@@ -1,18 +1,19 @@
 const moment = require("moment");
+const initialiseServer = require("../server");
 const Code = require("code");
 const expect = Code.expect;
 const Lab = require("lab");
 const lab = exports.lab = Lab.script();
 
-const server = require("../server");
-
 lab.test("GET / returns successfully", async () => {
+    const server = await initialiseServer();
     const response = await server.inject({ method: "GET", url: "/" });
 
     expect(response.statusCode).to.equal(200);
 });
 
-lab.experiment("POST to /api", () => {
+lab.experiment("POST to /api", async () => {
+    const server = await initialiseServer();
     const postOptions = {
         method: "POST",
         url: "/api/search",
