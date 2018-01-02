@@ -42,8 +42,6 @@ var browserPlugins = [
 
 var config = {
     entry: getEntrySources([
-        "react-widgets-webpack!./react-widgets.config.js",
-        "font-awesome-webpack!./font-awesome.config.js",
         APP_DIR + "/index.jsx"
     ]),
     output: {

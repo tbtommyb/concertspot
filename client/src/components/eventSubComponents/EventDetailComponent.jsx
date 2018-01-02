@@ -1,5 +1,5 @@
-
 import React, { PropTypes } from "react";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 const EventDetail = props => {
     const { type, content, icon } = props;
@@ -8,8 +8,8 @@ const EventDetail = props => {
         <div className="table">
             <span className="screen-reader">{type}</span>
             <p className="table-row">
-                <span className={"table-cell fa " + icon} aria-hidden="true"></span>
-                    {"\u00a0" + content}
+                <FontAwesomeIcon icon={icon} aria-hidden="true"/>
+                {"\u00a0" + content}
             </p>
         </div>
     );

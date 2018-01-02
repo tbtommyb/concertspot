@@ -1,4 +1,3 @@
-
 // Colours
 $background-base: #231f31;
 $box-shadow: rgba(0, 0, 0, .36);
@@ -19,3 +18,7 @@ $input-font-size: .8em;
 
 $curve: 20px;
 
+$font-path: "~react-widgets/lib/fonts";
+$img-path: "~react-widgets/lib/img";
+
+@import "~react-widgets/lib/scss/react-widgets";
