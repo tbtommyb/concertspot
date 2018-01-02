@@ -10,9 +10,9 @@ const NavBar = props => {
             <ul>
                 <li className="subnav left">
                     <ul>
-                        <li className="subnav-item"><Link to={"/"} className="logo">ConcertSpot</Link></li>
-                        <li className="subnav-item"><Link to={"/events"}>events</Link></li>
-                        <li className="subnav-item"><Link to={"/contact"}>contact</Link></li>
+                        <li className="subnav-item"><Link to="/" className="logo">ConcertSpot</Link></li>
+                        <li className="subnav-item"><Link to="/events">events</Link></li>
+                        <li className="subnav-item"><Link to="/contact">contact</Link></li>
                     </ul>
                 </li>
             </ul>

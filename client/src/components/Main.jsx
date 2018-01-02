@@ -1,24 +1,21 @@
-// Only render sidebar in client to avoid FOUC from Font Awesome
 import React from "react";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import PropTypes from "prop-types";
 import Results from "./ResultsComponent.jsx";
 import MapContainer from "../containers/MapContainer";
+import MediaQuery from "react-responsive";
+// const MediaQuery = require("react-responsive");
 
 require("../styles/App.scss");
-const MediaQuery = require("react-responsive");
 
 const Main = props => {
     return (
         <div>
-            {process.env.RENDER_ENV === "browser" ?
-                <CSSTransitionGroup transitionName="sidebar-slide"
-                    transitionEnterTimeout={600} transitionLeaveTimeout={600}
-                    transitionAppear={true} transitionAppearTimeout={600}>
-                    <Results {...props} />
-                </CSSTransitionGroup>
-                : null
-            }
+            <CSSTransitionGroup transitionName="sidebar-slide"
+                transitionEnterTimeout={600} transitionLeaveTimeout={600}
+                transitionAppear={true} transitionAppearTimeout={600}>
+                <Results {...props} />
+            </CSSTransitionGroup>
             <MediaQuery minWidth={640}>
                 <MapContainer events={props.events}/>
             </MediaQuery>

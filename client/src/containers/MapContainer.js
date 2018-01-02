@@ -1,4 +1,3 @@
-
 import { connect } from "react-redux";
 import { updateMap, openEvent, closeEvent  } from "../actions";
 import MapComponent from "../components/MapComponent.jsx";
