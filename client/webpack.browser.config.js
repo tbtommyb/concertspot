@@ -22,10 +22,14 @@ var browserLoaders = [
         test: /\.jsx?/,
         include: APP_DIR,
         exclude: /node_modules/,
-        loader: "babel-loader",
-        query: {
-            cacheDirectory: true
-        }
+        use: [
+            {
+                loader: "babel-loader",
+                options: {
+                    cacheDirectory: true,
+                }
+            },
+        ],
     }
 ];
 
@@ -53,7 +57,7 @@ var config = {
 };
 
 var browserConfig = Object.assign({}, baseConfig, config);
-browserConfig.module.loaders.push(...browserLoaders);
+browserConfig.module.rules.push(...browserLoaders);
 browserConfig.plugins.push(...browserPlugins);
 
 module.exports = browserConfig;

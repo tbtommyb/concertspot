@@ -7,7 +7,7 @@ import routes from "./routes.jsx";
 import config from "./config.js";
 
 if(process.env.RENDER_ENV === "browser") {
-    require("style!css!less!font-awesome-webpack/font-awesome-styles.loader!font-awesome-webpack/font-awesome.config.js");
+    require("style-loader!css-loader!less-loader!font-awesome-webpack/font-awesome-styles.loader!font-awesome-webpack/font-awesome.config.js");
 }
 
 export const store = configureStore({
