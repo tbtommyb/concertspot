@@ -1,8 +1,9 @@
 // Only render sidebar in client to avoid FOUC from Font Awesome
-import React, { PropTypes } from "react";
+import React from "react";
+import CSSTransitionsGroup from "react-transition-group/CSSTransitionGroup";
+import PropTypes from "prop-types";
 import Results from "./ResultsComponent.jsx";
 import MapContainer from "../containers/MapContainer";
-import ReactCSSTransitionsGroup from "react-addons-css-transition-group";
 
 require("../styles/App.scss");
 const MediaQuery = require("react-responsive");
@@ -11,11 +12,11 @@ const Main = props => {
     return (
         <div>
             {process.env.RENDER_ENV === "browser" ?
-                <ReactCSSTransitionsGroup transitionName="sidebar-slide"
+                <CSSTransitionsGroup transitionName="sidebar-slide"
                     transitionEnterTimeout={600} transitionLeaveTimeout={600}
                     transitionAppear={true} transitionAppearTimeout={600}>
                     <Results {...props} />
-                </ReactCSSTransitionsGroup>
+                </CSSTransitionsGroup>
                 : null
             }
             <MediaQuery minWidth={640}>

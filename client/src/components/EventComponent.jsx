@@ -1,5 +1,5 @@
-
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import EventDetailList from "./eventSubComponents/EventDetailListComponent.jsx";
 import EventDescription from "./eventSubComponents/EventDescriptionComponent.jsx";
 

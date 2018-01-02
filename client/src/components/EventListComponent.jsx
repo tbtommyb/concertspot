@@ -1,10 +1,10 @@
-
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import CSSTransitionsGroup from "react-transition-group/CSSTransitionGroup";
+import PropTypes from "prop-types";
 import smoothScroll from "../scripts/smoothScroll.js";
 import config from "../config.js";
 import Event from "./EventComponent.jsx";
-import ReactCSSTransitionsGroup from "react-addons-css-transition-group";
 
 class EventList extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class EventList extends Component {
         return (
             <div className="results-list" ref="eventlist">
                 <ul>
-                    <ReactCSSTransitionsGroup transitionName="add-event" transitionEnterTimeout={300}
+                    <CSSTransitionsGroup transitionName="add-event" transitionEnterTimeout={300}
                                               transitionLeaveTimeout={300}>
                         {Object.keys(events).map(id => {
                             const active = events[id].active;
@@ -41,7 +41,7 @@ class EventList extends Component {
                             if(active) { props.ref = "activeEvent"; }
                             return <Event {...props} />;
                         })}
-                    </ReactCSSTransitionsGroup>
+                    </CSSTransitionsGroup>
                 </ul>
             </div>
         );

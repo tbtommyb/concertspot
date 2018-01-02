@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Field, reduxForm } from "redux-form";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import NumberPicker from "react-widgets/lib/NumberPicker";
