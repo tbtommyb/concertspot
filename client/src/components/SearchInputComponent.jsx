@@ -4,11 +4,15 @@ import { Field, reduxForm } from "redux-form";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import moment from "moment";
-import momentLocalizer from "react-widgets/lib/localizers/moment";
-import numberLocalizer from "react-widgets/lib/localizers/simple-number";
+import momentLocalizer from "react-widgets-moment";
+import numberLocalizer from "react-widgets-simple-number";
 import config from "../config.js";
 
 require("../styles/SearchInput.scss");
+
+moment.locale("en");
+momentLocalizer();
+numberLocalizer();
 
 // Needed to work with redux-form
 const RenderDateTimePicker = props => {
@@ -48,9 +52,6 @@ const validate = values => {
     }
     return errors;
 };
-
-momentLocalizer(moment);
-numberLocalizer();
 
 export class SearchInput extends Component {
     constructor(props) {
