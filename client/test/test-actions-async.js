@@ -4,11 +4,12 @@ import * as router from "react-router";
 import * as actions from "../src/actions";
 import nock from "nock";
 import moment from "moment";
-import expect from "expect";
+import chai from "chai";
 import sinon from "sinon";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const expect = chai.expect;
 
 before(() => {
     window.google = {
@@ -55,12 +56,12 @@ describe("Submitting a new search", () => {
         ];
 
         router.browserHistory = { push: () => {} };
-        let browserHistoryPushStub = sinon.stub(router.browserHistory, "push", () => { });
+        let browserHistoryPushStub = sinon.stub(router.browserHistory, "push");
 
         return store.dispatch(actions.submitSearch(search))
             .then(() => {
-                expect(browserHistoryPushStub.called).toBe(true);
-                expect(store.getActions()).toEqual(expectedActions);
+                expect(browserHistoryPushStub.called).to.be.true;
+                expect(store.getActions()).to.eql(expectedActions);
             });
     });
 
@@ -83,7 +84,7 @@ describe("Fetching events", () => {
 
         return store.dispatch(actions.fetchEvents(expectedSubmittedSearch))
             .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
+                expect(store.getActions()).to.eql(expectedActions);
             });
     });
 
@@ -98,10 +99,10 @@ describe("Fetching events", () => {
         return store.dispatch(actions.fetchEvents(expectedSubmittedSearch))
             .then(() => {
                 const actions = store.getActions();
-                expect(actions[0].type).toEqual("FETCH_EVENTS_REQUEST");
-                expect(actions[0]).toIncludeKeys(["type", "search"]);
-                expect(actions[1].type).toEqual("FETCH_EVENTS_FAILURE");
-                expect(actions[1]).toIncludeKeys(["type", "search", "error"]);
+                expect(actions[0].type).to.equal("FETCH_EVENTS_REQUEST");
+                expect(actions[0]).to.have.all.keys(["type", "search"]);
+                expect(actions[1].type).to.equal("FETCH_EVENTS_FAILURE");
+                expect(actions[1]).to.have.all.keys(["type", "search", "error"]);
             });
     });
 
