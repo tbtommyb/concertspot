@@ -1,5 +1,6 @@
 // TOOD img and genres should be in different component
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 const EventDescription = props => {
     const { event: {active, largeimageurl, genres}, dangerDescription } = props;
