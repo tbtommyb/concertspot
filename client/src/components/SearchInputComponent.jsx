@@ -19,11 +19,17 @@ numberLocalizer();
 // Needed to work with redux-form
 const RenderDateTimePicker = props => {
     const { input, label, meta: { error, dirty } } = props;
+    const value = input.value;
     const validationClass = "search-validation-message" + (dirty && error ? "" : " is-hidden");
     return (
         <div className="search-details-item whole-row">
             <label className="search-input-label">{label}</label>
-            <DateTimePicker {...input} {...props} format={"D MMM"} onBlur={null}/>
+            <DateTimePicker
+              {...input}
+              {...props}
+              format={"D MMM"}
+              onBlur={null}
+              value={!value ? null : new Date(value)}/>
             <span className={validationClass}>{config.messages.validation}</span>
         </div>
     );
@@ -134,10 +140,6 @@ SearchInput.propTypes = {
 const SearchInputForm = reduxForm({
     form: "search-input",
     validate,
-    initialValues: {
-        maxDate: new Date(),
-        minDate: new Date(),
-    },
 })(SearchInput);
 
 export default SearchInputForm;
