@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { Field, reduxForm } from "redux-form";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import NumberPicker from "react-widgets/lib/NumberPicker";
-import "react-widgets/lib/scss/react-widgets.scss";
 import moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import numberLocalizer from "react-widgets-simple-number";
 import config from "../config.js";
 
-require("../styles/SearchInput.scss");
-require("../styles/react-widgets.scss");
+import "react-widgets/lib/scss/react-widgets.scss";
+import "../styles/SearchInput.scss";
+import "../styles/Widgets.scss";
 
 moment.locale("en");
 momentLocalizer();

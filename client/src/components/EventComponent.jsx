@@ -4,7 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import EventDetailList from "./eventSubComponents/EventDetailListComponent.jsx";
 import EventDescription from "./eventSubComponents/EventDescriptionComponent.jsx";
 
-require("../styles/Event.scss");
+import "../styles/Event.scss";
 
 class Event extends Component {
     constructor(props) {

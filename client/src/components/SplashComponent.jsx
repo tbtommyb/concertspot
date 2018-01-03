@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Field, reduxForm } from "redux-form";
 import config from "../config.js";
 
-require("../styles/Splash.scss");
+import "../styles/Splash.scss";
 
 export class Splash extends Component {
     constructor(props) {

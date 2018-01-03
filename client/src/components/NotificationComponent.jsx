@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-require("../styles/Notification.scss");
+import "../styles/Notification.scss";
 
 const Notification = props => {
     const { message } = props;

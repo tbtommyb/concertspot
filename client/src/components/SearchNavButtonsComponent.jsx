@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-require("../styles/NavButton.scss");
+import "../styles/NavButton.scss";
 
 const SearchNavButtons = props => {
     const { currentSearch, searchCount, searches, setCurrentSearch } = props;

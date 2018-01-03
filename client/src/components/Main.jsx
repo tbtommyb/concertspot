@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import Results from "./ResultsComponent.jsx";
 import MapContainer from "../containers/MapContainer";
 import MediaQuery from "react-responsive";
-// const MediaQuery = require("react-responsive");
 
-require("../styles/App.scss");
+import "../styles/App.scss";
 
 const Main = props => {
     return (
