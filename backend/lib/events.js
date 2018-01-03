@@ -22,7 +22,7 @@ const buildQueryOptions = (query, offset) => {
         api_key: process.env.SK_KEY,
         minDate: moment(mindate).format("YYYY-MM-DD"),
         maxDate: moment(maxdate).format("YYYY-MM-DD"),
-        "eventcodes[]": ["CLUB", "LIVE"], // TODO check this is working with the qsStringifyOptions
+        eventcodes: ["CLUB", "LIVE"],
         latitude: lat,
         longitude: lng,
         radius: radius,
@@ -30,7 +30,7 @@ const buildQueryOptions = (query, offset) => {
         limit: PAGE_LIMIT,
         description: true
     };
-    options.stringifyOptions = {
+    options.qsStringifyOptions = {
         arrayFormat: "brackets"
     };
     if(offset) {
