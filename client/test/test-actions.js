@@ -1,5 +1,7 @@
-import expect from "expect";
 import * as actions from "../src/actions";
+import chai from "chai";
+
+const expect = chai.expect;
 
 describe("Actions", () => {
 
@@ -24,7 +26,7 @@ describe("Actions", () => {
             type: "TOGGLE_EVENT",
             id
         };
-        expect(actions.toggleEvent(id)).toEqual(expectedAction);
+        expect(actions.toggleEvent(id)).to.eql(expectedAction);
     });
 
     it("should create an action to open an event", () => {
@@ -32,7 +34,7 @@ describe("Actions", () => {
             type: "OPEN_EVENT",
             id
         };
-        expect(actions.openEvent(id)).toEqual(expectedAction);
+        expect(actions.openEvent(id)).to.eql(expectedAction);
     });
 
     it("should create an action to close an event", () => {
@@ -40,7 +42,7 @@ describe("Actions", () => {
             type: "CLOSE_EVENT",
             id
         };
-        expect(actions.closeEvent(id)).toEqual(expectedAction);
+        expect(actions.closeEvent(id)).to.eql(expectedAction);
     });
 
     // Map action creators
@@ -56,7 +58,7 @@ describe("Actions", () => {
             type: "UPDATE_MAP",
             changes
         };
-        expect(actions.updateMap(changes)).toEqual(expectedAction);
+        expect(actions.updateMap(changes)).to.eql(expectedAction);
     });
 
     it("should create an action to set the map zoom level", () => {
@@ -69,20 +71,20 @@ describe("Actions", () => {
             type: "UPDATE_MAP",
             changes
         };
-        expect(actions.updateMap(changes)).toEqual(expectedAction);
+        expect(actions.updateMap(changes)).to.eql(expectedAction);
     });
 
     // Search action creators (sync)
 
     it("should create an action to add a search", () => {
-        expect(actions.addSearch(search)).toEqual({
+        expect(actions.addSearch(search)).to.eql({
             type: "ADD_SEARCH",
             search
         });
     });
 
     it("should create an action to set the current search", () => {
-        expect(actions.setCurrentSearch(search)).toEqual({
+        expect(actions.setCurrentSearch(search)).to.eql({
             type: "SET_CURRENT_SEARCH",
             search
         });
@@ -91,14 +93,14 @@ describe("Actions", () => {
     // Event fetching action creators (sync)
 
     it("should create an action to fetch events", () => {
-        expect(actions.fetchEventsRequest(search)).toEqual({
+        expect(actions.fetchEventsRequest(search)).to.eql({
             type: "FETCH_EVENTS_REQUEST",
             search
         });
     });
 
     it("should create an action for successful event requests", () => {
-        expect(actions.fetchEventsSuccess(search, json)).toEqual({
+        expect(actions.fetchEventsSuccess(search, json)).to.eql({
             type: "FETCH_EVENTS_SUCCESS",
             search,
             events: json.events
@@ -107,7 +109,7 @@ describe("Actions", () => {
 
     it("should create an action for failed event requests", () => {
         const error = "NO RESPONSE";
-        expect(actions.fetchEventsFailure(search, error)).toEqual({
+        expect(actions.fetchEventsFailure(search, error)).to.eql({
             type: "FETCH_EVENTS_FAILURE",
             search,
             error

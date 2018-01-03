@@ -1,8 +1,8 @@
 const Joi = require("joi");
 const parallel = require("async/parallel");
 const moment = require("moment");
-const { fetchEvents, getGenresForQuery } = require("../tasks");
-const { recommend } = require("../events");
+const { fetchEvents, getGenresForQuery } = require("../lib/tasks");
+const { recommend } = require("../lib/events");
 
 module.exports = [
     {
@@ -36,24 +36,11 @@ module.exports = [
                 }
             }
         },
-        handler: (request, reply) => {
-            parallel({
-                events: (cb) => {
-                    fetchEvents(request.payload, (err, events) => {
-                        if(err) { return cb(err); }
-                        cb(null, events);
-                    });
-                },
-                genres: (cb) => {
-                    getGenresForQuery(request.payload.query, (err, genres) => {
-                        if(err) { return  cb(err); }
-                        cb(null, genres);
-                    });
-                }
-            }, (err, results) => {
-                if(err) { return reply(err).statusCode(500); }
-                return reply({events: recommend(results.events, results.genres)});
-            });
+        handler: async (request, h) => {
+            const events = await fetchEvents(request.payload);
+            const genres = await getGenresForQuery(request.payload.query);
+
+            return { events: recommend(events, genres) };
         }
     }
 ];

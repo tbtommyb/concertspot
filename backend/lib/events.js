@@ -1,15 +1,15 @@
-const request = require("request");
+const request = require("request-promise-native");
 const moment = require("moment");
 const each = require("async/each");
 
-const RESULTS_LIMIT = 100;
+const PAGE_LIMIT = 100;
 const RESULTS_ORDER = 4;
 
 const buildOffsets = (totalCount) => {
     const offsets = [];
-    const limit = Math.floor(parseInt(totalCount, 10) / RESULTS_LIMIT);
+    const limit = totalCount / PAGE_LIMIT;
     for(let i = 1; i <= limit; i++) {
-        offsets.push(RESULTS_LIMIT * i);
+        offsets.push(PAGE_LIMIT * i);
     }
     return offsets;
 };
@@ -22,15 +22,15 @@ const buildQueryOptions = (query, offset) => {
         api_key: process.env.SK_KEY,
         minDate: moment(mindate).format("YYYY-MM-DD"),
         maxDate: moment(maxdate).format("YYYY-MM-DD"),
-        "eventcodes[]": ["CLUB", "LIVE"], // TODO check this is working with the qsStringifyOptions
+        eventcodes: ["CLUB", "LIVE"],
         latitude: lat,
         longitude: lng,
         radius: radius,
         order: RESULTS_ORDER,
-        limit: RESULTS_LIMIT,
+        limit: PAGE_LIMIT,
         description: true
     };
-    options.stringifyOptions = {
+    options.qsStringifyOptions = {
         arrayFormat: "brackets"
     };
     if(offset) {
@@ -39,38 +39,33 @@ const buildQueryOptions = (query, offset) => {
     return options;
 };
 
-const fetch = (query, cb) => {
+async function fetchPage(query, eventList, offset = 0) {
+    const res = await request.get(buildQueryOptions(query, offset));
+    const response = JSON.parse(res);
+
+    eventList.push(...response.results);
+
+    return +response.totalcount;
+}
+
+async function fetch(query) {
     if(!process.env.SK_URL || !process.env.SK_KEY) {
         throw new Error("Skiddle URL or key not provided");
     }
-    let events = [];
-    request.get(buildQueryOptions(query), (err, res, body) => {
-        if(err) { return cb(err); }
-        if(res.statusCode !== 200) { return cb(body); }
 
-        const response = JSON.parse(body);
-        events = events.concat(response.results);
-        const pageOffsets = buildOffsets(response.totalcount);
+    let eventList = [];
 
-        // No offsets so we don't need to fetch more results pages
-        if(!pageOffsets.length) {
-            return cb(null, events);
-        }
+    let count = await fetchPage(query, eventList);
+    if(count <= PAGE_LIMIT) { return eventList; }
 
-        each(pageOffsets, (offset, callback) => {
-            request.get(buildQueryOptions(query, offset), (err, res, body) => {
-                if(err) { return callback(err); }
-                events = events.concat(JSON.parse(body).results);
-                callback();
-            });
-        }, (err) => {
-            if(err) { return cb(err); }
-            cb(null, events);
-        });
-    });
-};
+    const pageOffsets = buildOffsets(count);
 
-const filter = event => {
+    await Promise.all(pageOffsets.map(offset => fetchPage(query, eventList, offset)));
+
+    return eventList;
+}
+
+const filterKeys = event => {
     const keys = {
         "artists": "artists",
         "date": "date",
@@ -136,5 +131,5 @@ const recommend = (events, queryGenres) => {
 module.exports = {
   recommend,
   fetch,
-  filter
+  filterKeys
 };

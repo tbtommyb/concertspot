@@ -5,16 +5,11 @@ const routes = require("./routes");
 
 const port = process.env.PORT || 8000;
 
-const server = new Hapi.Server();
-
-server.connection({
-  port
-})
-
-server.register([Inert, Vision], err => {
-    if(err) throw new Error(err);
-
+async function initialiseServer() {
+    const server = new Hapi.Server({ port });
+    await server.register([Inert, Vision]);
     server.route(routes);
-});
+    return server;
+};
 
-module.exports = server;
+module.exports = initialiseServer;

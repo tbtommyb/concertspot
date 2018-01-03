@@ -1,9 +1,10 @@
-
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import EventDetailList from "./eventSubComponents/EventDetailListComponent.jsx";
 import EventDescription from "./eventSubComponents/EventDescriptionComponent.jsx";
 
-require("../styles/Event.scss");
+import "../styles/Event.scss";
 
 class Event extends Component {
     constructor(props) {
@@ -40,7 +41,9 @@ class Event extends Component {
                 <div className="item-details-wrapper">
                     <EventDetailList event={event} />
                     <div className="item-ticket-btn">
-                        <a target="_blank" rel="noreferrer noopener" href={link}>Tickets <span className="fa fa-chevron-right" aria-hidden="true"></span></a>
+                        <a target="_blank" rel="noreferrer noopener" href={link}>
+                          Tickets <FontAwesomeIcon icon="chevron-right" aria-hidden="true"/>
+                        </a>
                     </div>
                     <EventDescription event={event} dangerDescription={dangerText} />
                 </div>

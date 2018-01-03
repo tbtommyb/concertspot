@@ -22,10 +22,14 @@ var browserLoaders = [
         test: /\.jsx?/,
         include: APP_DIR,
         exclude: /node_modules/,
-        loader: "babel-loader",
-        query: {
-            cacheDirectory: true
-        }
+        use: [
+            {
+                loader: "babel-loader",
+                options: {
+                    cacheDirectory: true,
+                }
+            },
+        ],
     }
 ];
 
@@ -38,8 +42,6 @@ var browserPlugins = [
 
 var config = {
     entry: getEntrySources([
-        "react-widgets-webpack!./react-widgets.config.js",
-        "font-awesome-webpack!./font-awesome.config.js",
         APP_DIR + "/index.jsx"
     ]),
     output: {
@@ -53,7 +55,7 @@ var config = {
 };
 
 var browserConfig = Object.assign({}, baseConfig, config);
-browserConfig.module.loaders.push(...browserLoaders);
+browserConfig.module.rules.push(...browserLoaders);
 browserConfig.plugins.push(...browserPlugins);
 
 module.exports = browserConfig;

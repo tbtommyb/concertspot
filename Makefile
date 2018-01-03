@@ -1,5 +1,5 @@
 .PHONY: test
-test: build-server test-server test-client
+test: build-server build-client test-server test-client
 
 .PHONY: test-server
 test-server:

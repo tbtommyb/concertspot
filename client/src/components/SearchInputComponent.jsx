@@ -1,22 +1,35 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Field, reduxForm } from "redux-form";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import moment from "moment";
-import momentLocalizer from "react-widgets/lib/localizers/moment";
-import numberLocalizer from "react-widgets/lib/localizers/simple-number";
+import momentLocalizer from "react-widgets-moment";
+import numberLocalizer from "react-widgets-simple-number";
 import config from "../config.js";
 
-require("../styles/SearchInput.scss");
+import "react-widgets/lib/scss/react-widgets.scss";
+import "../styles/SearchInput.scss";
+import "../styles/Widgets.scss";
+
+moment.locale("en");
+momentLocalizer();
+numberLocalizer();
 
 // Needed to work with redux-form
 const RenderDateTimePicker = props => {
     const { input, label, meta: { error, dirty } } = props;
+    const value = input.value;
     const validationClass = "search-validation-message" + (dirty && error ? "" : " is-hidden");
     return (
         <div className="search-details-item whole-row">
             <label className="search-input-label">{label}</label>
-            <DateTimePicker {...input} {...props} format={"D MMM"} onBlur={null}/>
+            <DateTimePicker
+              {...input}
+              {...props}
+              format={"D MMM"}
+              onBlur={null}
+              value={!value ? null : new Date(value)}/>
             <span className={validationClass}>{config.messages.validation}</span>
         </div>
     );
@@ -48,9 +61,6 @@ const validate = values => {
     return errors;
 };
 
-momentLocalizer(moment);
-numberLocalizer();
-
 export class SearchInput extends Component {
     constructor(props) {
         super(props);
@@ -76,14 +86,14 @@ export class SearchInput extends Component {
                             component="input"
                             type="text"
                             aria-labelledby="artist"
-                            placeholder=""/>
+                            placeholder="artist / genre"/>
                     </div>
                     <div className="whole-row centered">
                         <Field name="location"
                             component="input"
                             type="text"
                             aria-labelledby="location"
-                            placeholder=""/>
+                            placeholder="location"/>
                     </div>
                     <div className="whole-row centered">
                         <button className="search-btn left" type="button" onClick={this.handleClick}>{buttonText}</button>
@@ -121,15 +131,6 @@ export class SearchInput extends Component {
     }
 }
 
-/* <Field
-                                name="radius"
-                                aria-labelledby="radius"
-                                component={renderNumberPicker}
-                                min={1}
-                                max={9}
-                                onBlur={null}
-                                label="radius"/> */
-
 SearchInput.displayName = "SearchInputComponent";
 SearchInput.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -138,7 +139,7 @@ SearchInput.propTypes = {
 
 const SearchInputForm = reduxForm({
     form: "search-input",
-    validate
+    validate,
 })(SearchInput);
 
 export default SearchInputForm;

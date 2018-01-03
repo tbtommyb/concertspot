@@ -1,10 +1,10 @@
-
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import CSSTransitionsGroup from "react-transition-group/CSSTransitionGroup";
+import PropTypes from "prop-types";
 import smoothScroll from "../scripts/smoothScroll.js";
 import config from "../config.js";
 import Event from "./EventComponent.jsx";
-import ReactCSSTransitionsGroup from "react-addons-css-transition-group";
 
 class EventList extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class EventList extends Component {
         toggleEvent(id);
     }
     componentDidUpdate(prevProps) {
-        const activeEvent = this.refs.activeEvent;
+        const activeEvent = this.activeEvent;
         if(activeEvent) {
             const eventNode = ReactDOM.findDOMNode(activeEvent);
             const listNode = ReactDOM.findDOMNode(this);
@@ -29,19 +29,21 @@ class EventList extends Component {
         return (
             <div className="results-list" ref="eventlist">
                 <ul>
-                    <ReactCSSTransitionsGroup transitionName="add-event" transitionEnterTimeout={300}
+                    <CSSTransitionsGroup transitionName="add-event" transitionEnterTimeout={300}
                                               transitionLeaveTimeout={300}>
                         {Object.keys(events).map(id => {
-                            const active = events[id].active;
+                            const event = events[id];
                             const props = {
                                 key: id,
-                                event: events[id],
+                                event,
                                 handleSelect: this._handleSelect
                             };
-                            if(active) { props.ref = "activeEvent"; }
+                            if(event.active) {
+                                props.ref = input => this.activeEvent = input;
+                            }
                             return <Event {...props} />;
                         })}
-                    </ReactCSSTransitionsGroup>
+                    </CSSTransitionsGroup>
                 </ul>
             </div>
         );

@@ -1,6 +1,8 @@
-import expect from "expect";
+import chai from "chai";
 import moment from "moment";
 import * as reducers from "../src/reducers";
+
+const expect = chai.expect;
 
 describe("Maps reducer", () => {
 
@@ -12,14 +14,14 @@ describe("Maps reducer", () => {
     it("should return state if not a relevant action", () => {
         expect(reducers.map(state, {
             type: "TEST_ACTION"
-        })).toEqual(state);
+        })).to.eql(state);
     });
 
     it("should set map center when a new search is added", () => {
         expect(reducers.map(state, {
             type: "ADD_SEARCH",
             search
-        })).toEqual({
+        })).to.eql({
             name: "testing",
             markers: {},
             center: {
@@ -38,7 +40,7 @@ describe("Maps reducer", () => {
                     lng: "-0.12775829999998223"
                 }
             }
-        })).toEqual({
+        })).to.eql({
             name: "testing",
             markers: {},
             center: {
@@ -54,7 +56,7 @@ describe("Maps reducer", () => {
             changes: {
                 zoom: 5
             }
-        })).toEqual({
+        })).to.eql({
             name: "testing",
             markers: {},
             zoom: 5
@@ -68,7 +70,7 @@ describe("Maps reducer", () => {
                 id: "10"
             },
             events
-        })).toEqual({
+        })).to.eql({
             name: "testing",
             markers: {
                 "10": [{
@@ -102,14 +104,14 @@ describe("Events reducer", () => {
     it("should return state if not a relevant action", () => {
         expect(reducers.events(state, {
             type: "TEST_ACTION"
-        })).toEqual(state);
+        })).to.eql(state);
     });
 
     it("should toggle the event's active property on TOGGLE_EVENT (false to true)", () => {
         expect(reducers.events(state, {
             type: "TOGGLE_EVENT",
             id: "123"
-        })).toEqual({
+        })).to.eql({
             "name": "test",
             "123": {
                 id: "123",
@@ -124,7 +126,7 @@ describe("Events reducer", () => {
         expect(reducers.events({"123": event}, {
             type: "TOGGLE_EVENT",
             id: "123"
-        })).toEqual({
+        })).to.eql({
             "123": {
                 id: "123",
                 title: "Test event",
@@ -137,7 +139,7 @@ describe("Events reducer", () => {
         expect(reducers.events(state, {
             type: "OPEN_EVENT",
             id: "123"
-        })).toEqual({
+        })).to.eql({
             "name": "test",
             "123": {
                 id: "123",
@@ -151,7 +153,7 @@ describe("Events reducer", () => {
         expect(reducers.events(state, {
             type: "CLOSE_EVENT",
             id: "123"
-        })).toEqual({
+        })).to.eql({
             "name": "test",
             "123": {
                 id: "123",
@@ -167,7 +169,7 @@ describe("Events reducer", () => {
             type: "FETCH_EVENTS_SUCCESS",
             search,
             events
-        })).toEqual({
+        })).to.eql({
             [event.id]: event
         });
     });
@@ -177,7 +179,7 @@ describe("CurrentSearch reducer", () => {
     it("should return initial state for unrelated actions", () => {
         expect(reducers.currentSearch({}, {
             type: "TEST_ACTION"
-        })).toEqual({});
+        })).to.eql({});
     });
 
     it("should return the ID of the search being set", () => {
@@ -186,7 +188,7 @@ describe("CurrentSearch reducer", () => {
             search: {
                 id: 5
             }
-        })).toEqual(5);
+        })).to.equal(5);
     });
 });
 
@@ -211,14 +213,14 @@ describe("Searches reducer", () => {
     it("should return the initial state", () => {
         expect(reducers.searches(undefined, {
             type: "TEST_ACTION"
-        })).toEqual({});
+        })).to.eql({});
     });
 
     it("should handle ADD_SEARCH correctly", () => {
         expect(reducers.searches({}, {
             type: "ADD_SEARCH",
             search
-        })).toEqual(testResult);
+        })).to.eql(testResult);
     });
 
     it("should set isFetching and isError correctly for FETCH_EVENTS_REQUEST", () => {
@@ -228,7 +230,7 @@ describe("Searches reducer", () => {
         expect(reducers.searches(testResult, {
             type: "FETCH_EVENTS_REQUEST",
             search
-        })).toEqual(expectedResult);
+        })).to.eql(expectedResult);
     });
 
     it("should set isFetching and isError correctly for FETCH_EVENTS_FAILURE", () => {
@@ -238,7 +240,7 @@ describe("Searches reducer", () => {
         expect(reducers.searches(testResult, {
             type: "FETCH_EVENTS_FAILURE",
             search
-        })).toEqual(expectedResult);
+        })).to.eql(expectedResult);
     });
 
     it("should set isFetching and isError correctly and set a list of events ids for FETCH_EVENTS_SUCCESS", () => {
@@ -250,7 +252,7 @@ describe("Searches reducer", () => {
             type: "FETCH_EVENTS_SUCCESS",
             search,
             events
-        })).toEqual(expectedResult);
+        })).to.eql(expectedResult);
     });
 
 });
@@ -266,14 +268,14 @@ describe("Input reducer", () => {
     it("should return state for unrelated actions", () => {
         expect(reducers.inputReducer(state), {
             type: "TEST_ACTION"
-        }).toEqual(state);
+        }).to.eql(state);
     });
 
     it("should update its values when SET_CURRENT_SEARCH dispatched", () => {
         expect(reducers.inputReducer(state, {
             type: "SET_CURRENT_SEARCH",
             search
-        })).toEqual({
+        })).to.eql({
             "search-input": {
                 values: {
                     query: search.query,

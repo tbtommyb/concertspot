@@ -1,5 +1,6 @@
+import React, { Component } from "react";
 import GoogleMap from "google-map-react";
-import React, { Component, PropTypes } from "react";
+import PropTypes from "prop-types";
 import config from "../config.js";
 import Marker from "./Marker.jsx";
 

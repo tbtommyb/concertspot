@@ -4,26 +4,57 @@ var config = {
     cache: true,
     devtool: "eval-source-map",
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.(css|scss|sass)$/,
-                exclude: /node_modules/,
-                loader: extractTextPlugin.extract("isomorphic-style-loader", "css!sass")
+                use: [
+                    { loader: "style-loader" },
+                    { loader: "css-loader" },
+                    { loader: "sass-loader" },
+                ],
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    "url?limit=8192&name=images/[name].[ext]",
-                    "img?minimize&optimizationLevel=5&progressive=true"
-                ]
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,
+                            outputPath: "images",
+                        },
+                    },
+                    {
+                        loader: "img-loader",
+                        options: {
+                            optimizationLevel: 5,
+                            progressive: true,
+                        },
+                    }
+                ],
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name].[ext]"
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,
+                            outputPath: "fonts",
+                            mimetype: "application/font-woff",
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file-loader?name=fonts/[name].[ext]"
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            outputPath: "fonts",
+                        },
+                    },
+                ],
             }
         ]
     },

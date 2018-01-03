@@ -6,7 +6,7 @@ import Notification from "./NotificationComponent.jsx";
 import EventList from "./EventListComponent.jsx";
 import config from "../config.js";
 
-require("../styles/Results.scss");
+import "../styles/Results.scss";
 
 const Sidebar = (props) => {
     const { events, currentSearchObj } = props;

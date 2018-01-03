@@ -1,5 +1,4 @@
 import { browserHistory } from "react-router";
-import fetch from "isomorphic-fetch";
 import moment from "moment";
 import config from "../config.js";
 

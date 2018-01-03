@@ -1,15 +1,17 @@
 require("env2")(__dirname + "/config.env");
 
-const server = require("./server");
-const { cacheGenreList } = require("./tasks.js");
+const initialiseServer = require("./server");
+const { cacheGenreList } = require("./lib/tasks.js");
 
-cacheGenreList((err) => {
-    if(err) {
-        throw new Error(err);
+async function start() {
+    try {
+        const server = await initialiseServer();
+        await Promise.all([cacheGenreList(), server.start()]);
+        console.log(`Server running on ${server.info.uri}`);
     }
-});
+    catch (err) {
+        throw err;
+    }
+}
 
-server.start(err => {
-    if(err) { throw new Error(err); }
-    console.log(`Server running on ${server.info.uri}`);
-});
+start();

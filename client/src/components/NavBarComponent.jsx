@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router";
 
-require("../styles/NavBar.scss");
+import "../styles/NavBar.scss";
 
 const NavBar = props => {
     return (
@@ -9,9 +10,9 @@ const NavBar = props => {
             <ul>
                 <li className="subnav left">
                     <ul>
-                        <li className="subnav-item"><Link to={"/"} className="logo">ConcertSpot</Link></li>
-                        <li className="subnav-item"><Link to={"/events"}>events</Link></li>
-                        <li className="subnav-item"><Link to={"/contact"}>contact</Link></li>
+                        <li className="subnav-item"><Link to="/" className="logo">ConcertSpot</Link></li>
+                        <li className="subnav-item"><Link to="/events">events</Link></li>
+                        <li className="subnav-item"><Link to="/contact">contact</Link></li>
                     </ul>
                 </li>
             </ul>

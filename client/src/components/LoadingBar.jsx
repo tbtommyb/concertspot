@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-require("../styles/LoadingBar.scss");
+import "../styles/LoadingBar.scss";
 
 const LoadingBar = props => {
     return (
