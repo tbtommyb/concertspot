@@ -2,7 +2,7 @@
 
 """ Script to automate downloading new XML and processing """
 
-import urllib
+import urllib2
 import os
 import errno
 from datetime import date
@@ -34,9 +34,20 @@ if __name__ == "__main__":
         silent_remove(file)
 
     print "Downloading artists file..."
-    urllib.urlretrieve(ARTISTS_PATH, ARTISTS_FILE)
+    try:
+        response = urllib2.urlopen(ARTISTS_PATH)
+	with open(ARTISTS_FILE, "w") as f:
+	    f.write(response.read())
+    except Exception, e:
+        print e
+
     print "Downloading masters file..."
-    urllib.urlretrieve(MASTERS_PATH, MASTERS_FILE)
+    try:
+        response = urllib2.urlopen(MASTERS_PATH)
+        with open(MASTERS_FILE, "w") as f:
+            f.write(response.read())
+    except Exception, e:
+        print e
 
     artists.run_processor(ARTISTS_FILE, ARTISTS_JSON)
     print "Artist processing complete"
