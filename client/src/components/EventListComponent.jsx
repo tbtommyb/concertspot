@@ -17,7 +17,7 @@ class EventList extends Component {
         toggleEvent(id);
     }
     componentDidUpdate(prevProps) {
-        const activeEvent = this.refs.activeEvent;
+        const activeEvent = this.activeEvent;
         if(activeEvent) {
             const eventNode = ReactDOM.findDOMNode(activeEvent);
             const listNode = ReactDOM.findDOMNode(this);
@@ -32,13 +32,15 @@ class EventList extends Component {
                     <CSSTransitionsGroup transitionName="add-event" transitionEnterTimeout={300}
                                               transitionLeaveTimeout={300}>
                         {Object.keys(events).map(id => {
-                            const active = events[id].active;
+                            const event = events[id];
                             const props = {
                                 key: id,
-                                event: events[id],
+                                event,
                                 handleSelect: this._handleSelect
                             };
-                            if(active) { props.ref = "activeEvent"; }
+                            if(event.active) {
+                                props.ref = input => this.activeEvent = input;
+                            }
                             return <Event {...props} />;
                         })}
                     </CSSTransitionsGroup>
