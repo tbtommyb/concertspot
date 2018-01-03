@@ -7,7 +7,6 @@ var config = {
         rules: [
             {
                 test: /\.(css|scss|sass)$/,
-                exclude: /node_modules/,
                 use: [
                     { loader: "style-loader" },
                     { loader: "css-loader" },
@@ -32,10 +31,6 @@ var config = {
                         },
                     }
                 ],
-                // loaders: [
-                //     "url?limit=8192&name=images/[name].[ext]",
-                //     "img?minimize&optimizationLevel=5&progressive=true"
-                // ]
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

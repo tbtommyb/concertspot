@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { Field, reduxForm } from "redux-form";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import NumberPicker from "react-widgets/lib/NumberPicker";
+import "react-widgets/lib/scss/react-widgets.scss";
 import moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import numberLocalizer from "react-widgets-simple-number";
 import config from "../config.js";
 
 require("../styles/SearchInput.scss");
+require("../styles/react-widgets.scss");
 
 moment.locale("en");
 momentLocalizer();
@@ -78,14 +80,14 @@ export class SearchInput extends Component {
                             component="input"
                             type="text"
                             aria-labelledby="artist"
-                            placeholder=""/>
+                            placeholder="artist / genre"/>
                     </div>
                     <div className="whole-row centered">
                         <Field name="location"
                             component="input"
                             type="text"
                             aria-labelledby="location"
-                            placeholder=""/>
+                            placeholder="location"/>
                     </div>
                     <div className="whole-row centered">
                         <button className="search-btn left" type="button" onClick={this.handleClick}>{buttonText}</button>
@@ -123,15 +125,6 @@ export class SearchInput extends Component {
     }
 }
 
-/* <Field
-                                name="radius"
-                                aria-labelledby="radius"
-                                component={renderNumberPicker}
-                                min={1}
-                                max={9}
-                                onBlur={null}
-                                label="radius"/> */
-
 SearchInput.displayName = "SearchInputComponent";
 SearchInput.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -140,7 +133,11 @@ SearchInput.propTypes = {
 
 const SearchInputForm = reduxForm({
     form: "search-input",
-    validate
+    validate,
+    initialValues: {
+        maxDate: new Date(),
+        minDate: new Date(),
+    },
 })(SearchInput);
 
 export default SearchInputForm;

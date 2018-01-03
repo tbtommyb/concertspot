@@ -8,9 +8,9 @@ const EventDetailList = props => {
     return (
         <div className="item-details-list">
             <EventDetail type="venue" icon="map-marker" content={venue.name.toLowerCase()} />
-            <EventDetail type="date"  icon="calendar-o" content={moment(date).format("dddd Do MMM").toLowerCase()} />
-            <EventDetail type="price" icon="ticket" content={price.toLowerCase()} />
-            <EventDetail type="times" icon="clock-o" content={times.opening + " - " + times.closing} />
+            <EventDetail type="date"  icon="calendar" content={moment(date).format("dddd Do MMM").toLowerCase()} />
+            <EventDetail type="price" icon="ticket-alt" content={price.toLowerCase()} />
+            <EventDetail type="times" icon="clock" content={times.opening + " - " + times.closing} />
         </div>
     );
 };

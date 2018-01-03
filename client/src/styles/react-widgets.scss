@@ -1,6 +1,4 @@
-
 .rw-widget {
-    border-radius: 0 !important;
     border: none !important;
     color: #231f31 !important;
     display: inline-block;
@@ -14,16 +12,16 @@
     }
 
     &:hover {
-        background-color: white !important;
+        // background-color: white !important;
         border-color: white !important;
     }
 }
 
-.rw-datetimepicker {
+.rw-datetime-picker {
     width: 60%;
 }
 
-.rw-datetimepicker > .rw-input {
+.rw-datetime-picker > .rw-input {
     border-bottom: none;
 }
 
@@ -32,12 +30,11 @@
     font-size: 1.4em;
 }
 
-.rw-datetimepicker input.rw-input {
+.rw-datetime-picker input.rw-input {
     box-shadow: none !important;
 }
 
 .rw-widget .rw-input {
-    border-radius: 0 !important;
     height: 2.4em;
 }
 
@@ -58,4 +55,8 @@
     &:hover {
         background-color: #fd8023;
     }
+}
+
+.rw-widget-input[role="combobox"] {
+    width: 100%;
 }
