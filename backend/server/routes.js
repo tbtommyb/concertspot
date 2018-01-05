@@ -37,8 +37,13 @@ module.exports = [
             }
         },
         handler: async (request, h) => {
-            const events = await fetchEvents(request.payload);
-            const genres = await getGenresForQuery(request.payload.query);
+            try {
+                const events = await fetchEvents(request.payload);
+                const genres = await getGenresForQuery(request.payload.query);
+            } catch(err) {
+                console.log(err);
+                return { err };
+            }
 
             return { events: recommend(events, genres) };
         }
