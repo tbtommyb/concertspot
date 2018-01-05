@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - cs_pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
   server:
     build:
       context: backend
@@ -35,5 +35,5 @@ services:
     depends_on:
       - db
 volumes:
-  cs_pg_data:
+  pg_data:
   webpack_output:
