@@ -40,12 +40,11 @@ module.exports = [
             try {
                 const events = await fetchEvents(request.payload);
                 const genres = await getGenresForQuery(request.payload.query);
+                return { events: recommend(events, genres) };
             } catch(err) {
                 console.log(err);
                 return { err };
             }
-
-            return { events: recommend(events, genres) };
         }
     }
 ];
