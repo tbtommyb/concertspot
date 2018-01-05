@@ -15,7 +15,7 @@ async function checkIfGenre(query) {
     const sanitisedQuery = sanitise(query);
 
     const results = [];
-    if(genres.includes(sanitisedQuery)) {
+    if(genres && genres.includes(sanitisedQuery)) {
         // Create a genre object to match the query term
         results.push({ name: sanitisedQuery, weighting: 1.0 });
     }
