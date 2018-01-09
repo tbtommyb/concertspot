@@ -56,7 +56,7 @@ async function getGenresForQuery(query) {
 
 async function cacheGenreList() {
     const genres = await getGenreList();
-    cache.add(cache.generateGenreListId(), genres);
+    cache.add(cache.generateGenreListId(), genres, false);
 }
 
 module.exports = {
