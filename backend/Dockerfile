@@ -1,8 +1,8 @@
-FROM node
+FROM node:9
 
 WORKDIR /concertspot/
 
-COPY package*.json ./
+COPY . ./
 
 RUN npm install
 

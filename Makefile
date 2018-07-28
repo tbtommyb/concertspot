@@ -23,7 +23,7 @@ client-production-build:
 
 .PHONY: setup-db
 setup-db:
-	docker-compose run -d setup-db
+	docker-compose run setup-db
 
 .PHONY: run-server
 run-server:
