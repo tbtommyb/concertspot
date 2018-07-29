@@ -1,5 +1,3 @@
-var extractTextPlugin = require("extract-text-webpack-plugin");
-
 var config = {
     cache: true,
     devtool: "eval-source-map",
@@ -58,11 +56,6 @@ var config = {
             }
         ]
     },
-    plugins: [
-        new extractTextPlugin("styles/style.css", {
-            allChunks: true
-        })
-    ]
 };
 
 module.exports = config;
