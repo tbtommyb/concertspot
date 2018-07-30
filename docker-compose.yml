@@ -31,6 +31,8 @@ services:
   setup-db:
     build:
       context: scripts
+    environment:
+      POSTGRES_PASSWORD:
     depends_on:
       - db
 volumes:
