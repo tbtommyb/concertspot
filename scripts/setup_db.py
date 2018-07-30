@@ -1,6 +1,7 @@
 """ Initialise DB. Usage:
     setup_db artist_input.json genre_input.json db_name
 """
+import os
 import sys
 import psycopg2
 import ijson
@@ -10,7 +11,7 @@ ROWS_PER_INSERT = 100000
 class Database:
     """ Initialise database with JSON data from args """
     def __init__(self):
-        conn = psycopg2.connect("dbname=postgres user=postgres password=example host=db")
+        conn = psycopg2.connect("dbname=postgres user=postgres password=" + os.getenv("POSTGRES_PASSWORD") + " host=db")
         self.conn = conn
         self.cur = conn.cursor()
 

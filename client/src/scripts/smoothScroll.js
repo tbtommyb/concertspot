@@ -34,7 +34,7 @@ var smoothScroll = function(element, target, duration) {
 
         var scroll_frame = function() {
             if(element.scrollTop != previous_top) {
-                reject("interrupted");
+                resolve();
                 return;
             }
 

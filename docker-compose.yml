@@ -21,7 +21,6 @@ services:
       - "8080:8080"
     volumes:
       - webpack_output:/concertspot/server/build
-      - ./backend:/concertspot
   client:
     build:
       context: client
@@ -32,6 +31,8 @@ services:
   setup-db:
     build:
       context: scripts
+    environment:
+      POSTGRES_PASSWORD:
     depends_on:
       - db
 volumes:
