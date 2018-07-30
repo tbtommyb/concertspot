@@ -10,6 +10,7 @@ class EventList extends Component {
     constructor(props) {
         super(props);
         this._handleSelect = this._handleSelect.bind(this);
+        this._setScrollDestination = node => this.scrollDestination = node;
     }
 
     _handleSelect(id) {
@@ -17,9 +18,8 @@ class EventList extends Component {
         toggleEvent(id);
     }
     componentDidUpdate(prevProps) {
-        const activeEvent = this.activeEvent;
-        if(activeEvent) {
-            const eventNode = ReactDOM.findDOMNode(activeEvent);
+        if(this.scrollDestination) {
+            const eventNode = ReactDOM.findDOMNode(this.scrollDestination);
             const listNode = ReactDOM.findDOMNode(this);
             smoothScroll(listNode, eventNode.offsetTop - listNode.offsetTop, config.event.scrollDuration);
         }
@@ -33,13 +33,9 @@ class EventList extends Component {
                                               transitionLeaveTimeout={300}>
                         {Object.keys(events).map(id => {
                             const event = events[id];
-                            const props = {
-                                key: id,
-                                event,
-                                handleSelect: this._handleSelect
-                            };
+                            const props = { key: id, event, handleSelect: this._handleSelect };
                             if(event.active) {
-                                props.ref = input => this.activeEvent = input;
+                                props.ref = this._setScrollDestination;
                             }
                             return <Event {...props} />;
                         })}
